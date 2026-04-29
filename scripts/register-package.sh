@@ -109,9 +109,9 @@ for suite in $SUITES; do
       rm -rf "$_tmpdir"
       _arch_found=true
     done
-    [[ "$_arch_found" == "false" ]] && {
+    if [[ "$_arch_found" == "false" ]]; then
       echo "ERROR: no arch-specific assets found for ${produced} ${VERSION} in release ${TAG}"
       exit 1
-    }
+    fi
   done
 done
