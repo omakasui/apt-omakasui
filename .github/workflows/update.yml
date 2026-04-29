@@ -180,11 +180,3 @@ jobs:
         uses: ./.github/actions/commit-and-push
         with:
           message: ${{ steps.msg.outputs.value }}
-
-      - name: Trigger omakasui.org rebuild
-        env:
-          GH_TOKEN: ${{ secrets.OMAKASUI_ORG_DISPATCH_TOKEN }}
-        run: |
-          gh api repos/omakasui/omakasui.org/dispatches \
-            --method POST \
-            --field event_type=apt-omakasui-updated
