@@ -45,5 +45,4 @@ for suite in $SUITES; do
   echo "Signed: dists/${suite}/Release"
 done
 
-gpg --armor --export "$KEY_ID" > omakasui.gpg.key
-echo "Exported: omakasui.gpg.key"
+# Public key is served via keyrings.omakasui.org/omakasui-core.gpg.key

@@ -64,9 +64,9 @@ The `channel` field is `stable` (default) or `dev`. Pass `--channel dev` to `reg
 ```bash
 # Import both GPG keys
 sudo install -dm 755 /etc/apt/keyrings
-curl -fsSL https://packages.omakasui.org/omakasui.gpg.key \
+curl -fsSL https://keyrings.omakasui.org/omakasui-packages.gpg.key \
   | gpg --dearmor | sudo tee /etc/apt/keyrings/omakasui.gpg > /dev/null
-curl -fsSL https://core.omakasui.org/omakasui.gpg.key \
+curl -fsSL https://keyrings.omakasui.org/omakasui-core.gpg.key \
   | gpg --dearmor | sudo tee /etc/apt/keyrings/omakasui-core.gpg > /dev/null
 
 # Add both sources

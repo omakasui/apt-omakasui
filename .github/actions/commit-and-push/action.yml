@@ -16,9 +16,7 @@ runs:
 
         DISTS_SNAPSHOT=$(mktemp -d)
         INDEX_SNAPSHOT=$(mktemp -d)
-        GPG_KEY_SNAPSHOT=$(mktemp -d)
         cp -r dists/. "$DISTS_SNAPSHOT/"
-        cp omakasui.gpg.key "$GPG_KEY_SNAPSHOT/"
         cp index/packages.tsv "$INDEX_SNAPSHOT/" 2>/dev/null || true
 
         for i in 1 2 3 4 5; do
@@ -26,11 +24,10 @@ runs:
           git reset --hard origin/main
 
           cp -r "$DISTS_SNAPSHOT/." dists/
-          cp "$GPG_KEY_SNAPSHOT/omakasui.gpg.key" omakasui.gpg.key
           mkdir -p index
           cp "$INDEX_SNAPSHOT/packages.tsv" index/packages.tsv 2>/dev/null || true
 
-          git add -f dists/ omakasui.gpg.key index/
+          git add -f dists/ index/
           git add -u index/ 2>/dev/null || true
 
           if git diff --cached --quiet; then
