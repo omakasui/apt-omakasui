@@ -85,10 +85,10 @@ jobs:
           fi
 
       - name: Setup APT tools and GPG key
+        id: setup-apt
         uses: ./.github/actions/setup-apt
         with:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
 
       - name: '[packages-updated] Register all packages in index manifest'
         if: steps.params.outputs.action == 'packages-updated'
@@ -151,7 +151,7 @@ jobs:
 
       - name: Regenerate APT metadata
         env:
-          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_KEY_ID: ${{ steps.setup-apt.outputs.fingerprint }}
         run: |
           touch index/packages.tsv
           bash scripts/update-index.sh --suites "$ALL_SUITES"

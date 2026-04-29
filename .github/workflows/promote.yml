@@ -46,10 +46,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup APT tools and GPG key
+        id: setup-apt
         uses: ./.github/actions/setup-apt
         with:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
 
       - name: Promote package in index manifest
         if: inputs.action == 'promote-package'
@@ -73,7 +73,7 @@ jobs:
 
       - name: Regenerate APT metadata
         env:
-          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_KEY_ID: ${{ steps.setup-apt.outputs.fingerprint }}
         run: |
           bash scripts/update-index.sh --suites "$ALL_SUITES"
           bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
