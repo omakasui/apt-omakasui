@@ -1,8 +1,8 @@
-# apt-packages
+# apt-omakasui
 
-APT repository for [omakasui](https://omakasui.org) custom packages, served via GitHub Pages at `core.omakasui.org`.
+APT repository for [omakasui](https://omakasui.org) configuration packages (`omakasui-*`), served via GitHub Pages at `core.omakasui.org`.
 
-Metadata (`dists/`) and the package index (`index/packages.tsv`) live in this repo. Binary packages are stored as GitHub Release assets in [build-apt-packages](https://github.com/omakasui/build-apt-packages) and referenced directly via their full URL in the `Filename` field of the `Packages` index. No proxy or redirect layer required.
+Metadata (`dists/`) and the package index (`index/packages.tsv`) live in this repo. Binary packages are stored as GitHub Release assets in [build-apt-omakasui](https://github.com/omakasui/build-apt-omakasui) and referenced directly via their full URL in the `Filename` field of the `Packages` index. A Cloudflare Worker on `core.omakasui.org` redirects `/pool/` requests to those release assets.
 
 ## Suites and architectures
 
@@ -39,12 +39,12 @@ Run `make help` from the repo root for a full list of available targets. Common 
 ```bash
 make list                                          # show all packages in the index
 make list-dev                                      # show packages not yet promoted to stable
-make info PKG=fzf                                  # inspect all entries for a package
+make info PKG=omakasui-nvim                        # inspect all entries for a package
 make check                                         # count entries per suite/arch
 make index                                         # regenerate Packages files
 make rebuild GPG_KEY_ID=<fp>                       # regenerate + re-sign
-make promote-pkg PKG=fzf                           # promote fzf dev → stable
-make prune-dry                                     # preview stale releases in build-apt-packages
+make promote-pkg PKG=omakasui-nvim                 # promote omakasui-nvim dev → stable
+make prune-dry                                     # preview stale releases in build-apt-omakasui
 ```
 
 ## packages.tsv format
@@ -59,13 +59,24 @@ The `channel` field is `stable` (default) or `dev`. Pass `--channel dev` to `reg
 
 ## User setup
 
-```bash
-curl -fsSL https://keyrings.omakasui.org/omakasui-core.gpg.key \
-  | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/omakasui-core.gpg
+`omakasui-*` packages depend on their corresponding generic packages from `packages.omakasui.org`. Both sources must be configured:
 
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/omakasui-core.gpg] \
-  https://core.omakasui.org $(. /etc/os-release && echo $VERSION_CODENAME) main" \
+```bash
+# Import both GPG keys
+sudo install -dm 755 /etc/apt/keyrings
+curl -fsSL https://packages.omakasui.org/omakasui.gpg.key \
+  | gpg --dearmor | sudo tee /etc/apt/keyrings/omakasui.gpg > /dev/null
+curl -fsSL https://core.omakasui.org/omakasui.gpg.key \
+  | gpg --dearmor | sudo tee /etc/apt/keyrings/omakasui-core.gpg > /dev/null
+
+# Add both sources
+CODENAME=$(. /etc/os-release && echo $VERSION_CODENAME)
+echo "deb [signed-by=/etc/apt/keyrings/omakasui.gpg] https://packages.omakasui.org $CODENAME main" \
   | sudo tee /etc/apt/sources.list.d/omakasui.list
+echo "deb [signed-by=/etc/apt/keyrings/omakasui-core.gpg] https://core.omakasui.org $CODENAME main" \
+  | sudo tee /etc/apt/sources.list.d/omakasui-core.list
 
 sudo apt-get update
+sudo apt-get install omakasui-nvim
 ```
+
