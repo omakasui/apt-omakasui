@@ -91,22 +91,27 @@ for suite in $SUITES; do
     [[ "$_is_all" == "true" ]] && continue
 
     # Fall back to arch-specific builds.
+    _arch_found=false
     for arch in amd64 arm64; do
       _tmpdir=$(mktemp -d)
       src="${produced}_${VERSION}_${distro}_${arch}.deb"
       _url="https://github.com/${REPO}/releases/download/${TAG}/${src}"
 
-      gh release download "$TAG" \
-        --repo "$REPO" --pattern "$src" --dir "$_tmpdir"
+      if ! gh release download "$TAG" \
+           --repo "$REPO" --pattern "$src" --dir "$_tmpdir" 2>/dev/null; then
+        echo "Skipping ${arch}: no asset ${src} in release ${TAG}"
+        rm -rf "$_tmpdir"
+        continue
+      fi
 
       _deb="$_tmpdir/$src"
-      [[ ! -f "$_deb" ]] && {
-        echo "ERROR: $src not found in release $TAG"
-        rm -rf "$_tmpdir"; exit 1
-      }
-
       _register_entry "$suite" "$arch" "$produced" "$VERSION" "$_url" "$_deb"
       rm -rf "$_tmpdir"
+      _arch_found=true
     done
+    [[ "$_arch_found" == "false" ]] && {
+      echo "ERROR: no arch-specific assets found for ${produced} ${VERSION} in release ${TAG}"
+      exit 1
+    }
   done
 done
