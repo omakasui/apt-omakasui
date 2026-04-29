@@ -2,7 +2,7 @@
 # update-index.sh — Generate Packages/Packages.gz/Packages.xz for every suite and arch.
 #
 # Reads index/packages.tsv. The Filename field is pool-relative; a Cloudflare Worker
-# on packages.omakasui.org redirects pool/ requests to GitHub Releases assets.
+# on core.omakasui.org redirects pool/ requests to GitHub Releases assets.
 # Dev suites include all stable packages as a fallback, overridden by explicit dev entries.
 #
 # Usage: update-index.sh --suites "<suite1> <suite2>"

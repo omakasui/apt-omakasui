@@ -1,5 +1,5 @@
 /**
- * Cloudflare Worker — pool redirect for omakasui-packages.omakasui.org
+ * Cloudflare Worker — pool redirect for core.omakasui.org
  *
  * apt always treats the Filename field in a Packages index as a path relative
  * to the repository base URL.  Binary packages live as release assets in
