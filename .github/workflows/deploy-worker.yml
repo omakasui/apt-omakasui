@@ -1,0 +1,28 @@
+# Deploy the Cloudflare Worker that redirects apt pool requests to GitHub Releases.
+# Runs whenever worker.js or wrangler.toml changes, or manually.
+name: Deploy Cloudflare Worker
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'worker.js'
+      - 'wrangler.toml'
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy worker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Deploy worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

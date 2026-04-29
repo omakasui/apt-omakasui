@@ -1,0 +1,84 @@
+name: Promote packages to stable
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        type: choice
+        options:
+          - promote-package
+          - promote-all
+      package:
+        description: 'Package name — required for promote-package'
+        required: false
+        type: string
+      version:
+        description: 'Version — for promote-package only (leave empty to promote all dev versions)'
+        required: false
+        type: string
+      suites:
+        description: 'Space-separated suites (e.g. "noble" or "trixie noble"). Leave empty for all.'
+        required: false
+        type: string
+      exclude:
+        description: 'For promote-all: space-separated package names to exclude from bulk promotion'
+        required: false
+        type: string
+
+# Must stay in sync with build-matrix.yml in omakasui/build-omakasui-packages.
+env:
+  ALL_SUITES: "trixie noble"
+  ALL_DEV_SUITES: "trixie-dev noble-dev"
+
+jobs:
+  promote:
+    name: Promote packages to stable
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup APT tools and GPG key
+        uses: ./.github/actions/setup-apt
+        with:
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
+
+      - name: Promote package in index manifest
+        if: inputs.action == 'promote-package'
+        run: |
+          SUITES="${{ inputs.suites }}"
+          [[ -z "$SUITES" ]] && SUITES="$ALL_SUITES"
+          bash scripts/promote-packages.sh \
+            --pkg     "${{ inputs.package }}" \
+            --version "${{ inputs.version }}" \
+            --suites  "$SUITES"
+
+      - name: Promote all dev packages to stable
+        if: inputs.action == 'promote-all'
+        run: |
+          SUITES="${{ inputs.suites }}"
+          [[ -z "$SUITES" ]] && SUITES="$ALL_SUITES"
+          bash scripts/promote-packages.sh \
+            --all \
+            --suites  "$SUITES" \
+            --exclude "${{ inputs.exclude }}"
+
+      - name: Regenerate APT metadata
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        run: |
+          bash scripts/update-index.sh --suites "$ALL_SUITES"
+          bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
+
+      - name: Commit and push
+        uses: ./.github/actions/commit-and-push
+        with:
+          message: "apt: promote to stable [$(date '+%Y-%m-%d')]"

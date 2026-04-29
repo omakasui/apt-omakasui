@@ -1,0 +1,94 @@
+name: Maintain APT repo
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        type: choice
+        options:
+          - rebuild-index
+          - remove-package
+          - clean-pool
+      package:
+        description: 'Package name — required for remove-package'
+        required: false
+        type: string
+      suites:
+        description: 'Space-separated suites (e.g. "noble" or "trixie noble"). Leave empty for all.'
+        required: false
+        type: string
+      pattern:
+        description: 'Glob pattern for clean-pool (e.g. "omakasui-lazygit*")'
+        required: false
+        type: string
+
+# Must stay in sync with build-matrix.yml in omakasui/build-omakasui-packages.
+env:
+  ALL_SUITES: "trixie noble"
+  ALL_DEV_SUITES: "trixie-dev noble-dev"
+
+jobs:
+  maintain:
+    name: Maintain APT repo
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate inputs
+        run: |
+          ACTION="${{ inputs.action }}"
+          case "$ACTION" in
+            remove-package)
+              if [[ -z "${{ inputs.package }}" ]]; then
+                echo "ERROR: package is required for remove-package"; exit 1
+              fi
+              ;;
+            clean-pool)
+              if [[ -z "${{ inputs.pattern }}" ]]; then
+                echo "ERROR: pattern is required for clean-pool"; exit 1
+              fi
+              ;;
+            rebuild-index)
+              echo "Rebuilding index from existing packages.tsv."
+              ;;
+          esac
+
+      - name: Setup APT tools and GPG key
+        uses: ./.github/actions/setup-apt
+        with:
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
+
+      - name: '[remove-package] Remove entries from index manifest'
+        if: inputs.action == 'remove-package'
+        run: |
+          bash scripts/remove-entries.sh \
+            --package "${{ inputs.package }}" \
+            --suites  "${{ inputs.suites }}"
+
+      - name: '[clean-pool] Remove entries matching pattern from index manifest'
+        if: inputs.action == 'clean-pool'
+        run: |
+          bash scripts/remove-entries.sh \
+            --pattern "${{ inputs.pattern }}" \
+            --suites  "${{ inputs.suites }}"
+
+      - name: Regenerate APT metadata
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        run: |
+          bash scripts/update-index.sh --suites "$ALL_SUITES"
+          bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
+
+      - name: Commit and push
+        uses: ./.github/actions/commit-and-push
+        with:
+          message: "apt: maintain [${{ inputs.action }}] [$(date '+%Y-%m-%d')]"

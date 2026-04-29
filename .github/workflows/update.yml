@@ -1,0 +1,190 @@
+name: Update APT repo
+
+on:
+  repository_dispatch:
+    types: [packages-updated, package-updated, remove-package, rebuild-index, clean-pool]
+
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package name'
+        required: true
+        type: string
+      version:
+        description: 'Version'
+        required: true
+        type: string
+      suites:
+        description: 'Suites — space-separated, e.g. "trixie" or "trixie noble"'
+        required: true
+        type: string
+      produces:
+        description: 'Space-separated list of produced package names. Leave empty to use package name.'
+        required: false
+        type: string
+      channel:
+        description: 'Publishing channel (stable or dev)'
+        required: false
+        default: 'stable'
+        type: choice
+        options:
+          - stable
+          - dev
+
+# Must stay in sync with build-matrix.yml in omakasui/build-omakasui-packages.
+env:
+  ALL_SUITES: "trixie noble"
+  ALL_DEV_SUITES: "trixie-dev noble-dev"
+
+# Serialize runs so concurrent package-updated events don't overwrite each other.
+concurrency:
+  group: update-apt-repo
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Update APT repo
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve parameters
+        id: params
+        run: |
+          if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+            echo "action=${{ github.event.action }}"                  >> "$GITHUB_OUTPUT"
+            echo "package=${{ github.event.client_payload.package }}" >> "$GITHUB_OUTPUT"
+            echo "version=${{ github.event.client_payload.version }}" >> "$GITHUB_OUTPUT"
+            echo "suites=${{ github.event.client_payload.suites }}"   >> "$GITHUB_OUTPUT"
+            echo "pattern=${{ github.event.client_payload.pattern }}" >> "$GITHUB_OUTPUT"
+            PRODUCES=$(echo '${{ toJson(github.event.client_payload.produces) }}' | jq -c '.')
+            echo "produces=${PRODUCES}"                               >> "$GITHUB_OUTPUT"
+            PKGS_JSON=$(echo '${{ toJson(github.event.client_payload.packages) }}' | jq -c '. // []')
+            echo "packages_json=${PKGS_JSON}"                         >> "$GITHUB_OUTPUT"
+            CD_CHANNEL='${{ github.event.client_payload.channel }}'
+            echo "channel=${CD_CHANNEL:-stable}"                      >> "$GITHUB_OUTPUT"
+          else
+            echo "action=package-updated"          >> "$GITHUB_OUTPUT"
+            echo "package=${{ inputs.package }}"   >> "$GITHUB_OUTPUT"
+            echo "version=${{ inputs.version }}"   >> "$GITHUB_OUTPUT"
+            echo "suites=${{ inputs.suites }}"     >> "$GITHUB_OUTPUT"
+            echo "packages_json=[]"                >> "$GITHUB_OUTPUT"
+            if [[ -n "${{ inputs.produces }}" ]]; then
+              PRODUCES_JSON=$(echo "${{ inputs.produces }}" | tr ' ' '\n' | jq -Rc '[.,inputs]' 2>/dev/null || echo "[]")
+              echo "produces=${PRODUCES_JSON}"     >> "$GITHUB_OUTPUT"
+            else
+              echo "produces=[]"                   >> "$GITHUB_OUTPUT"
+            fi
+            echo "channel=${{ inputs.channel }}"   >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup APT tools and GPG key
+        uses: ./.github/actions/setup-apt
+        with:
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
+
+      - name: '[packages-updated] Register all packages in index manifest'
+        if: steps.params.outputs.action == 'packages-updated'
+        env:
+          GH_TOKEN: ${{ secrets.BUILD_OMAKASUI_DISPATCH_TOKEN }}
+        run: |
+          PKGS_JSON='${{ steps.params.outputs.packages_json }}'
+          while IFS= read -r entry; do
+            PKG=$(echo      "$entry" | jq -r '.package')
+            VERSION=$(echo  "$entry" | jq -r '.version')
+            SUITES=$(echo   "$entry" | jq -r '.suites')
+            PRODUCES=$(echo "$entry" | jq -r '.produces | if length == 0 then "" else join(" ") end')
+            CHANNEL=$(echo  "$entry" | jq -r '.channel // "stable"')
+
+            echo "==> Registering: ${PKG} ${VERSION} (suites: ${SUITES}, channel: ${CHANNEL})"
+            bash scripts/register-package.sh \
+              --pkg      "$PKG" \
+              --version  "$VERSION" \
+              --suites   "$SUITES" \
+              --produces "$PRODUCES" \
+              --channel  "$CHANNEL"
+          done < <(echo "$PKGS_JSON" | jq -c '.[]')
+
+      - name: '[package-updated] Register package in index manifest'
+        if: steps.params.outputs.action == 'package-updated'
+        env:
+          GH_TOKEN: ${{ secrets.BUILD_OMAKASUI_DISPATCH_TOKEN }}
+        run: |
+          PRODUCES_JSON='${{ steps.params.outputs.produces }}'
+          if [[ "$PRODUCES_JSON" == "null" || "$PRODUCES_JSON" == "[]" || -z "$PRODUCES_JSON" ]]; then
+            PRODUCES=""
+          else
+            PRODUCES=$(echo "$PRODUCES_JSON" | jq -r '.[]' | tr '\n' ' ')
+          fi
+
+          bash scripts/register-package.sh \
+            --pkg      "${{ steps.params.outputs.package }}" \
+            --version  "${{ steps.params.outputs.version }}" \
+            --suites   "${{ steps.params.outputs.suites }}" \
+            --produces "$PRODUCES" \
+            --channel  "${{ steps.params.outputs.channel }}"
+
+      - name: '[remove-package] Remove entries from index manifest'
+        if: steps.params.outputs.action == 'remove-package'
+        run: |
+          bash scripts/remove-entries.sh \
+            --package "${{ steps.params.outputs.package }}" \
+            --suites  "${{ steps.params.outputs.suites }}"
+
+      - name: '[clean-pool] Remove entries matching pattern from index manifest'
+        if: steps.params.outputs.action == 'clean-pool'
+        run: |
+          bash scripts/remove-entries.sh \
+            --pattern "${{ steps.params.outputs.pattern }}" \
+            --suites  "${{ steps.params.outputs.suites }}"
+
+      - name: '[rebuild-index] no-op'
+        if: steps.params.outputs.action == 'rebuild-index'
+        run: echo "Rebuilding index from existing index/packages.tsv."
+
+      - name: Regenerate APT metadata
+        env:
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+        run: |
+          touch index/packages.tsv
+          bash scripts/update-index.sh --suites "$ALL_SUITES"
+          bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
+
+      - name: Build commit message
+        id: msg
+        run: |
+          ACTION="${{ steps.params.outputs.action }}"
+          PKG="${{ steps.params.outputs.package }}"
+          VERSION="${{ steps.params.outputs.version }}"
+          PATTERN="${{ steps.params.outputs.pattern }}"
+          case "$ACTION" in
+            packages-updated)
+              PKGS_LIST=$(echo '${{ steps.params.outputs.packages_json }}' | jq -r '[.[] | "\(.package) \(.version)"] | join(", ")')
+              MSG="apt: ${PKGS_LIST} [$(date '+%Y-%m-%d')]"
+              ;;
+            package-updated)  MSG="apt: ${PKG} ${VERSION} [$(date '+%Y-%m-%d')]" ;;
+            remove-package)   MSG="apt: remove ${PKG} [$(date '+%Y-%m-%d')]" ;;
+            clean-pool)       MSG="apt: clean ${PATTERN} [$(date '+%Y-%m-%d')]" ;;
+            *)                MSG="apt: rebuild index [$(date '+%Y-%m-%d')]" ;;
+          esac
+          echo "value=${MSG}" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push
+        uses: ./.github/actions/commit-and-push
+        with:
+          message: ${{ steps.msg.outputs.value }}
+
+      - name: Trigger omakasui.org rebuild
+        env:
+          GH_TOKEN: ${{ secrets.OMAKASUI_ORG_DISPATCH_TOKEN }}
+        run: |
+          gh api repos/omakasui/omakasui.org/dispatches \
+            --method POST \
+            --field event_type=apt-omakasui-updated
