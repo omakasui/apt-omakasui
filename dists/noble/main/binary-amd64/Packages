@@ -1,0 +1,280 @@
+Package: omakasui-nvim
+Version: 20260327.2
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 137148
+Depends: nvim, git, gum
+Section: editors
+Priority: optional
+Homepage: https://github.com/LazyVim/LazyVim
+Description: Pre-built LazyVim configuration for omakasui
+ Installs pre-cached config and plugins to /usr/share/omakasui-nvim.
+ Run omakasui-setup-nvim to activate for the current user.
+Filename: pool/omakasui-nvim-20260327.2/omakasui-nvim_20260327.2_ubuntu2404_all.deb
+Size: 65075940
+MD5sum: 8e0a189f1645b1a7c8f57eda50495e47
+SHA1: 5fb9abf370265734fc5b62d44ccaad3e354f1896
+SHA256: 000ce6b6fc2b6d2b26e69b0f037b7c98e398a45ae7e535ca6883c43fe10e60f5
+
+Package: omakub-nvim
+Version: 20260327.2
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 137148
+Depends: nvim, git, gum
+Section: editors
+Priority: optional
+Homepage: https://github.com/LazyVim/LazyVim
+Description: Pre-built LazyVim configuration for omakub
+ Installs pre-cached config and plugins to /usr/share/omakub-nvim.
+ Run omakub-setup-nvim to activate for the current user.
+Filename: pool/omakasui-nvim-20260327.2/omakub-nvim_20260327.2_ubuntu2404_all.deb
+Size: 65082796
+MD5sum: d3de2a78017ab12766c5cb61e9a81cb2
+SHA1: 7a1fcbae1f6ed35b225d196834e8f6eabceef77c
+SHA256: 82be08fbc81a0a6891ca527edce685f12b417ff7c99b44b9e598933ffe859b16
+
+Package: omadeb-nvim
+Version: 20260327.2
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 137148
+Depends: nvim, git, gum
+Section: editors
+Priority: optional
+Homepage: https://github.com/LazyVim/LazyVim
+Description: Pre-built LazyVim configuration for omadeb
+ Installs pre-cached config and plugins to /usr/share/omadeb-nvim.
+ Run omadeb-setup-nvim to activate for the current user.
+Filename: pool/omakasui-nvim-20260327.2/omadeb-nvim_20260327.2_ubuntu2404_all.deb
+Size: 65083164
+MD5sum: 1b4590b9ee6e2d617b3b8ed40937f035
+SHA1: 274b189889e72f57b54a59dabe295471833d143b
+SHA256: 95db7e97d7f39a4519d15fafe86808bcbdd70cce7d39e827d8cb9b882a974169
+
+Package: omari-nvim
+Version: 20260327.2
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 137148
+Depends: nvim, git, gum
+Section: editors
+Priority: optional
+Homepage: https://github.com/LazyVim/LazyVim
+Description: Pre-built LazyVim configuration for omari
+ Installs pre-cached config and plugins to /usr/share/omari-nvim.
+ Run omari-setup-nvim to activate for the current user.
+Filename: pool/omakasui-nvim-20260327.2/omari-nvim_20260327.2_ubuntu2404_all.deb
+Size: 65081254
+MD5sum: 6e629e3d9a502b1868586dd8897a25e4
+SHA1: 5574fca41c77d49c3470ac5256050b3be3253000
+SHA256: ce5ca0e7e0876990798940410b0791b084963d60caffc26842262db49ecb9a97
+
+Package: omakasui-walker
+Version: 20260330.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
+ .
+Filename: pool/omakasui-walker-20260330.1/omakasui-walker_20260330.1_ubuntu2404_all.deb
+Size: 706
+MD5sum: 535435d4d86a8729bfde5050b58362fe
+SHA1: c1bb329df9a023858d7ea85d0fb998ec861f6bb9
+SHA256: 6e45932eab333bac520488b5cf07f1276b9d4f83fcb9e62e1eee074ea070af8c
+
+Package: omadeb-walker
+Version: 20260330.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
+ .
+Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1_ubuntu2404_all.deb
+Size: 712
+MD5sum: 9c6f8403ec478b7548d2301b6251115c
+SHA1: cd7c7c518dfb26510e9d8a644480b0ef02d6a8d1
+SHA256: 03f2c596ee062ec2ec4daa78462163eb0fa8da142643c6963900e1a45b7b3d74
+
+Package: omakub-walker
+Version: 20260330.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
+ .
+Filename: pool/omakasui-walker-20260330.1/omakub-walker_20260330.1_ubuntu2404_all.deb
+Size: 712
+MD5sum: 6f23541bd5e80c182935bfc67c59444e
+SHA1: d9e0cb37bb0ab82a14b4ce67cd6ec189c6d1339e
+SHA256: 926b1afb2b154cf6a828c3e7835beda4ccb9c380e157665fbe3f03c23687be12
+
+Package: omari-walker
+Version: 20260330.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
+ .
+Filename: pool/omakasui-walker-20260330.1/omari-walker_20260330.1_ubuntu2404_all.deb
+Size: 712
+MD5sum: 60947def3283336e6398839d5fc3574a
+SHA1: 65e40a4f80928a9594a2d8e3df142f983972ba1b
+SHA256: 98e756c12f4efaff671fe6919b8bcd041068e3ceaf307abcd7e13f17e94a17dd
+
+Package: omakasui-zellij
+Version: 20260408.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 40
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Homepage: https://zellij.dev
+Description: Zellij configuration for omakasui
+ Installs omakub-based zellij config and a setup script.
+ Run omakasui-setup-zellij to activate for the current user.
+Filename: pool/omakasui-zellij-20260408.1/omakasui-zellij_20260408.1_ubuntu2404_all.deb
+Size: 3536
+MD5sum: 2057f0d896696bd7599b0f094497f77c
+SHA1: cda320849b58146fb8c45f82502661ee7be6224d
+SHA256: 055fd7e9cb9e181f4ebdfd3206baff0a8e0f0b82d74a35bd163df493f4fbdd5f
+
+Package: omakub-zellij
+Version: 20260408.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 40
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Homepage: https://zellij.dev
+Description: Zellij configuration for omakub
+ Installs omakub-based zellij config and a setup script.
+ Run omakub-setup-zellij to activate for the current user.
+Filename: pool/omakasui-zellij-20260408.1/omakub-zellij_20260408.1_ubuntu2404_all.deb
+Size: 3530
+MD5sum: c7c89f7ddba04ae8d7d74f2dad0d62e1
+SHA1: 29a5a11e062709e1dd21f4395e1976adf96924dd
+SHA256: 5c6204fc1533f443d0e897e8a40f6552a902c9838cfe53e61af4a8bc46df90c3
+
+Package: omadeb-zellij
+Version: 20260408.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 40
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Homepage: https://zellij.dev
+Description: Zellij configuration for omadeb
+ Installs omakub-based zellij config and a setup script.
+ Run omadeb-setup-zellij to activate for the current user.
+Filename: pool/omakasui-zellij-20260408.1/omadeb-zellij_20260408.1_ubuntu2404_all.deb
+Size: 3536
+MD5sum: 750263633795686300ca1b505cfb58d6
+SHA1: 0dea5b2c0849ada05596a68f16222b4804e67119
+SHA256: 7263cf991f3dadd704887bff97fe2d0315e5f9245b699590091a45df50c833b6
+
+Package: omari-zellij
+Version: 20260408.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 40
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Homepage: https://zellij.dev
+Description: Zellij configuration for omari
+ Installs omakub-based zellij config and a setup script.
+ Run omari-setup-zellij to activate for the current user.
+Filename: pool/omakasui-zellij-20260408.1/omari-zellij_20260408.1_ubuntu2404_all.deb
+Size: 3534
+MD5sum: 86e2ef5f276a5b3514db763a48456f7f
+SHA1: a9bddc881be9783a0daa083755569bc5ee0870ff
+SHA256: c3f93f626635d8c87e95f4aef675c5b9cbd441273a4b716be778adfd028ac56a
+
+Package: omakasui-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omakasui
+ Setup script that links Aether themes into the omakasui theme list.
+Filename: pool/omakasui-aether-20260327.1/omakasui-aether_20260327.1_ubuntu2404_all.deb
+Size: 1130
+MD5sum: 62ee6e19313f7ec86a2bab7b46296f9b
+SHA1: d5807aa26bcf9f17f46568b177717aa19a1f543b
+SHA256: b5672d9102214a3f5a18eca5c1a844fd708484e1a3d17f134e78e646ed59aec4
+
+Package: omakub-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omakub
+ Setup script that links Aether themes into the omakub theme list.
+Filename: pool/omakasui-aether-20260327.1/omakub-aether_20260327.1_ubuntu2404_all.deb
+Size: 1130
+MD5sum: 6319e0ee33661e6ec092526d827ec872
+SHA1: 9dd07744eab9d0951d7f9a6d67a24f7f1f6daba2
+SHA256: 4ccb07382d4e83c9d4922ac9d192f1ae8352375c5ba5878c50e6192e23a11d95
+
+Package: omadeb-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omadeb
+ Setup script that links Aether themes into the omadeb theme list.
+Filename: pool/omakasui-aether-20260327.1/omadeb-aether_20260327.1_ubuntu2404_all.deb
+Size: 1132
+MD5sum: a1566a08bd46da7161547f4433a8b028
+SHA1: 9787b0886309e01fbe1c3368e7cf70ddd14cf80b
+SHA256: f68e80ad3d326cb4f2820ab75ba0782d7eee0057b23d584ded02b1052f30e344
+
+Package: omari-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omari
+ Setup script that links Aether themes into the omari theme list.
+Filename: pool/omakasui-aether-20260327.1/omari-aether_20260327.1_ubuntu2404_all.deb
+Size: 1128
+MD5sum: 817ce990f89f43b4b3bc49d3fa012f90
+SHA1: 95817f9329d6452d381b08958b6e2aef2c77a29a
+SHA256: 54661ada63b2ab69966093254adaa872e6ed04bdc059153050316e450496e642
+
