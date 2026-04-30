@@ -210,3 +210,71 @@ MD5sum: 86e2ef5f276a5b3514db763a48456f7f
 SHA1: a9bddc881be9783a0daa083755569bc5ee0870ff
 SHA256: c3f93f626635d8c87e95f4aef675c5b9cbd441273a4b716be778adfd028ac56a
 
+Package: omakasui-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omakasui
+ Setup script that links Aether themes into the omakasui theme list.
+Filename: pool/omakasui-aether-20260327.1/omakasui-aether_20260327.1_ubuntu2404_all.deb
+Size: 1130
+MD5sum: 62ee6e19313f7ec86a2bab7b46296f9b
+SHA1: d5807aa26bcf9f17f46568b177717aa19a1f543b
+SHA256: b5672d9102214a3f5a18eca5c1a844fd708484e1a3d17f134e78e646ed59aec4
+
+Package: omakub-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omakub
+ Setup script that links Aether themes into the omakub theme list.
+Filename: pool/omakasui-aether-20260327.1/omakub-aether_20260327.1_ubuntu2404_all.deb
+Size: 1130
+MD5sum: 6319e0ee33661e6ec092526d827ec872
+SHA1: 9dd07744eab9d0951d7f9a6d67a24f7f1f6daba2
+SHA256: 4ccb07382d4e83c9d4922ac9d192f1ae8352375c5ba5878c50e6192e23a11d95
+
+Package: omadeb-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omadeb
+ Setup script that links Aether themes into the omadeb theme list.
+Filename: pool/omakasui-aether-20260327.1/omadeb-aether_20260327.1_ubuntu2404_all.deb
+Size: 1132
+MD5sum: a1566a08bd46da7161547f4433a8b028
+SHA1: 9787b0886309e01fbe1c3368e7cf70ddd14cf80b
+SHA256: f68e80ad3d326cb4f2820ab75ba0782d7eee0057b23d584ded02b1052f30e344
+
+Package: omari-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omari
+ Setup script that links Aether themes into the omari theme list.
+Filename: pool/omakasui-aether-20260327.1/omari-aether_20260327.1_ubuntu2404_all.deb
+Size: 1128
+MD5sum: 817ce990f89f43b4b3bc49d3fa012f90
+SHA1: 95817f9329d6452d381b08958b6e2aef2c77a29a
+SHA256: 54661ada63b2ab69966093254adaa872e6ed04bdc059153050316e450496e642
+

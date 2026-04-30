@@ -210,3 +210,71 @@ MD5sum: 88bbbb1d297ce5018973e2525af16c1d
 SHA1: e9cdf39b09df2364a202600aac735550a93dfbf6
 SHA256: 7f0350405a3b02204c1a7395fd4df9bb9677ea6d9880a38b822c2ea6a200a87c
 
+Package: omakasui-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omakasui
+ Setup script that links Aether themes into the omakasui theme list.
+Filename: pool/omakasui-aether-20260327.1/omakasui-aether_20260327.1_debian13_all.deb
+Size: 1324
+MD5sum: 445800a27b7a5f09e377fbe0afcb9e41
+SHA1: e3262f9682a65f911bd12e1c9435ec7adac7ce1f
+SHA256: 573ad5833c1e5adcdceb5877dc410611d627fef32c1bdcc1276a09acb9afa67e
+
+Package: omakub-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omakub
+ Setup script that links Aether themes into the omakub theme list.
+Filename: pool/omakasui-aether-20260327.1/omakub-aether_20260327.1_debian13_all.deb
+Size: 1324
+MD5sum: bde6fab502dd1f28ee1360aa2dc77d9b
+SHA1: a36ac640c623fb67a10455b313fca402fde2fe96
+SHA256: c618700cafc8eb7a1c02985e9186b9ed56165185089e14b4b6f23feba69b8ecb
+
+Package: omadeb-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omadeb
+ Setup script that links Aether themes into the omadeb theme list.
+Filename: pool/omakasui-aether-20260327.1/omadeb-aether_20260327.1_debian13_all.deb
+Size: 1324
+MD5sum: 1646d7db33487f718f9a8c7db9a0bc17
+SHA1: 7a2fc615809deec8583b249296d71a0a926981ac
+SHA256: 7249f8684e7178b07597150b28364e06ee526a69771f277fda011855ea4efb6c
+
+Package: omari-aether
+Version: 20260327.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 16
+Depends: aether, gum
+Section: gnome
+Priority: optional
+Homepage: https://github.com/bjarneo/aether
+Description: Aether theme integration for omari
+ Setup script that links Aether themes into the omari theme list.
+Filename: pool/omakasui-aether-20260327.1/omari-aether_20260327.1_debian13_all.deb
+Size: 1324
+MD5sum: 255046abe8b5f07018e14dc9cc6e7040
+SHA1: 379ca064f38edff40bb79075e8118c422aa919b6
+SHA256: 881ee3427d32eab1c3039ba94512fd50f7369cdfc2f551271da5f97908a0cc5a
+
