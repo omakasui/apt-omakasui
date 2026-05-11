@@ -33,8 +33,8 @@ on:
 
 # Must stay in sync with build-matrix.yml in omakasui/build-omakasui-packages.
 env:
-  ALL_SUITES: "trixie noble"
-  ALL_DEV_SUITES: "trixie-dev noble-dev"
+  ALL_SUITES: "trixie noble resolute"
+  ALL_DEV_SUITES: "trixie-dev noble-dev resolute-dev"
 
 # Serialize runs so concurrent package-updated events don't overwrite each other.
 concurrency:

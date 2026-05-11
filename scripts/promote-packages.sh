@@ -34,16 +34,19 @@ done
 
 touch index/packages.tsv
 
+FROZEN_RAW=$( [[ -f index/freeze.list ]] && tr '\n' '|' < index/freeze.list || echo "" )
+
 if [[ "$ALL" == "true" ]]; then
-  awk -v excl="$EXCLUDE" -v suites="$SUITES" '
+  awk -v excl="$EXCLUDE" -v suites="$SUITES" -v frozen_raw="$FROZEN_RAW" '
   BEGIN {
     n  = split(suites, sa, " "); for (i=1;i<=n;i++)  suite_set[sa[i]] = 1
     ne = split(excl,   ea, " "); for (i=1;i<=ne;i++) excl_set[ea[i]]  = 1
+    nf = split(frozen_raw, fa, "|"); for (i=1;i<=nf;i++) { gsub(/^[[:space:]]+|[[:space:]]+$/, "", fa[i]); if (fa[i] != "") frozen_set[fa[i]] = 1 }
   }
   {
     n_fields = NF
     chan = (n_fields >= 11) ? $11 : "stable"
-    is_target = (chan == "dev" && !excl_set[$3] && suite_set[$1])
+    is_target = (chan == "dev" && !excl_set[$3] && suite_set[$1] && !frozen_set[$1 " " $3])
     lines[NR] = $0; n_f[NR] = n_fields; is_promote[NR] = is_target
     if (is_target) promote_key[$1 " " $2 " " $3] = 1
   }
@@ -66,14 +69,15 @@ if [[ "$ALL" == "true" ]]; then
   }
   ' index/packages.tsv > /tmp/packages_promoted.tmp
 else
-  awk -v pkg="$PKG" -v ver="$VERSION" -v suites="$SUITES" '
+  awk -v pkg="$PKG" -v ver="$VERSION" -v suites="$SUITES" -v frozen_raw="$FROZEN_RAW" '
   BEGIN {
     n = split(suites, sa, " "); for (i = 1; i <= n; i++) suite_set[sa[i]] = 1
+    nf = split(frozen_raw, fa, "|"); for (i=1;i<=nf;i++) { gsub(/^[[:space:]]+|[[:space:]]+$/, "", fa[i]); if (fa[i] != "") frozen_set[fa[i]] = 1 }
   }
   {
     n_fields = NF
     chan = (n_fields >= 11) ? $11 : "stable"
-    is_target = (chan == "dev" && $3 == pkg && (ver == "" || $4 == ver) && suite_set[$1])
+    is_target = (chan == "dev" && $3 == pkg && (ver == "" || $4 == ver) && suite_set[$1] && !frozen_set[$1 " " $3])
     lines[NR] = $0; n_f[NR] = n_fields; is_promote[NR] = is_target
     if (is_target) promote_key[$1 " " $2 " " $3] = 1
   }

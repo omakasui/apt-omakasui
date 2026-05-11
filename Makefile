@@ -3,9 +3,9 @@ SHELL   := /bin/bash
 
 PKG      ?=
 VERSION  ?=
-SUITES   ?= noble trixie
-ALL_SUITES     := noble trixie
-ALL_DEV_SUITES := noble-dev trixie-dev
+SUITES   ?= noble trixie resolute
+ALL_SUITES     := noble trixie resolute
+ALL_DEV_SUITES := noble-dev trixie-dev resolute-dev
 SCRIPTS  := scripts
 
 _require_pkg     = $(if $(PKG),,$(error PKG is required. Example: make $@ PKG=fzf))
@@ -67,6 +67,27 @@ remove: ## Remove a package from the index (PKG= required, SUITES= optional)
 	@bash $(SCRIPTS)/remove-entries.sh \
 		--package "$(PKG)" \
 		$(if $(filter-out noble trixie,$(SUITES)),--suites "$(SUITES)")
+
+.PHONY: freeze
+freeze: ## Pin a package for specific suites (PKG= SUITES= required)
+	$(call _require_pkg)
+	$(if $(SUITES),,$(error SUITES is required for freeze. Example: make $@ PKG=pinta SUITES="noble"))
+	@touch index/freeze.list
+	@for suite in $(SUITES); do \
+		grep -qxF "$$suite $(PKG)" index/freeze.list || echo "$$suite $(PKG)" >> index/freeze.list; \
+	done
+	@sort -o index/freeze.list index/freeze.list
+	@echo "Frozen: $(PKG) in suites: $(SUITES)"
+
+.PHONY: unfreeze
+unfreeze: ## Release a frozen package (PKG= required, SUITES= optional — empty = all)
+	$(call _require_pkg)
+	@if [[ -n "$(SUITES)" ]]; then \
+		for suite in $(SUITES); do sed -i "/^$$suite $(PKG)$$/d" index/freeze.list; done; \
+	else \
+		sed -i "/^[^ ]* $(PKG)$$/d" index/freeze.list; \
+	fi
+	@echo "Unfrozen: $(PKG)$(if $(SUITES), in suites: $(SUITES))"
 
 .PHONY: prune-dry
 prune-dry: ## Show stale releases in build-apt-omakasui (dry-run)
