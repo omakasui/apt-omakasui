@@ -37,7 +37,7 @@ done
 PRODUCED_PKGS="${PRODUCES:-$PKG}"
 
 # Suite-to-distro label mapping — keep in sync with build-matrix.yml.
-declare -A DISTRO_MAP=([noble]="ubuntu2404" [trixie]="debian13")
+declare -A DISTRO_MAP=([noble]="ubuntu2404" [trixie]="debian13" [resolute]="ubuntu2604")
 
 TAG="${PKG}-${VERSION}"
 mkdir -p index

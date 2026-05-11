@@ -3,9 +3,9 @@ SHELL   := /bin/bash
 
 PKG      ?=
 VERSION  ?=
-SUITES   ?= noble trixie
-ALL_SUITES     := noble trixie
-ALL_DEV_SUITES := noble-dev trixie-dev
+SUITES   ?= noble trixie resolute
+ALL_SUITES     := noble trixie resolute
+ALL_DEV_SUITES := noble-dev trixie-dev resolute-dev
 SCRIPTS  := scripts
 
 _require_pkg     = $(if $(PKG),,$(error PKG is required. Example: make $@ PKG=fzf))
