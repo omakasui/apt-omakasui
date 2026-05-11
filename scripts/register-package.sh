@@ -70,6 +70,12 @@ for suite in $SUITES; do
   [[ -z "$distro" ]] && { echo "ERROR: no DISTRO_MAP entry for '${suite}'"; exit 1; }
 
   for produced in $PRODUCED_PKGS; do
+    # Guard: skip if this suite+package is listed in index/freeze.list.
+    if grep -qxF "${suite} ${produced}" index/freeze.list 2>/dev/null; then
+      echo "SKIP: ${suite}/${produced} is frozen — edit index/freeze.list to release"
+      continue
+    fi
+
     _is_all=false
 
     # Try arch:all first (distro-tagged filename, then plain).

@@ -11,8 +11,14 @@ on:
           - rebuild-index
           - remove-package
           - clean-pool
+          - freeze-package
+          - unfreeze-package
       package:
-        description: 'Package name — required for remove-package'
+        description: 'Package name — required for remove-package, freeze-package, unfreeze-package'
+        required: false
+        type: string
+      version:
+        description: 'Version — unused, kept for compatibility'
         required: false
         type: string
       suites:
@@ -26,8 +32,8 @@ on:
 
 # Must stay in sync with build-matrix.yml in omakasui/build-omakasui-packages.
 env:
-  ALL_SUITES: "trixie noble"
-  ALL_DEV_SUITES: "trixie-dev noble-dev"
+  ALL_SUITES: "trixie noble resolute"
+  ALL_DEV_SUITES: "trixie-dev noble-dev resolute-dev"
 
 jobs:
   maintain:
@@ -56,6 +62,16 @@ jobs:
                 echo "ERROR: pattern is required for clean-pool"; exit 1
               fi
               ;;
+            freeze-package)
+              if [[ -z "${{ inputs.package }}" ]]; then
+                echo "ERROR: package is required for freeze-package"; exit 1
+              fi
+              ;;
+            unfreeze-package)
+              if [[ -z "${{ inputs.package }}" ]]; then
+                echo "ERROR: package is required for unfreeze-package"; exit 1
+              fi
+              ;;
             rebuild-index)
               echo "Rebuilding index from existing packages.tsv."
               ;;
@@ -81,7 +97,35 @@ jobs:
             --pattern "${{ inputs.pattern }}" \
             --suites  "${{ inputs.suites }}"
 
+      - name: '[freeze-package] Add to freeze.list'
+        if: inputs.action == 'freeze-package'
+        run: |
+          SUITES="${{ inputs.suites }}"
+          [[ -z "$SUITES" ]] && SUITES="$ALL_SUITES"
+          touch index/freeze.list
+          for suite in $SUITES; do
+            grep -qxF "$suite ${{ inputs.package }}" index/freeze.list || \
+              echo "$suite ${{ inputs.package }}" >> index/freeze.list
+          done
+          sort -o index/freeze.list index/freeze.list
+          echo "Frozen: ${{ inputs.package }} in suites: $SUITES"
+
+      - name: '[unfreeze-package] Remove from freeze.list'
+        if: inputs.action == 'unfreeze-package'
+        run: |
+          SUITES="${{ inputs.suites }}"
+          PKG="${{ inputs.package }}"
+          if [[ -n "$SUITES" ]]; then
+            for suite in $SUITES; do
+              sed -i "/^${suite} ${PKG}$/d" index/freeze.list
+            done
+          else
+            sed -i "/^[^ ]* ${PKG}$/d" index/freeze.list
+          fi
+          echo "Unfrozen: ${PKG}${SUITES:+ in suites: $SUITES}"
+
       - name: Regenerate APT metadata
+        if: ${{ !contains(fromJSON('["freeze-package","unfreeze-package"]'), inputs.action) }}
         env:
           GPG_KEY_ID: ${{ steps.setup-apt.outputs.fingerprint }}
         run: |
