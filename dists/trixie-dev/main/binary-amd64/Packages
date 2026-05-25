@@ -295,3 +295,130 @@ MD5sum: 61d0b29c2dabc3881fec91e6d60023c1
 SHA1: 73ea68e0f765bb1fd8e3c8af40a05aaea503e9b6
 SHA256: 93f67104dd1d6738a010a1b7b2cdcfeb6c6b9eea8ff8ca38522017c8167407fa
 
+Package: omakasui-archive-keyring
+Version: 1.0.0
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 15
+Section: misc
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omakasui-archive-keyring
+Description: GPG signing keys for Omakasui APT repositories
+ Provides the GPG keys used to authenticate packages from the
+ Omakasui and third-party repositories used by Omari:
+ .
+  * packages.omakasui.org (omakasui-packages.gpg)
+  * core.omakasui.org    (omakasui-core.gpg)
+  * mise.en.dev/deb      (mise-archive-keyring.gpg)
+Filename: pool/omakasui-archive-keyring-1.0.0/omakasui-archive-keyring_1.0.0_debian13_all.deb
+Size: 4992
+MD5sum: a4dd2139d8d4a001364b10194290a16c
+SHA1: c0c8c37e2c7c194046ece51208271f02f16f7888
+SHA256: 00435701e60c1c3f9be7f128cb61c510330294c2333bef37cc39c638027d68c6
+
+Package: omari-base
+Version: 1.0.0
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: adduser, apt, apt-utils, base-files, bind9-dnsutils, console-setup, cpio, dbus-broker, debconf, debconf-i18n, debian-keyring, dosfstools, e2fsprogs, eject, file, iproute2, iputils-ping, less, locales, lsb-release, libpam-systemd, logrotate, lshw, lsof, kbd, kmod, man-db, mount, netbase, netcat-openbsd, nftables, omakasui-archive-keyring, passwd, procps, python3, parted, pciutils, psmisc, rsync, sudo, tzdata, udev, usbutils, wget, xz-utils
+Recommends: apparmor, bash-completion, nano, ntfs-3g, openssh-client, plymouth, rsyslog
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Base system for Omari
+Filename: pool/omari-meta-1.0.0/omari-base_1.0.0_debian13_all.deb
+Size: 1400
+MD5sum: b9b1ca0b37ab05a15c27a9cfdac805a6
+SHA1: 4ffefb02a77b826a47d957d28c60ed705f1e4b44
+SHA256: 6da953c83a22f596930ce89329714954ead22f225d68b2b5abfdce4140d6b1ca
+
+Package: omari-desktop-niri
+Version: 1.0.0
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: omari-base (= 1.0.0), omari-settings (= 1.0.0), acpi, acpid, alacritty, alsa-utils, avahi-daemon, bat, bluetui, bluez, brightnessctl, btop, build-essential, chromium, cliphist, cmake, containerd.io, cups, cups-filters, curl, docker-buildx-plugin, docker-compose-plugin, docker-ce, docker-ce-cli, elephant-all, eza, fastfetch, fd-find, ffmpeg, ffmpegthumbnailer, firefox, flatpak, font-cascadia-mono-nf, fontconfig, fonts-font-awesome, fonts-noto, fonts-noto-cjk, fonts-noto-cjk-extra, fonts-noto-color-emoji, fonts-noto-extra, fzf, gnome-calculator, gnome-keyring, gnome-sushi, gnome-themes-extra, gnupg, gpg, greetd, grim, gvfs, gvfs-backends, imagemagick, impala, initramfs-tools, imv, iwd, jq, lazydocker, lazygit, libgbm1, libegl-mesa0, libegl1, libglx-mesa0, libgtk4-layer-shell-0, libnotify-bin, libnotify-dev, libreoffice, libusb-0.1-4, localsend, lsb-release, mako-notifier, mate-polkit, mesa-va-drivers, mesa-vdpau-drivers, mesa-vulkan-drivers, mise, mpv, mupdf, mupdf-tools, nautilus, network-manager, ninja-build, niri, omari-nvim, pamixer, pipewire, pipewire-alsa, pipewire-audio, pipewire-pulse, pkg-config, playerctl, plocate, plymouth, plymouth-themes, polkitd, power-profiles-daemon, printer-driver-cups-pdf, python3-terminaltexteffects, qt6-svg-plugins, qt6-wayland, rfkill, ripgrep, slurp, starship, swaybg, swayidle, swaylock, swayosd, system-config-printer, systemd-resolved, tar, tracker-miner-fs, tuigreet, ufw, ufw-docker, unzip, uwsm, walker, waybar, wget, wf-recorder, wiremix, wireplumber, wl-clip-persist, wl-clipboard, wooz, wtype, xdg-desktop-portal, xdg-desktop-portal-gnome, xdg-desktop-portal-gtk, xdg-terminal-exec, xdg-user-dirs, xwayland, xwayland-satellite, yaru-theme-gtk, yaru-theme-icon, zoxide
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Niri desktop environment for Omari
+Filename: pool/omari-meta-1.0.0/omari-desktop-niri_1.0.0_debian13_all.deb
+Size: 1932
+MD5sum: 0d55326f42b2c9341779ad6d9f5498af
+SHA1: ebca2973e884f07d6d609faaa8ad7e5d62972cfe
+SHA256: 6dd0e669a96e9276654c11ba9f44d2702aa9ae6f58d5a411d4147e10ef8e6c4e
+
+Package: omari-drivers
+Version: 1.0.0
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: bluez-firmware, firmware-atheros, firmware-intel-sound, firmware-iwlwifi, firmware-linux, firmware-realtek
+Recommends: fwupd, fwupd-signed
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Non-free firmware and drivers for Omari
+Filename: pool/omari-meta-1.0.0/omari-drivers_1.0.0_debian13_all.deb
+Size: 1168
+MD5sum: 81e9ba46e20df639465307e6b4a9b744
+SHA1: 234497dbf23c0f6354956fe6caea82e893c05b4e
+SHA256: be62e072611f1b7752bea14ba6bc7302d08950794c211e15a3a39879b2df3e69
+
+Package: omari-live
+Version: 1.0.0
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: calamares-settings-omari, live-boot, live-config, live-config-systemd, live-tools
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Live environment components for Omari installer ISO
+Filename: pool/omari-meta-1.0.0/omari-live_1.0.0_debian13_all.deb
+Size: 1148
+MD5sum: 969d3c201ae5c8d29fd555aff1b8b472
+SHA1: 61026f6cf316a88b8c7e4723d7b9cbe10ef4b029
+SHA256: e9be5b198d32b27326a78106501d9170be385e157238f0f0cce659a8394f2004
+
+Package: calamares-settings-omari
+Version: 1.0.0
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 217
+Depends: calamares
+Section: misc
+Priority: optional
+Homepage: https://codeberg.org/omakasui/calamares-settings-omari
+Description: Calamares installer configuration for Omari
+ Provides the branding, module configuration, and install sequence
+ for the Omari Calamares installer.
+Filename: pool/calamares-settings-omari-1.0.0/calamares-settings-omari_1.0.0_debian13_all.deb
+Size: 158956
+MD5sum: 58b2aac4cb2d2e369de5fd6cad3a9d2a
+SHA1: 6495569914aa5f2fff11d38c871b9ea92c60a752
+SHA256: f17e84ef37ff748ad727d27d4bb0a6763381988cf28a44e7c1d84ab96ad0ca98
+
+Package: omari-settings
+Version: 1.0.0
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 66343
+Section: misc
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-settings
+Description: Default configuration and scripts for Omari
+ Provides the default dotfiles (placed in /etc/skel) and the
+ omari management scripts placed in /usr/share/omari/bin.
+ Symlinks for all omari-* scripts are created in /usr/local/bin.
+Filename: pool/omari-settings-1.0.0/omari-settings_1.0.0_debian13_all.deb
+Size: 66156396
+MD5sum: 206a2ec29388d34a770b9d6bb35b56aa
+SHA1: 76a9f4109f8c72f97f118570ee511d489f2540be
+SHA256: 4929724d69ecfc09775a4a955c77eea0fd5a14bb708b906e0de463d9e55d108a
+
