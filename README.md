@@ -10,6 +10,8 @@ Metadata (`dists/`) and the package index (`index/packages.tsv`) live in this re
 |---|---|---|
 | `noble` | Ubuntu 24.04 | `amd64`, `arm64` |
 | `noble-dev` | Ubuntu 24.04 (dev channel) | `amd64`, `arm64` |
+| `resolute` | Ubuntu 26.04 | `amd64`, `arm64` |
+| `resolute-dev` | Ubuntu 26.04 (dev channel) | `amd64`, `arm64` |
 | `trixie` | Debian 13 | `amd64`, `arm64` |
 | `trixie-dev` | Debian 13 (dev channel) | `amd64`, `arm64` |
 
@@ -44,6 +46,7 @@ make check                                         # count entries per suite/arc
 make index                                         # regenerate Packages files
 make rebuild GPG_KEY_ID=<fp>                       # regenerate + re-sign
 make promote-pkg PKG=omakasui-nvim                 # promote omakasui-nvim dev → stable
+make readme                                        # sync the README packages table
 make prune-dry                                     # preview stale releases in build-apt-omakasui
 ```
 
