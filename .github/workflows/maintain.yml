@@ -34,6 +34,7 @@ on:
 env:
   ALL_SUITES: "trixie noble resolute"
   ALL_DEV_SUITES: "trixie-dev noble-dev resolute-dev"
+  ALL_ARCHES: "amd64 arm64"
 
 jobs:
   maintain:
@@ -132,7 +133,26 @@ jobs:
           bash scripts/update-index.sh --suites "$ALL_SUITES"
           bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
 
+      - name: Update README packages table
+        if: ${{ !contains(fromJSON('["freeze-package","unfreeze-package"]'), inputs.action) }}
+        run: bash scripts/update-readme.sh --suites "$ALL_SUITES" --arches "$ALL_ARCHES"
+
+      - name: Build commit message
+        id: msg
+        run: |
+          ACTION="${{ inputs.action }}"
+          PKG="${{ inputs.package }}"
+          PATTERN="${{ inputs.pattern }}"
+          case "$ACTION" in
+            remove-package)   MSG="maint: remove ${PKG} [$(date '+%Y-%m-%d')]" ;;
+            clean-pool)       MSG="maint: clean ${PATTERN} [$(date '+%Y-%m-%d')]" ;;
+            freeze-package)   MSG="maint: freeze ${PKG} [$(date '+%Y-%m-%d')]" ;;
+            unfreeze-package) MSG="maint: unfreeze ${PKG} [$(date '+%Y-%m-%d')]" ;;
+            *)                MSG="maint: rebuild index [$(date '+%Y-%m-%d')]" ;;
+          esac
+          echo "value=${MSG}" >> "$GITHUB_OUTPUT"
+
       - name: Commit and push
         uses: ./.github/actions/commit-and-push
         with:
-          message: "apt: maintain [${{ inputs.action }}] [$(date '+%Y-%m-%d')]"
+          message: ${{ steps.msg.outputs.value }}

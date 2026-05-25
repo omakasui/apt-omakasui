@@ -78,7 +78,27 @@ jobs:
           bash scripts/update-index.sh --suites "$ALL_SUITES"
           bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
 
+      - name: Build commit message
+        id: msg
+        run: |
+          if [[ "${{ inputs.action }}" == "promote-all" ]]; then
+            if [[ -n "${{ inputs.exclude }}" ]]; then
+              MSG="apt: promote all to stable (excl: ${{ inputs.exclude }}) [$(date '+%Y-%m-%d')]"
+            else
+              MSG="apt: promote all dev packages to stable [$(date '+%Y-%m-%d')]"
+            fi
+          else
+            PKG="${{ inputs.package }}"
+            VERSION="${{ inputs.version }}"
+            if [[ -n "$VERSION" ]]; then
+              MSG="apt: promote ${PKG} ${VERSION} to stable [$(date '+%Y-%m-%d')]"
+            else
+              MSG="apt: promote ${PKG} to stable [$(date '+%Y-%m-%d')]"
+            fi
+          fi
+          echo "value=${MSG}" >> "$GITHUB_OUTPUT"
+
       - name: Commit and push
         uses: ./.github/actions/commit-and-push
         with:
-          message: "apt: promote to stable [$(date '+%Y-%m-%d')]"
+          message: ${{ steps.msg.outputs.value }}

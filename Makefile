@@ -6,6 +6,7 @@ VERSION  ?=
 SUITES   ?= noble trixie resolute
 ALL_SUITES     := noble trixie resolute
 ALL_DEV_SUITES := noble-dev trixie-dev resolute-dev
+ALL_ARCHES     := amd64 arm64
 SCRIPTS  := scripts
 
 _require_pkg     = $(if $(PKG),,$(error PKG is required. Example: make $@ PKG=fzf))
@@ -29,6 +30,10 @@ sign: ## Re-sign Release files for all suites (GPG_KEY_ID= required)
 
 .PHONY: rebuild
 rebuild: index sign ## Regenerate and sign all metadata (GPG_KEY_ID= required)
+
+.PHONY: readme
+readme: ## Sync the README packages table with index/packages.tsv
+	@bash $(SCRIPTS)/update-readme.sh --suites "$(ALL_SUITES)" --arches "$(ALL_ARCHES)"
 
 .PHONY: register
 register: ## Register a package in stable (PKG= VERSION= SUITES= required)
