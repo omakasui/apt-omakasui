@@ -409,6 +409,7 @@ Version: 1.0.0
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 66345
+Replaces: bash
 Section: misc
 Priority: optional
 Homepage: https://codeberg.org/omakasui/omari-settings
@@ -417,8 +418,8 @@ Description: Default configuration and scripts for Omari
  omari management scripts placed in /usr/share/omari/bin.
  Symlinks for all omari-* scripts are created in /usr/local/bin.
 Filename: pool/omari-settings-1.0.0/omari-settings_1.0.0_debian13_all.deb
-Size: 66156512
-MD5sum: 96d9a670f2390f62bce5b34b130b52f6
-SHA1: d2e7a782866288bdf46bdd1e41df24b6b06100ae
-SHA256: 328de5dc4d0a5f65c3d8ac45c13a6cda80ba37339609f6e6f470e3a21ef5a123
+Size: 66156516
+MD5sum: 85ccacdcfbfd4da1589a176d4fa2d07f
+SHA1: 6d921caabcfd4e7fbabaf93a8bec5fc043dd89ad
+SHA256: 267a310822ed9046feb9ef51ba467868143efc82c0ac703ea9cdac352d8123a3
 
