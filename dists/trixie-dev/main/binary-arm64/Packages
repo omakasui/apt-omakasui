@@ -408,7 +408,7 @@ Package: omari-settings
 Version: 1.0.0
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 66344
+Installed-Size: 66348
 Replaces: bash, nvim
 Section: misc
 Priority: optional
@@ -418,8 +418,8 @@ Description: Default configuration and scripts for Omari
  omari management scripts placed in /usr/share/omari/bin.
  Symlinks for all omari-* scripts are created in /usr/local/bin.
 Filename: pool/omari-settings-1.0.0/omari-settings_1.0.0_debian13_all.deb
-Size: 66156476
-MD5sum: 5c32a11f5c7c7b7ba769cadf0b024e44
-SHA1: 9ffa86f58399c6867d63305d4d6f707425ecaf15
-SHA256: eb352cc243c0a83dfd1713da1ca9d527affde2048cc7b491ce5ef1d1379dfc9f
+Size: 66156604
+MD5sum: de3a8c94b860e77d6a68305391129955
+SHA1: 69fb5273e7fc406815fd457b28914b2cba28c2f7
+SHA256: d4f780bcc0abcf3604ab237a2bc57d71b0c28252d462dbf247a67c571804d2e7
 
