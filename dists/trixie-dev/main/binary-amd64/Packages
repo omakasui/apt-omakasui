@@ -335,6 +335,24 @@ MD5sum: de3a8c94b860e77d6a68305391129955
 SHA1: 69fb5273e7fc406815fd457b28914b2cba28c2f7
 SHA256: d4f780bcc0abcf3604ab237a2bc57d71b0c28252d462dbf247a67c571804d2e7
 
+Package: calamares-settings-omari
+Version: 1.0.0
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 216
+Depends: calamares
+Section: misc
+Priority: optional
+Homepage: https://codeberg.org/omakasui/calamares-settings-omari
+Description: Calamares installer configuration for Omari
+ Provides the branding, module configuration, and install sequence
+ for the Omari Calamares installer.
+Filename: pool/calamares-settings-omari-1.0.0/calamares-settings-omari_1.0.0_debian13_all.deb
+Size: 158756
+MD5sum: f1c55a8eb34f261523a75596d15aed9c
+SHA1: 875e51aa03b0ba7d4c7454e11871f75781f9504c
+SHA256: e6dc47fa1b016063a60ac3459b324af6a7e0c2b5cf4793004e64c532221d63af
+
 Package: omari-base
 Version: 1.0.0
 Architecture: all
@@ -404,22 +422,4 @@ Size: 1148
 MD5sum: 969d3c201ae5c8d29fd555aff1b8b472
 SHA1: 61026f6cf316a88b8c7e4723d7b9cbe10ef4b029
 SHA256: e9be5b198d32b27326a78106501d9170be385e157238f0f0cce659a8394f2004
-
-Package: calamares-settings-omari
-Version: 1.0.0
-Architecture: all
-Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 216
-Depends: calamares
-Section: misc
-Priority: optional
-Homepage: https://codeberg.org/omakasui/calamares-settings-omari
-Description: Calamares installer configuration for Omari
- Provides the branding, module configuration, and install sequence
- for the Omari Calamares installer.
-Filename: pool/calamares-settings-omari-1.0.0/calamares-settings-omari_1.0.0_debian13_all.deb
-Size: 158756
-MD5sum: f1c55a8eb34f261523a75596d15aed9c
-SHA1: 875e51aa03b0ba7d4c7454e11871f75781f9504c
-SHA256: e6dc47fa1b016063a60ac3459b324af6a7e0c2b5cf4793004e64c532221d63af
 
