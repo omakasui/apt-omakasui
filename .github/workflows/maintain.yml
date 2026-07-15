@@ -98,6 +98,10 @@ jobs:
             --pattern "${{ inputs.pattern }}" \
             --suites  "${{ inputs.suites }}"
 
+      - name: '[rebuild-index] no-op'
+        if: inputs.action == 'rebuild-index'
+        run: echo "Rebuilding index from existing index/packages.tsv."
+
       - name: '[freeze-package] Add to freeze.list'
         if: inputs.action == 'freeze-package'
         run: |
@@ -130,11 +134,11 @@ jobs:
         env:
           GPG_KEY_ID: ${{ steps.setup-apt.outputs.fingerprint }}
         run: |
+          touch index/packages.tsv
           bash scripts/update-index.sh --suites "$ALL_SUITES"
           bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
 
       - name: Update README packages table
-        if: ${{ !contains(fromJSON('["freeze-package","unfreeze-package"]'), inputs.action) }}
         run: bash scripts/update-readme.sh --suites "$ALL_SUITES" --arches "$ALL_ARCHES"
 
       - name: Build commit message
@@ -144,11 +148,11 @@ jobs:
           PKG="${{ inputs.package }}"
           PATTERN="${{ inputs.pattern }}"
           case "$ACTION" in
-            remove-package)   MSG="maint: remove ${PKG} [$(date '+%Y-%m-%d')]" ;;
-            clean-pool)       MSG="maint: clean ${PATTERN} [$(date '+%Y-%m-%d')]" ;;
+            remove-package) MSG="maint: remove ${PKG} [$(date '+%Y-%m-%d')]" ;;
+            clean-pool)     MSG="maint: clean ${PATTERN} [$(date '+%Y-%m-%d')]" ;;
             freeze-package)   MSG="maint: freeze ${PKG} [$(date '+%Y-%m-%d')]" ;;
             unfreeze-package) MSG="maint: unfreeze ${PKG} [$(date '+%Y-%m-%d')]" ;;
-            *)                MSG="maint: rebuild index [$(date '+%Y-%m-%d')]" ;;
+            *)              MSG="maint: rebuild index [$(date '+%Y-%m-%d')]" ;;
           esac
           echo "value=${MSG}" >> "$GITHUB_OUTPUT"
 

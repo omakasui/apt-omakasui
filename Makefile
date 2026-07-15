@@ -1,12 +1,13 @@
 SHELL   := /bin/bash
 .DEFAULT_GOAL := help
 
-PKG      ?=
-VERSION  ?=
-SUITES   ?= noble trixie resolute
+PKG          ?=
+VERSION      ?=
+SUITES       ?= noble trixie resolute
+GPG_KEY_URL  ?= https://github.com/omakasui/keyrings/raw/refs/heads/main/omakasui-core.gpg.key
+GPG_KEY_ID   ?=
 ALL_SUITES     := noble trixie resolute
 ALL_DEV_SUITES := noble-dev trixie-dev resolute-dev
-ALL_ARCHES     := amd64 arm64
 SCRIPTS  := scripts
 
 _require_pkg     = $(if $(PKG),,$(error PKG is required. Example: make $@ PKG=fzf))
@@ -22,18 +23,19 @@ index: ## Regenerate Packages files from packages.tsv
 	@bash $(SCRIPTS)/update-index.sh --suites "$(ALL_SUITES)"
 
 .PHONY: sign
-sign: ## Re-sign Release files for all suites (GPG_KEY_ID= required)
-	$(if $(GPG_KEY_ID),,$(error GPG_KEY_ID is required. Example: make $@ GPG_KEY_ID=<fingerprint>))
+sign: ## Re-sign Release files for all suites (GPG_KEY_ID= or GPG_KEY_URL= optional)
 	@bash $(SCRIPTS)/sign-release.sh \
 		--suites "$(ALL_SUITES) $(ALL_DEV_SUITES)" \
-		--key-id "$(GPG_KEY_ID)"
+		$(if $(GPG_KEY_ID),--key-id "$(GPG_KEY_ID)",--key-url "$(GPG_KEY_URL)")
 
 .PHONY: rebuild
-rebuild: index sign ## Regenerate and sign all metadata (GPG_KEY_ID= required)
+rebuild: index sign ## Regenerate and sign all metadata
 
 .PHONY: readme
-readme: ## Sync the README packages table with index/packages.tsv
-	@bash $(SCRIPTS)/update-readme.sh --suites "$(ALL_SUITES)" --arches "$(ALL_ARCHES)"
+readme: ## Sync README packages table with index/packages.tsv
+	@bash $(SCRIPTS)/update-readme.sh \
+		--suites "$(ALL_SUITES)" \
+		--arches "amd64 arm64"
 
 .PHONY: register
 register: ## Register a package in stable (PKG= VERSION= SUITES= required)
@@ -113,6 +115,14 @@ list-dev: ## List packages not yet promoted to stable
 	@awk '(NF>=11 && $$11=="dev") {print $$3, $$4, $$1, $$2}' index/packages.tsv \
 		| sort -u \
 		| column -t
+
+.PHONY: validate
+validate: ## Validate index/packages.tsv integrity (field count, duplicates)
+	@awk 'NF != 11 { printf "Line %d: wrong field count (%d)\n", NR, NF; err=1 } \
+	     END { if (!err) print "packages.tsv OK: " NR " entr" (NR==1?"y":"ies") }' \
+	  index/packages.tsv
+	@awk 'seen[$$1" "$$2" "$$3" "$$11]++ { printf "Duplicate: %s %s %s (%s)\n", $$1, $$2, $$3, $$11 }' \
+	  index/packages.tsv | sort -u || true
 
 .PHONY: preview-promote
 preview-promote: ## Preview what next promote-all will add vs update in stable

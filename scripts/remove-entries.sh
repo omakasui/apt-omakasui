@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-# remove-entries.sh — Remove rows from index/packages.tsv by exact name
-# or glob pattern, optionally filtered by suite.
-#
-# Usage:
-#   remove-entries.sh --package <name> [--suites "<suite1> <suite2>"]
-#   remove-entries.sh --pattern <glob> [--suites "<suite1> <suite2>"]
+# remove-entries.sh — Remove rows from index/packages.tsv by exact name or glob pattern.
+# Usage: remove-entries.sh --package <name> [--suites "<s1> <s2>"]
+#        remove-entries.sh --pattern <glob> [--suites "<s1> <s2>"]
 
 set -euo pipefail
 
@@ -33,11 +30,11 @@ done
 BEFORE=$(wc -l < index/packages.tsv)
 
 if [[ -n "$PACKAGE" ]]; then
-  # Match the name field exactly (field 3, surrounded by spaces).
+  # Match field 3 exactly by surrounding the name with spaces.
   if [[ -n "$SUITES" ]]; then
     cp index/packages.tsv /tmp/packages.tmp
     for suite in $SUITES; do
-      # Keep lines from other suites untouched, remove only matching suite+name.
+      # Preserve other suites; remove only the matching suite+name.
       grep -vF "^${suite} " /tmp/packages.tmp > /tmp/packages.other || true
       grep -F "^${suite} " /tmp/packages.tmp | grep -vF " ${PACKAGE} " \
         >> /tmp/packages.other || true
@@ -49,12 +46,12 @@ if [[ -n "$PACKAGE" ]]; then
     mv /tmp/packages.tmp index/packages.tsv
   fi
 else
-  # Convert glob to extended regex: * -> .*
+  # Convert glob to extended regex.
   REGEX=" $(echo "$PATTERN" | sed 's/\*/.*/g') "
   if [[ -n "$SUITES" ]]; then
     cp index/packages.tsv /tmp/packages.tmp
     for suite in $SUITES; do
-      # Keep lines from other suites, filter matching suite lines by pattern.
+      # Preserve other suites; filter matching suite lines by pattern.
       grep -vF "^${suite} " /tmp/packages.tmp > /tmp/packages.other || true
       grep -F "^${suite} " /tmp/packages.tmp | grep -vE "${REGEX}" \
         >> /tmp/packages.other || true

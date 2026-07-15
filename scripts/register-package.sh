@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
-# register-package.sh — Download .deb files from a build-apt-packages release,
-# compute hashes, and update index/packages.tsv.
-#
-# Usage:
-#   register-package.sh --pkg <key> --version <ver> --suites "<suite1> <suite2>" \
-#                       [--produces "<pkg1> <pkg2>"] [--repo <owner/repo>]
-#
-# Requires: gh (GitHub CLI), md5sum, sha1sum, sha256sum, GH_TOKEN in environment.
+# register-package.sh — Download .deb assets from a GitHub Release and register them in index/packages.tsv.
+# Usage: register-package.sh --pkg <key> --version <ver> --suites "<s1> <s2>" [--produces "<p1> <p2>"] [--channel stable|dev]
 
 set -euo pipefail
 
@@ -36,17 +30,15 @@ done
 
 PRODUCED_PKGS="${PRODUCES:-$PKG}"
 
-# Suite-to-distro label mapping — keep in sync with build-matrix.yml.
-declare -A DISTRO_MAP=([noble]="ubuntu2404" [trixie]="debian13" [resolute]="ubuntu2604")
-
 TAG="${PKG}-${VERSION}"
 mkdir -p index
 touch index/packages.tsv
 
 _register_entry() {
-  local suite="$1" arch="$2" name="$3" version="$4" url="$5" deb="$6"
+  local suite="$1" arch="$2" name="$3" url="$4" deb="$5"
 
-  local size md5 sha1 sha256 control_b64
+  local version size md5 sha1 sha256 control_b64
+  version=$(dpkg-deb --field "$deb" Version)
   size=$(wc -c < "$deb")
   md5=$(md5sum       "$deb" | cut -d' ' -f1)
   sha1=$(sha1sum     "$deb" | cut -d' ' -f1)
@@ -54,7 +46,7 @@ _register_entry() {
 
   control_b64=$(dpkg-deb --field "$deb" | base64 -w0)
 
-  # Remove any existing entry for this suite/arch/name/channel, then append the new one.
+  # Replace any existing entry for this suite/arch/name/channel, then append the new one.
   awk -v s="$suite" -v a="$arch" -v n="$name" -v c="$CHANNEL" \
     '{ chan=(NF>=11)?$11:"stable"; if ($1==s && $2==a && $3==n && chan==c) next; print }' \
     index/packages.tsv > /tmp/packages.tmp || true
@@ -66,11 +58,9 @@ _register_entry() {
 }
 
 for suite in $SUITES; do
-  distro="${DISTRO_MAP[$suite]:-}"
-  [[ -z "$distro" ]] && { echo "ERROR: no DISTRO_MAP entry for '${suite}'"; exit 1; }
 
   for produced in $PRODUCED_PKGS; do
-    # Guard: skip if this suite+package is listed in index/freeze.list.
+    # Skip frozen suite+package combinations.
     if grep -qxF "${suite} ${produced}" index/freeze.list 2>/dev/null; then
       echo "SKIP: ${suite}/${produced} is frozen — edit index/freeze.list to release"
       continue
@@ -78,29 +68,23 @@ for suite in $SUITES; do
 
     _is_all=false
 
-    # Try arch:all first (distro-tagged filename, then plain).
-    # Each pattern gets its own tmpdir so the downloaded filename is always known.
-    for _pat in \
-        "${produced}_${VERSION}_${distro}_all.deb" \
-        "${produced}_${VERSION}_all.deb"; do
-      _tmpdir=$(mktemp -d)
-      if gh release download "$TAG" \
-           --repo "$REPO" --pattern "$_pat" --dir "$_tmpdir" 2>/dev/null; then
-        _is_all=true
-        _url="https://github.com/${REPO}/releases/download/${TAG}/${_pat}"
-        _register_entry "$suite" "all" "$produced" "$VERSION" "$_url" "$_tmpdir/$_pat"
-        rm -rf "$_tmpdir"
-        break
-      fi
-      rm -rf "$_tmpdir"
-    done
+    # Try arch:all first.
+    _pat="${produced}_${VERSION}-1+${suite}_all.deb"
+    _tmpdir=$(mktemp -d)
+    if gh release download "$TAG" \
+         --repo "$REPO" --pattern "$_pat" --dir "$_tmpdir" 2>/dev/null; then
+      _is_all=true
+      _url="https://github.com/${REPO}/releases/download/${TAG}/${_pat}"
+      _register_entry "$suite" "all" "$produced" "$_url" "$_tmpdir/$_pat"
+    fi
+    rm -rf "$_tmpdir"
     [[ "$_is_all" == "true" ]] && continue
 
-    # Fall back to arch-specific builds.
+    # Fall back to arch-specific assets.
     _arch_found=false
     for arch in amd64 arm64; do
       _tmpdir=$(mktemp -d)
-      src="${produced}_${VERSION}_${distro}_${arch}.deb"
+      src="${produced}_${VERSION}-1+${suite}_${arch}.deb"
       _url="https://github.com/${REPO}/releases/download/${TAG}/${src}"
 
       if ! gh release download "$TAG" \
@@ -111,7 +95,7 @@ for suite in $SUITES; do
       fi
 
       _deb="$_tmpdir/$src"
-      _register_entry "$suite" "$arch" "$produced" "$VERSION" "$_url" "$_deb"
+      _register_entry "$suite" "$arch" "$produced" "$_url" "$_deb"
       rm -rf "$_tmpdir"
       _arch_found=true
     done

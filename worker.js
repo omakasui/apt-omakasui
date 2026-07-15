@@ -31,7 +31,7 @@ export default {
       // Expect exactly: ['pool', '<tag>', '<filename>']
       if (parts.length === 3) {
         const [, tag, filename] = parts;
-        const target = `https://github.com/${BUILD_REPO}/releases/download/${encodeURIComponent(tag)}/${encodeURIComponent(filename)}`;
+        const target = `https://github.com/${BUILD_REPO}/releases/download/${tag}/${filename}`;
         return Response.redirect(target, 302);
       }
     }

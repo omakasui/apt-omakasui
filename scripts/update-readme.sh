@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 # update-readme.sh — Sync the ## Packages table in README.md with index/packages.tsv.
-# Adds new packages, removes deleted ones, updates changed rows, re-sorts alphabetically.
-# Suites/architectures are shown as "all" when a package covers the full set.
-#
 # Usage: update-readme.sh [--suites "suite1 suite2 ..."] [--arches "arch1 arch2 ..."]
-# Falls back to $ALL_SUITES / $ALL_ARCHES env vars, then to built-in defaults.
 
 set -euo pipefail
 

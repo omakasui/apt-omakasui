@@ -1,14 +1,7 @@
 #!/usr/bin/env bash
-# prune-releases.sh — Report (and optionally delete) GitHub Releases in
-# build-apt-packages that are no longer needed.
-#
-# A release is kept if its tag is referenced by any entry in packages.tsv
-# (stable or dev), OR if it is the most recent release for that build package.
-#
-# Usage:
-#   prune-releases.sh [--delete] [--repo <owner/repo>] [--limit <n>]
-#
-# Requires: gh (GitHub CLI) authenticated with repo write access (for --delete).
+# prune-releases.sh — Report (and optionally delete) stale GitHub Releases in build-apt-packages.
+# A release is kept if referenced in packages.tsv or is the latest for its build package.
+# Usage: prune-releases.sh [--delete] [--repo <owner/repo>] [--limit <n>]
 
 set -euo pipefail
 
@@ -31,7 +24,7 @@ done
   exit 1
 }
 
-# Active tags: all tags referenced in packages.tsv (field 5 URLs).
+# All tags currently referenced in packages.tsv.
 mapfile -t ACTIVE_TAGS < <(
   awk '{print $5}' "$TSV" \
     | grep -oP 'releases/download/\K[^/]+' \
@@ -40,7 +33,7 @@ mapfile -t ACTIVE_TAGS < <(
 
 echo "Active release tags referenced in packages.tsv: ${#ACTIVE_TAGS[@]}"
 
-# Fetch all releases newest-first (gh default), then derive a sorted copy.
+# Fetch all releases ordered newest-first, then derive a sorted copy for comm.
 mapfile -t ALL_TAGS_ORDERED < <(
   gh release list --repo "$REPO" --limit "$LIMIT" --json tagName \
     --jq '.[].tagName'
@@ -49,8 +42,7 @@ mapfile -t ALL_TAGS_SORTED < <(printf '%s\n' "${ALL_TAGS_ORDERED[@]}" | sort)
 
 echo "Total releases in ${REPO}: ${#ALL_TAGS_SORTED[@]}"
 
-# Build-package names: derived from tsv by stripping the version from the tag.
-# Tag format is <build-pkg>-<version>; version is field 4.
+# Derive build-package names from TSV URLs (tag format: <pkg>-<version>).
 declare -A BUILD_PKGS
 while IFS=' ' read -r _s _a _n version url _rest; do
   tag=$(printf '%s' "$url" | grep -oP 'releases/download/\K[^/]+' || true)
@@ -59,7 +51,7 @@ while IFS=' ' read -r _s _a _n version url _rest; do
   [[ -n "$build_pkg" ]] && BUILD_PKGS["$build_pkg"]=1
 done < "$TSV"
 
-# For each build package, protect its most recent release tag (newest-first order).
+# Protect the most recent release tag for each build package.
 declare -A LATEST_TAG
 for tag in "${ALL_TAGS_ORDERED[@]}"; do
   for build_pkg in "${!BUILD_PKGS[@]}"; do
@@ -70,7 +62,7 @@ for tag in "${ALL_TAGS_ORDERED[@]}"; do
   done
 done
 
-# Protected set: referenced in tsv + latest release per build package.
+# Protected = referenced in TSV + latest per build package.
 declare -A PROTECTED
 for tag in "${ACTIVE_TAGS[@]}";        do PROTECTED[$tag]=1; done
 for tag in "${LATEST_TAG[@]}";         do PROTECTED[$tag]=1; done

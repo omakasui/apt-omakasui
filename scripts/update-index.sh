@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
-# update-index.sh — Generate Packages/Packages.gz/Packages.xz for every suite and arch.
-#
-# Reads index/packages.tsv. The Filename field is pool-relative; a Cloudflare Worker
-# on core.omakasui.org redirects pool/ requests to GitHub Releases assets.
+# update-index.sh — Generate Packages/Packages.gz/Packages.xz for every suite.
 # Dev suites include all stable packages as a fallback, overridden by explicit dev entries.
-#
 # Usage: update-index.sh --suites "<suite1> <suite2>"
-#
-# TSV columns: suite arch name version url size md5 sha1 sha256 control_b64 [channel]
 
 set -euo pipefail
 
@@ -53,8 +47,7 @@ for suite in $SUITES; do
     : > "${stable_dir}/Packages"
     : > "${dev_dir}/Packages"
 
-    # Collect the set of package names that have an explicit dev entry for this
-    # suite+arch, so stable fallback entries are skipped for those.
+    # Collect packages with an explicit dev entry so stable fallback is skipped for them.
     declare -A _dev_pkgs=()
     while IFS=' ' read -r s a name _rest; do
       [[ "$s" != "$suite" ]] && continue
@@ -65,7 +58,6 @@ for suite in $SUITES; do
 
     while IFS=' ' read -r s a name version url size md5 sha1 sha256 control_b64 entry_channel _ignored; do
       [[ "$s" != "$suite" ]] && continue
-      # Include arch-specific entries and arch:all entries for every arch.
       [[ "$a" != "$arch" && "$a" != "all" ]] && continue
 
       _chan="${entry_channel:-stable}"
@@ -76,7 +68,7 @@ for suite in $SUITES; do
         pkg_dir="$stable_dir"
       fi
 
-      # Convert GitHub Releases URL to pool-relative path for apt.
+      # Rewrite GitHub Releases URL to pool-relative path for apt.
       if [[ "$url" == https://github.com/*/releases/download/*/* ]]; then
         _tag="${url%/*}"; _tag="${_tag##*/}"
         _file="${url##*/}"
