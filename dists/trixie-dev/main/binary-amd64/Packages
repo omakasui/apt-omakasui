@@ -33,40 +33,6 @@ MD5sum: 2c591af8f32f1c24a5ea2c4303288ea0
 SHA1: d86e37d56468fd5cddafde2cc7ebf56500a6dd6c
 SHA256: fffed6c6adf1b9b9477a857a350dc520e031bbfe1850d04412caa6ea3c2f1d82
 
-Package: omadeb-walker
-Version: 20260330.1
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 4
-Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
-Section: utils
-Priority: optional
-Homepage: https://github.com/omakasui/omakasui
-Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
- .
-Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1_debian13_all.deb
-Size: 710
-MD5sum: a391c3c55c085657e29b6a2439e9563b
-SHA1: 6a62ce39a52235a2bc2f6cadf3c2d39063ab62f4
-SHA256: 8f7a454ec340fb885f14f111ba53cff2d9d2d4ef6e341bc11ac14c842470ff3e
-
-Package: omakub-walker
-Version: 20260330.1
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 4
-Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
-Section: utils
-Priority: optional
-Homepage: https://github.com/omakasui/omakasui
-Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
- .
-Filename: pool/omakasui-walker-20260330.1/omakub-walker_20260330.1_debian13_all.deb
-Size: 710
-MD5sum: 078c76cd08981ab3bd6abcac56af72f4
-SHA1: 4b269c241d9f68bd497bf5981e4eadaf369ccff3
-SHA256: fef8871cde4c2dfaaa571db0a36851efe471781851b5c0de4707d907169b206f
-
 Package: omari-walker
 Version: 20260330.1
 Architecture: all
@@ -102,42 +68,6 @@ MD5sum: 3c3fa3662a772f17bca078bea94de0e4
 SHA1: e6c88292a9e27a1ab83cde6fc1d00b67d0ff1fc7
 SHA256: 70ec435eb61777c678f958895abc1caf084943d637923a447005bcabd29eb0e6
 
-Package: omakub-zellij
-Version: 20260408.1
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration for omakub
- Installs omakub-based zellij config and a setup script.
- Run omakub-setup-zellij to activate for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omakub-zellij_20260408.1_debian13_all.deb
-Size: 3680
-MD5sum: b4c92156e307d04dc87f9c4f377d3138
-SHA1: 3763b28dd2ba1d763b0373eb2e9afe84e384e8cb
-SHA256: f450521d1f86646261a860fddb1fa84a5e0e86bb88926331ea535a76e1c6672a
-
-Package: omadeb-zellij
-Version: 20260408.1
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration for omadeb
- Installs omakub-based zellij config and a setup script.
- Run omadeb-setup-zellij to activate for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omadeb-zellij_20260408.1_debian13_all.deb
-Size: 3688
-MD5sum: 0813b96c2aae5e41492fe5ece6b46440
-SHA1: 7871800b9d68ff15de21c40a137322330aaf039e
-SHA256: 5d15f68a065edf303089bcf415e056a654c89901bcd35fe35705391fb6f81145
-
 Package: omari-zellij
 Version: 20260408.1
 Architecture: all
@@ -155,42 +85,6 @@ Size: 3684
 MD5sum: 88bbbb1d297ce5018973e2525af16c1d
 SHA1: e9cdf39b09df2364a202600aac735550a93dfbf6
 SHA256: 7f0350405a3b02204c1a7395fd4df9bb9677ea6d9880a38b822c2ea6a200a87c
-
-Package: omakub-nvim
-Version: 20260327.2
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 137832
-Depends: nvim, git, gum
-Section: editors
-Priority: optional
-Homepage: https://github.com/LazyVim/LazyVim
-Description: Pre-built LazyVim configuration for omakub
- Installs pre-cached config and plugins to /usr/share/omakub-nvim.
- Run omakub-setup-nvim to activate for the current user.
-Filename: pool/omakasui-nvim-20260327.2/omakub-nvim_20260327.2_debian13_all.deb
-Size: 65005296
-MD5sum: 2fc92e672f04ec62eb1ea4f5234a465f
-SHA1: 4e819e3021c8c50991a4d680362d56cca7c22579
-SHA256: 50b4e6bd47d3a64a5b3c220e0ece25d523f318ef4dec29af2d7a6c5515134897
-
-Package: omadeb-nvim
-Version: 20260327.2
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 137832
-Depends: nvim, git, gum
-Section: editors
-Priority: optional
-Homepage: https://github.com/LazyVim/LazyVim
-Description: Pre-built LazyVim configuration for omadeb
- Installs pre-cached config and plugins to /usr/share/omadeb-nvim.
- Run omadeb-setup-nvim to activate for the current user.
-Filename: pool/omakasui-nvim-20260327.2/omadeb-nvim_20260327.2_debian13_all.deb
-Size: 64999320
-MD5sum: 164e6dc8d4c01886e79d70d2320ee326
-SHA1: e00bd1b7e560fdff2bb6b2017fee33208d57a6cf
-SHA256: b277ed41df1c71c093ff335191ff092734f7778c7c0b0b0e1bc4852d780184ac
 
 Package: omari-nvim
 Version: 20260327.2
@@ -210,11 +104,117 @@ MD5sum: 61d0b29c2dabc3881fec91e6d60023c1
 SHA1: 73ea68e0f765bb1fd8e3c8af40a05aaea503e9b6
 SHA256: 93f67104dd1d6738a010a1b7b2cdcfeb6c6b9eea8ff8ca38522017c8167407fa
 
+Package: omakub-nvim
+Version: 20260327.2-1+trixie
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 138336
+Depends: nvim, git, gum
+Section: editors
+Priority: optional
+Homepage: https://github.com/LazyVim/LazyVim
+Description: Pre-built LazyVim configuration (omakub-nvim)
+ Installs pre-cached config and plugins to /usr/share/omakub-nvim.
+ Run the bundled *-setup-nvim script to activate it for the current user.
+Filename: pool/omakasui-nvim-20260327.2/omakub-nvim_20260327.2-1+trixie_all.deb
+Size: 65720790
+MD5sum: 8578869c8b1378ef308f2fc13481a04e
+SHA1: 06f44d00a457ad8c4809b3fbf0c068c2054826da
+SHA256: 6f2c36cba00fbe8d7acb4404a86b8be0b63ce4bad9915fab2965733dac4c3e66
+
+Package: omadeb-nvim
+Version: 20260327.2-1+trixie
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 138336
+Depends: nvim, git, gum
+Section: editors
+Priority: optional
+Homepage: https://github.com/LazyVim/LazyVim
+Description: Pre-built LazyVim configuration (omadeb-nvim)
+ Installs pre-cached config and plugins to /usr/share/omadeb-nvim.
+ Run the bundled *-setup-nvim script to activate it for the current user.
+Filename: pool/omakasui-nvim-20260327.2/omadeb-nvim_20260327.2-1+trixie_all.deb
+Size: 65720300
+MD5sum: 5c99b7737867fb6bccef7f08a6eebfd8
+SHA1: ee7d0dbeb6b583edb5295a9a0f32d8816c7ba0fb
+SHA256: 77bbaa7f0179d3becdf95afa99044b57e0bb95b6532ce22fcd9d639516fd6e23
+
+Package: omadeb-walker
+Version: 20260330.1-1+trixie
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers.
+ Installs walker, elephant, and all elephant provider packages in one shot.
+Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1-1+trixie_all.deb
+Size: 1794
+MD5sum: bb5093709bff6664226463d4b1577800
+SHA1: 7ed4034cc3aec3cde089cf4accc1255671131e48
+SHA256: 78e4bd3f00c2101b74ad2e96b603acf72c3676cbd99bae4fcc74f337a903e780
+
+Package: omakub-walker
+Version: 20260330.1-1+trixie
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers.
+ Installs walker, elephant, and all elephant provider packages in one shot.
+Filename: pool/omakasui-walker-20260330.1/omakub-walker_20260330.1-1+trixie_all.deb
+Size: 1796
+MD5sum: 0b0c9f5b7f7f44ed83382ce17e051802
+SHA1: 053f1bf32ba54899fe270e2cb9a16b99066e8ec9
+SHA256: 049519674644a9bf544422f965228ab13b4d3ed964fe1eb5e2255ef76298d685
+
+Package: omakub-zellij
+Version: 20260408.1-1+trixie
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 40
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Homepage: https://zellij.dev
+Description: Zellij configuration (omakub-zellij)
+ Installs omakub-based zellij config and a setup script.
+ Run the bundled *-setup-zellij script to activate it for the current user.
+Filename: pool/omakasui-zellij-20260408.1/omakub-zellij_20260408.1-1+trixie_all.deb
+Size: 4564
+MD5sum: 4b7ef34def8c35e4c2370d46c521bfe8
+SHA1: c5d93c0c67cdabfbfa1e8b3e992d3f74066ed4b2
+SHA256: 35b81a3cb205c1a365a65c019abc70a9d1086df0dd85029f208894fdd4e388e5
+
+Package: omadeb-zellij
+Version: 20260408.1-1+trixie
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 40
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Homepage: https://zellij.dev
+Description: Zellij configuration (omadeb-zellij)
+ Installs omakub-based zellij config and a setup script.
+ Run the bundled *-setup-zellij script to activate it for the current user.
+Filename: pool/omakasui-zellij-20260408.1/omadeb-zellij_20260408.1-1+trixie_all.deb
+Size: 4584
+MD5sum: 17524f6c99f416d3a6dbac8c703d1f88
+SHA1: b7612152bd93b1036ca61d29d255283ca7a1e13b
+SHA256: 6abe0e7c4ebc91b9d2b704b8f5bbb991480e6cd1034dafaa55099b9be597f4a3
+
 Package: omakasui-archive-keyring
 Version: 1.0.0
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 15
+Installed-Size: 12
 Section: misc
 Priority: optional
 Homepage: https://codeberg.org/omakasui/omakasui-archive-keyring
@@ -224,12 +224,36 @@ Description: GPG signing keys for Omakasui APT repositories
  .
   * packages.omakasui.org (omakasui-packages.gpg)
   * core.omakasui.org    (omakasui-core.gpg)
-  * mise.en.dev/deb      (mise-archive-keyring.gpg)
-Filename: pool/omakasui-archive-keyring-1.0.0/omakasui-archive-keyring_1.0.0_debian13_all.deb
-Size: 4992
-MD5sum: a4dd2139d8d4a001364b10194290a16c
-SHA1: c0c8c37e2c7c194046ece51208271f02f16f7888
-SHA256: 00435701e60c1c3f9be7f128cb61c510330294c2333bef37cc39c638027d68c6
+Filename: pool/omakasui-archive-keyring-1.0.0/omakasui-archive-keyring_1.0.0-1+trixie_all.deb
+Size: 2664
+MD5sum: 0ac6ee9b5efe1329fd0d032b3aaceed8
+SHA1: ce2fdeae98265a7c83ad64e2262d2a15822dad91
+SHA256: 81b6f28719018926a3ed6d5212929ddde21397c080a90b65653c922502d58e30
+
+Package: omari-base-files
+Version: 1:1.0.0
+Architecture: all
+Source: base-files
+Essential: yes
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 351
+Pre-Depends: awk
+Breaks: debian-security-support (<< 2019.04.25), initscripts (<< 2.88dsf-13.3), sendfile (<< 2.1b.20080616-5.2~)
+Replaces: base, dpkg (<= 1.15.0), miscutils
+Provides: base, usr-is-merged
+Section: admin
+Priority: required
+Multi-Arch: foreign
+Description: Debian base system miscellaneous files
+ This package contains the basic filesystem hierarchy of a Debian system, and
+ several important miscellaneous files, such as /etc/debian_version,
+ /etc/host.conf, /etc/issue, /etc/motd, /etc/profile, and others,
+ and the text of several common licenses in use on Debian systems.
+Filename: pool/omari-base-files-1.0.0-testing1/omari-base-files_1.0.0-testing1-1+trixie_all.deb
+Size: 73404
+MD5sum: 014cbda285347309b2c5b862dbe3da43
+SHA1: 2af6ba7807301b5d33eaf2846160978136bba5e5
+SHA256: 69814f55fa7f2e694454c4a13c0a481bf3d70f5a79095f062f1458164fcd7f90
 
 Package: omari-base
 Version: 1.0.0-testing1
@@ -237,17 +261,17 @@ Architecture: all
 Source: omari-meta
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 7
-Depends: adduser, apt, apt-utils, base-files, bind9-dnsutils, console-setup, cpio, dbus-broker, debconf, debconf-i18n, debian-keyring, dosfstools, e2fsprogs, eject, file, iproute2, iputils-ping, less, locales, lsb-release, libpam-systemd, logrotate, lshw, lsof, kbd, kmod, man-db, mount, netbase, netcat-openbsd, nftables, omakasui-archive-keyring, passwd, procps, python3, parted, pciutils, psmisc, rsync, sudo, tzdata, udev, usbutils, wget, xz-utils
-Recommends: apparmor, bash-completion, nano, ntfs-3g, openssh-client, plymouth, rsyslog
+Depends: adduser, apt, apt-utils, base-files, bind9-dnsutils, console-setup, cpio, cron, dbus-broker, debconf, debconf-i18n, debian-keyring, dmidecode, dosfstools, e2fsprogs, eject, ed, file, hdparm, init, iproute2, iputils-ping, less, locales, lsb-release, libpam-systemd, logrotate, lshw, lsof, kbd, kmod, mawk, man-db, media-types, mount, netbase, netcat-openbsd, nftables, passwd, procps, python3, parted, pciutils, psmisc, ripgrep, rsync, sensible-utils, strace, sudo, time, tzdata, udev, usbutils, vim-tiny, wget, whiptail, xz-utils
+Recommends: apparmor, bash-completion, command-not-found, nano, manpages, ntfs-3g, openssh-client, plymouth, sudo-rs, tcpdump, rsyslog, uuid-runtime
 Section: metapackages
 Priority: optional
 Homepage: https://codeberg.org/omakasui/omari-meta
 Description: Base system for Omari
-Filename: pool/omari-meta-1.0.0-testing1/omari-base_1.0.0-testing1_debian13_all.deb
-Size: 1472
-MD5sum: eb2d6c1d0c18f9aae7c2de567ebe906d
-SHA1: 3841ab2607ae8da8da31c2d9a22154b8e2ab7fe4
-SHA256: 1a69bbbd9205648196defcda1f7505d41750321ec7a0bd50a007efda515821ae
+Filename: pool/omari-meta-1.0.0-testing1/omari-base_1.0.0-testing1-1+trixie_all.deb
+Size: 1564
+MD5sum: b5cc70bfa13db47f36d5e15061ff44dd
+SHA1: 5bd8bf347d78104b7ab3be20bc4f364d997999cd
+SHA256: f2499a8310422fc9a6b9b6d80cdc2b7bd242cd3e7793d3a9a652b7c84b08f731
 
 Package: omari-desktop-niri
 Version: 1.0.0-testing1
@@ -255,16 +279,17 @@ Architecture: all
 Source: omari-meta
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 7
-Depends: omari-base (= 1.0.0-testing1), omari-settings (= 1.0.0-testing1), acpi, acpid, alacritty, alsa-utils, avahi-daemon, bat, bluetui, bluez, brightnessctl, btop, chromium, cliphist, cups, cups-filters, curl, elephant-all, eza, flameshot, fastfetch, fd-find, ffmpeg, ffmpegthumbnailer, firefox, flatpak, font-cascadia-mono-nf, fontconfig, fonts-font-awesome, fonts-noto, fonts-noto-cjk, fonts-noto-cjk-extra, fonts-noto-color-emoji, fonts-noto-extra, fzf, gnome-calculator, gnome-keyring, gnome-sushi, gnome-themes-extra, gnupg, gpg, grim, gvfs, gvfs-backends, imagemagick, impala, initramfs-tools, imv, iwd, jq, lazydocker, lazygit, libgbm1, libegl-mesa0, libegl1, libglx-mesa0, libgtk4-layer-shell-0, libnotify-bin, libusb-0.1-4, localsend, mako-notifier, mate-polkit, mesa-va-drivers, mesa-vdpau-drivers, mesa-vulkan-drivers, mise, mpv, mupdf, mupdf-tools, nautilus, network-manager, niri, omari-nvim, pamixer, pipewire, pipewire-alsa, pipewire-audio, pipewire-pulse, playerctl, plocate, plymouth, plymouth-themes, polkitd, power-profiles-daemon, printer-driver-cups-pdf, python3-terminaltexteffects, qt6-svg-plugins, qt6-wayland, rfkill, ripgrep, slurp, starship, swaybg, swayidle, swaylock, swayosd, system-config-printer, systemd-resolved, tar, tracker-miner-fs, ufw, ufw-docker, unzip, sddm, walker, waybar, wf-recorder, wiremix, wireplumber, wl-clip-persist, wl-clipboard, wooz, wtype, xdg-desktop-portal, xdg-desktop-portal-gnome, xdg-desktop-portal-gtk, xdg-terminal-exec, xdg-user-dirs, xwayland, xwayland-satellite, yaru-theme-gtk, yaru-theme-icon, zoxide
+Depends: calcurse, cliphist, elephant-all, grim, gtklock, gtklock-playerctl-module, mako-notifier, mise, niri, omari-desktop-common (= 1.0.0-testing1), omari-grub-theme, omari-settings-niri, omari-system-themes, plymouth-theme, plymouth-theme-omari, swappy, swaybg, swayidle, walker, waybar, wlopm, wlsunset, yaru-theme-gtk, yaru-theme-icon
+Recommends: alacritty, chromium, imv, nautilus, pavucontrol, xdg-desktop-portal, xdg-desktop-portal-gtk, xdg-desktop-portal-gnome, xwayland-satellite
 Section: metapackages
 Priority: optional
 Homepage: https://codeberg.org/omakasui/omari-meta
 Description: Niri desktop environment for Omari
-Filename: pool/omari-meta-1.0.0-testing1/omari-desktop-niri_1.0.0-testing1_debian13_all.deb
-Size: 1928
-MD5sum: 99f49d03ab1f1269c72a5c3c91216010
-SHA1: 8a3c4b76dd9f60da6e9ebe718cddbb9f74ed337f
-SHA256: 1a7a4e2e9d94b15ac6676dd837e47572a97f8e92ec786b0905a41d268d6732bb
+Filename: pool/omari-meta-1.0.0-testing1/omari-desktop-niri_1.0.0-testing1-1+trixie_all.deb
+Size: 1416
+MD5sum: 74e9326553e57aace37dd2e461d2f4da
+SHA1: 8664f55bb434e3504f9b6447e5a584b9f3c4fde3
+SHA256: 3e0d12a2279539df797fe6b749cbad29cd7d9f351f9cefb5bd77e210fe992e81
 
 Package: omari-drivers
 Version: 1.0.0-testing1
@@ -273,16 +298,16 @@ Source: omari-meta
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 7
 Depends: bluez-firmware, firmware-atheros, firmware-intel-sound, firmware-iwlwifi, firmware-linux, firmware-realtek
-Recommends: fwupd, fwupd-signed
+Recommends: fwupd, fwupd-signed, gnome-firmware
 Section: metapackages
 Priority: optional
 Homepage: https://codeberg.org/omakasui/omari-meta
 Description: Non-free firmware and drivers for Omari
-Filename: pool/omari-meta-1.0.0-testing1/omari-drivers_1.0.0-testing1_debian13_all.deb
-Size: 1240
-MD5sum: d12d9b10e4015a06d6017e3103e681a7
-SHA1: 6e1bbd8e38b19788443b568e5b6a86935e8e0a3d
-SHA256: 0ed0300a1f840fb1681d92496ba23febd2d7bd78c5c2787a7e5c7a6e040569fe
+Filename: pool/omari-meta-1.0.0-testing1/omari-drivers_1.0.0-testing1-1+trixie_all.deb
+Size: 1244
+MD5sum: badb1afcc16214ca750f242bf42bc576
+SHA1: c5d15cde3ef82771437307dcac6b17fe82cd7228
+SHA256: e8b4782796eb16dbe2e18cf626b8d1b88fded6daae9316938db3eed20f50e07f
 
 Package: omari-live
 Version: 1.0.0-testing1
@@ -290,41 +315,42 @@ Architecture: all
 Source: omari-meta
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 7
-Depends: calamares-settings-omari, greetd, tuigreet, live-boot, live-config, live-config-systemd, live-tools
+Depends: calamares-settings-omari, live-boot, live-config, live-config-systemd
 Section: metapackages
 Priority: optional
 Homepage: https://codeberg.org/omakasui/omari-meta
 Description: Live environment components for Omari installer ISO
-Filename: pool/omari-meta-1.0.0-testing1/omari-live_1.0.0-testing1_debian13_all.deb
-Size: 1232
-MD5sum: c95100e8a852ea12b455bcd0cc3cce5c
-SHA1: b739f864ecfc56f20be36223a36fbc8e742d34ca
-SHA256: 7c1a6e98dfdb0b1511c0a4027ef2e0c09b3e24007696c16c32ce4cd5cf4f1c83
+Filename: pool/omari-meta-1.0.0-testing1/omari-live_1.0.0-testing1-1+trixie_all.deb
+Size: 1216
+MD5sum: e3b6a08e8d1ff296f24417f10d01a4b1
+SHA1: aa043a86f5ad6a0020a05e848282682cbc3a1c69
+SHA256: 62f3e539625c9c229964f1a8915c4d7e7975ac8aa5319bae8c97e781f3bd8155
 
 Package: calamares-settings-omari
 Version: 1.0.0-testing1
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 221
-Depends: calamares
+Installed-Size: 339
+Depends: calamares-settings-tileos-common
+Provides: calamares-settings
 Section: misc
 Priority: optional
 Homepage: https://codeberg.org/omakasui/calamares-settings-omari
 Description: Calamares installer configuration for Omari
  Provides the branding, module configuration, and install sequence
  for the Omari Calamares installer.
-Filename: pool/calamares-settings-omari-1.0.0-testing1/calamares-settings-omari_1.0.0-testing1_debian13_all.deb
-Size: 159184
-MD5sum: c4220f58ae3685578f27eac87df15091
-SHA1: bdfb452c33abeead092b62004197f2fc7bce9979
-SHA256: ef84fa8c669c9806490615db31b80a88e893a580f0f2140470a5ca9f2bd550b0
+Filename: pool/calamares-settings-omari-1.0.0-testing1/calamares-settings-omari_1.0.0-testing1-1+trixie_all.deb
+Size: 298644
+MD5sum: d844429ea035f4130b4835da440eb5bd
+SHA1: 3cc1b527eaebc20ff6673c7d024e0d7b4fd6c40c
+SHA256: 5a9f028552863d7ccd5942edcc3756e8fc0c4d9bff0f4e0bfcfc56d6f53f020e
 
 Package: omari-settings
 Version: 1.0.0-testing1
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 66348
-Replaces: bash, nvim
+Installed-Size: 511
+Replaces: nvim
 Section: misc
 Priority: optional
 Homepage: https://codeberg.org/omakasui/omari-settings
@@ -332,9 +358,9 @@ Description: Default configuration and scripts for Omari
  Provides the default dotfiles (placed in /etc/skel) and the
  omari management scripts placed in /usr/share/omari/bin.
  Symlinks for all omari-* scripts are created in /usr/local/bin.
-Filename: pool/omari-settings-1.0.0-testing1/omari-settings_1.0.0-testing1_debian13_all.deb
-Size: 66156968
-MD5sum: 347014bd6d0cc65af5c8dc325ed5234e
-SHA1: 7e12b19a503521e0b01bc38c8c6b6e25484d7cf8
-SHA256: e5088c1b539bbf8b0be028e9b7ebb49221e3fa434ca880a60161782e3d066379
+Filename: pool/omari-settings-1.0.0-testing1/omari-settings_1.0.0-testing1-1+trixie_all.deb
+Size: 111632
+MD5sum: e63dbd00babbf100a301ed2bf27bd717
+SHA1: f736ce117b57ed5228c298ebe59d4253eb23bb54
+SHA256: 69b1272e953f56432759bb15dfd51a669878c76a6cadafb8c90a39edc4b3198b
 
