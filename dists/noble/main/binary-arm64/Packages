@@ -156,23 +156,6 @@ MD5sum: 86e2ef5f276a5b3514db763a48456f7f
 SHA1: a9bddc881be9783a0daa083755569bc5ee0870ff
 SHA256: c3f93f626635d8c87e95f4aef675c5b9cbd441273a4b716be778adfd028ac56a
 
-Package: gnome-shell-extension-grimble-tiling-wm
-Version: 1.3.0
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 344
-Depends: gnome-shell
-Section: gnome
-Priority: optional
-Homepage: https://github.com/erwanlem/grimble-tiling-wm
-Description: Grimble Tiling Window Manager - GNOME Shell extension. Brings tiling window manager behaviour to GNOME, with customizable keybindings, multi-monitor support and workspaces.
- .
-Filename: pool/gnome-shell-extension-grimble-tiling-wm-1.3.0/gnome-shell-extension-grimble-tiling-wm_1.3.0_ubuntu2404_all.deb
-Size: 36688
-MD5sum: 37d303bd4408a983e757dff613668c51
-SHA1: c63e5e2d5bc3db60a4f8636d7edc455bcb86c26f
-SHA256: 3561c65521158c9935a5850a2bba9376d0fe7613675db0ce917d30cbbf72c9ef
-
 Package: omakub-nvim
 Version: 20260327.2
 Architecture: all
