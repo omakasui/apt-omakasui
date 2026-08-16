@@ -210,3 +210,45 @@ MD5sum: 2972996d790c9cf98c124f26696cd61c
 SHA1: 8e939a9124c7377f9f7d599d6f15f2bc13f4536d
 SHA256: 96b6d3889b452419ac3c6725ee7f82504bdc870765576213b6f10de5f7f84520
 
+Package: omakub-devtools
+Version: 0.0.2
+Architecture: all
+Source: omakasui-devtools
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 63
+Depends: bash, jq
+Recommends: bash-completion, imagemagick, python3, python3-pil
+Conflicts: omadeb-devtools
+Section: devel
+Priority: optional
+Description: Development tooling for Omabuntu environments
+ Provides the omakub-devtools command-line dispatcher and helper scripts used by
+ developers working across Omabuntu: theme asset generation, preview formatting,
+ and related build tooling. Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.1/omakub-devtools_0.0.1-1+noble_all.deb
+Size: 11978
+MD5sum: 080f2b613591be542ac0ccf4397b8f0d
+SHA1: 2b9f7a0caaf674e2a5d9b910703244ce1d5dfc87
+SHA256: a648ae9fff3f83c488748c7e5acdb19c4051d846a3e1a247128fb77ae83f9d76
+
+Package: omadeb-devtools
+Version: 0.0.2
+Architecture: all
+Source: omakasui-devtools
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 63
+Depends: bash, jq
+Recommends: bash-completion, imagemagick, python3, python3-pil
+Conflicts: omakub-devtools
+Section: devel
+Priority: optional
+Description: Development tooling for Omadeb environments
+ Provides the omadeb-devtools command-line dispatcher and helper scripts used by
+ developers working across Omadeb: theme asset generation, preview formatting,
+ and related build tooling. Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.1/omadeb-devtools_0.0.1-1+noble_all.deb
+Size: 11976
+MD5sum: dfdb6247053b01399fdc1d9301ea717e
+SHA1: af9b04645530b078958cc84a1a3d23a35e86d78b
+SHA256: e0223f934ea4e64dadc67607fc999afdaad6c51d590ff5997e9693a08656159e
+
