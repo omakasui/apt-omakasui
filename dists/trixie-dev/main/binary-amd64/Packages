@@ -50,24 +50,6 @@ MD5sum: a5a57fcfa7df0cd963864b76f1bd104b
 SHA1: 9af6a3b26021eb401248a978d64f1426b581df1c
 SHA256: c32981c8847f422e86a1a2ea7946883d20ae2620eb1cfe14b9913456b1e05d73
 
-Package: omakasui-zellij
-Version: 20260408.1
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration for omakasui
- Installs omakub-based zellij config and a setup script.
- Run omakasui-setup-zellij to activate for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omakasui-zellij_20260408.1_debian13_all.deb
-Size: 3684
-MD5sum: 3c3fa3662a772f17bca078bea94de0e4
-SHA1: e6c88292a9e27a1ab83cde6fc1d00b67d0ff1fc7
-SHA256: 70ec435eb61777c678f958895abc1caf084943d637923a447005bcabd29eb0e6
-
 Package: omari-zellij
 Version: 20260408.1
 Architecture: all
@@ -137,42 +119,6 @@ Size: 1796
 MD5sum: 0b0c9f5b7f7f44ed83382ce17e051802
 SHA1: 053f1bf32ba54899fe270e2cb9a16b99066e8ec9
 SHA256: 049519674644a9bf544422f965228ab13b4d3ed964fe1eb5e2255ef76298d685
-
-Package: omakub-zellij
-Version: 20260408.1-1+trixie
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration (omakub-zellij)
- Installs omakub-based zellij config and a setup script.
- Run the bundled *-setup-zellij script to activate it for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omakub-zellij_20260408.1-1+trixie_all.deb
-Size: 4564
-MD5sum: 4b7ef34def8c35e4c2370d46c521bfe8
-SHA1: c5d93c0c67cdabfbfa1e8b3e992d3f74066ed4b2
-SHA256: 35b81a3cb205c1a365a65c019abc70a9d1086df0dd85029f208894fdd4e388e5
-
-Package: omadeb-zellij
-Version: 20260408.1-1+trixie
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration (omadeb-zellij)
- Installs omakub-based zellij config and a setup script.
- Run the bundled *-setup-zellij script to activate it for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omadeb-zellij_20260408.1-1+trixie_all.deb
-Size: 4584
-MD5sum: 17524f6c99f416d3a6dbac8c703d1f88
-SHA1: b7612152bd93b1036ca61d29d255283ca7a1e13b
-SHA256: 6abe0e7c4ebc91b9d2b704b8f5bbb991480e6cd1034dafaa55099b9be597f4a3
 
 Package: omakasui-archive-keyring
 Version: 1.0.0
@@ -401,4 +347,62 @@ Size: 2740
 MD5sum: d872309216406f429439056bf5b373a3
 SHA1: 4cec85295a632cf25e915366b02ccea90d238da0
 SHA256: faad19bbe5b485dc387dd1835f3db434f60cc6b9703157f803b2e74c2c22f388
+
+Package: omakasui-zellij
+Version: 1:0.0.1
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 26
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration (shared payload)
+ Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
+ plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
+ the project-specific setup command.
+Filename: pool/omakasui-zellij-0.0.1/omakasui-zellij_0.0.1-1+trixie_all.deb
+Size: 4916
+MD5sum: c1348d087f1ca7bbc765738388484105
+SHA1: 85ce093a7d55cb78a15dcab38363c8faad04b655
+SHA256: ee34e9705187f4ac65c2dc47ccc98d8ca13e7fc7353fef9c3123d8456d45dd5a
+
+Package: omakub-zellij
+Version: 1:0.0.1
+Architecture: all
+Source: omakasui-zellij
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-zellij (= 1:0.0.1)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration for Omabuntu/Omakub
+ Provides the omakub-setup-zellij command, which activates the shared
+ omakasui-zellij configuration for the current user.
+Filename: pool/omakasui-zellij-0.0.1/omakub-zellij_0.0.1-1+trixie_all.deb
+Size: 2044
+MD5sum: 7b03679b68f2c49268708a917ff5dd16
+SHA1: 06acd69f00440494224cace81f138ac9e6b24515
+SHA256: e1db1e4b96fbcf1c4ee41da192df9539d500c48844a988e6d811cfe726d1aabe
+
+Package: omadeb-zellij
+Version: 1:0.0.1
+Architecture: all
+Source: omakasui-zellij
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-zellij (= 1:0.0.1)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration for Omadeb
+ Provides the omadeb-setup-zellij command, which activates the shared
+ omakasui-zellij configuration for the current user.
+Filename: pool/omakasui-zellij-0.0.1/omadeb-zellij_0.0.1-1+trixie_all.deb
+Size: 2036
+MD5sum: 63a5ca282ce232d20623a7b9565f773b
+SHA1: 04617a959fd12cb2c54206794a0770d6567ef642
+SHA256: 726bbd9cf0532ba653327d12d579e5505daf8af67304f1009b3024c9b56e7d67
 
