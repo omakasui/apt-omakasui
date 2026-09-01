@@ -138,26 +138,6 @@ MD5sum: ca05631b61311155f6b97cb6ba862e7c
 SHA1: 410ed92c7922981e99e777662261d12d5bd59954
 SHA256: e28fb865740e17cb3fd3d66dbe4021345207f9ab20316b633f2a1229596f5e8f
 
-Package: omakasui-zellij
-Version: 1:0.0.1
-Architecture: all
-Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 26
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Multi-Arch: foreign
-Homepage: https://github.com/omakasui/omakasui-zellij
-Description: Zellij configuration (shared payload)
- Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
- plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
- the project-specific setup command.
-Filename: pool/omakasui-zellij-0.0.1/omakasui-zellij_0.0.1-1+noble_all.deb
-Size: 4838
-MD5sum: a22eb8d9076696b714f86de688ac154f
-SHA1: 4ead1620d562d4d0fbf718fd58593ed75a22c5b0
-SHA256: 41d5825df6878afa198154ae5674935af44537f9c5f64a2902c6719e522ed54a
-
 Package: omakub-zellij
 Version: 1:0.0.1
 Architecture: all
@@ -255,4 +235,24 @@ Size: 2810
 MD5sum: 56f30aec7ccc76e966edd6a69196d9e4
 SHA1: 3b61e5547c7136336d5db03c2e277d3db3877f8b
 SHA256: 245f545671fc394fc893fefe683ffabb794efb2388bd1ea7567180ecf48dd795
+
+Package: omakasui-zellij
+Version: 1:0.0.2
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 27
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration (shared payload)
+ Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
+ plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
+ the project-specific setup command.
+Filename: pool/omakasui-zellij-0.0.2/omakasui-zellij_0.0.2-1+noble_all.deb
+Size: 5306
+MD5sum: 954da1feb2f614938e1a3675b49ddd9e
+SHA1: 321dd032c47b143919d63760e3e9f8eedeecdac9
+SHA256: 609d34e4a052b2d57da8da8d80a3b91d8da320edaf4eaedd1586d17b98607dc8
 
