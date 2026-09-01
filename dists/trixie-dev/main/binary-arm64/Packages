@@ -351,10 +351,10 @@ SHA1: 04617a959fd12cb2c54206794a0770d6567ef642
 SHA256: 726bbd9cf0532ba653327d12d579e5505daf8af67304f1009b3024c9b56e7d67
 
 Package: omakasui-nvim
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 131747
+Installed-Size: 132326
 Depends: nvim, git, gum, xdg-utils
 Breaks: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
 Replaces: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
@@ -366,47 +366,47 @@ Description: Pre-built LazyVim configuration (shared payload)
  Installs pre-cached LazyVim config and plugins to /usr/share/omakasui-nvim,
  plus the shared setup script. Install omakub-nvim or omadeb-nvim to get the
  project-specific setup command.
-Filename: pool/omakasui-nvim-0.0.2/omakasui-nvim_0.0.2-1+trixie_all.deb
-Size: 77074224
-MD5sum: fb8118061c013d553d6392b11a5e77e0
-SHA1: eacdd414ba91bc6b45b1ce5c8530e9f58c4c687e
-SHA256: 3360369e7c0f330730ca222390f40cafbf84b91017e4d395c5ddcede936966e3
+Filename: pool/omakasui-nvim-0.0.3/omakasui-nvim_0.0.3-1+trixie_all.deb
+Size: 77209512
+MD5sum: c5a2da627dfc5b54d826581161e4a712
+SHA1: 4c47f8f9b4527e329272725ab039c2abd2de10fc
+SHA256: d71e67313f3e6eaadaf98a258f75ba0f17b119038bc447c502199d5618fd598d
 
 Package: omakub-nvim
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Source: omakasui-nvim
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 12
-Depends: omakasui-nvim (= 1:0.0.2)
+Depends: omakasui-nvim (= 1:0.0.3)
 Section: editors
 Priority: optional
 Homepage: https://github.com/omakasui/omakasui-nvim
 Description: Pre-built LazyVim configuration for Omabuntu/Omakub
  Provides the omakub-setup-nvim command, which activates the shared
  omakasui-nvim payload for the current user.
-Filename: pool/omakasui-nvim-0.0.2/omakub-nvim_0.0.2-1+trixie_all.deb
-Size: 2744
-MD5sum: 15199059664c54e709a4edd48578dfaf
-SHA1: d38b7ef9b5e99b035fdda7ec456dc1bfcd16ab33
-SHA256: 15452cbbb112f4bdbe29be4fd39f175e123dccb8bcd4f7ee9dd288709cea5ce2
+Filename: pool/omakasui-nvim-0.0.3/omakub-nvim_0.0.3-1+trixie_all.deb
+Size: 2892
+MD5sum: d3497aedcd8029ee84ce962e1300cebd
+SHA1: 55161f189789364bbe56e8263ea4a5fed7e6f3f2
+SHA256: ea457c3efca40e9f256ca3687632763c906ad36f52e7834201b7a82e9859a17a
 
 Package: omadeb-nvim
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Source: omakasui-nvim
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 12
-Depends: omakasui-nvim (= 1:0.0.2)
+Depends: omakasui-nvim (= 1:0.0.3)
 Section: editors
 Priority: optional
 Homepage: https://github.com/omakasui/omakasui-nvim
 Description: Pre-built LazyVim configuration for Omadeb
  Provides the omadeb-setup-nvim command, which activates the shared
  omakasui-nvim payload for the current user.
-Filename: pool/omakasui-nvim-0.0.2/omadeb-nvim_0.0.2-1+trixie_all.deb
-Size: 2740
-MD5sum: d872309216406f429439056bf5b373a3
-SHA1: 4cec85295a632cf25e915366b02ccea90d238da0
-SHA256: faad19bbe5b485dc387dd1835f3db434f60cc6b9703157f803b2e74c2c22f388
+Filename: pool/omakasui-nvim-0.0.3/omadeb-nvim_0.0.3-1+trixie_all.deb
+Size: 2888
+MD5sum: 1e953da8782d365421f4e9ef91bbf8bf
+SHA1: c862c6c8401f5271b7bb8e80de57896251ac2e57
+SHA256: 119815ac487b3e3e5936f5006f412035d8cc761fcc4d10d961f3f9fe9672e590
 
