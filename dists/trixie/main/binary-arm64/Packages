@@ -1,21 +1,3 @@
-Package: omakasui-nvim
-Version: 20260327.2
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 137160
-Depends: nvim, git, gum
-Section: editors
-Priority: optional
-Homepage: https://github.com/LazyVim/LazyVim
-Description: Pre-built LazyVim configuration for omakasui
- Installs pre-cached config and plugins to /usr/share/omakasui-nvim.
- Run omakasui-setup-nvim to activate for the current user.
-Filename: pool/omakasui-nvim-20260327.2/omakasui-nvim_20260327.2_debian13_all.deb
-Size: 64726900
-MD5sum: 2c673bc4ec3af79b78d611046604e319
-SHA1: 81f3f5ee935aec6a3a9deb2d63e0ad4d306b2bd1
-SHA256: 645f920460268df1a94e850a2771248959da4ec491f27341fab71ef3723c3fd4
-
 Package: omakasui-walker
 Version: 20260330.1
 Architecture: all
@@ -32,60 +14,6 @@ Size: 706
 MD5sum: 2c591af8f32f1c24a5ea2c4303288ea0
 SHA1: d86e37d56468fd5cddafde2cc7ebf56500a6dd6c
 SHA256: fffed6c6adf1b9b9477a857a350dc520e031bbfe1850d04412caa6ea3c2f1d82
-
-Package: omakasui-zellij
-Version: 20260408.1
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration for omakasui
- Installs omakub-based zellij config and a setup script.
- Run omakasui-setup-zellij to activate for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omakasui-zellij_20260408.1_debian13_all.deb
-Size: 3684
-MD5sum: 3c3fa3662a772f17bca078bea94de0e4
-SHA1: e6c88292a9e27a1ab83cde6fc1d00b67d0ff1fc7
-SHA256: 70ec435eb61777c678f958895abc1caf084943d637923a447005bcabd29eb0e6
-
-Package: omakub-nvim
-Version: 20260327.2-1+trixie
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 138336
-Depends: nvim, git, gum
-Section: editors
-Priority: optional
-Homepage: https://github.com/LazyVim/LazyVim
-Description: Pre-built LazyVim configuration (omakub-nvim)
- Installs pre-cached config and plugins to /usr/share/omakub-nvim.
- Run the bundled *-setup-nvim script to activate it for the current user.
-Filename: pool/omakasui-nvim-20260327.2/omakub-nvim_20260327.2-1+trixie_all.deb
-Size: 65720790
-MD5sum: 8578869c8b1378ef308f2fc13481a04e
-SHA1: 06f44d00a457ad8c4809b3fbf0c068c2054826da
-SHA256: 6f2c36cba00fbe8d7acb4404a86b8be0b63ce4bad9915fab2965733dac4c3e66
-
-Package: omadeb-nvim
-Version: 20260327.2-1+trixie
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 138336
-Depends: nvim, git, gum
-Section: editors
-Priority: optional
-Homepage: https://github.com/LazyVim/LazyVim
-Description: Pre-built LazyVim configuration (omadeb-nvim)
- Installs pre-cached config and plugins to /usr/share/omadeb-nvim.
- Run the bundled *-setup-nvim script to activate it for the current user.
-Filename: pool/omakasui-nvim-20260327.2/omadeb-nvim_20260327.2-1+trixie_all.deb
-Size: 65720300
-MD5sum: 5c99b7737867fb6bccef7f08a6eebfd8
-SHA1: ee7d0dbeb6b583edb5295a9a0f32d8816c7ba0fb
-SHA256: 77bbaa7f0179d3becdf95afa99044b57e0bb95b6532ce22fcd9d639516fd6e23
 
 Package: omadeb-walker
 Version: 20260330.1-1+trixie
@@ -120,42 +48,6 @@ Size: 1796
 MD5sum: 0b0c9f5b7f7f44ed83382ce17e051802
 SHA1: 053f1bf32ba54899fe270e2cb9a16b99066e8ec9
 SHA256: 049519674644a9bf544422f965228ab13b4d3ed964fe1eb5e2255ef76298d685
-
-Package: omakub-zellij
-Version: 20260408.1-1+trixie
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration (omakub-zellij)
- Installs omakub-based zellij config and a setup script.
- Run the bundled *-setup-zellij script to activate it for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omakub-zellij_20260408.1-1+trixie_all.deb
-Size: 4564
-MD5sum: 4b7ef34def8c35e4c2370d46c521bfe8
-SHA1: c5d93c0c67cdabfbfa1e8b3e992d3f74066ed4b2
-SHA256: 35b81a3cb205c1a365a65c019abc70a9d1086df0dd85029f208894fdd4e388e5
-
-Package: omadeb-zellij
-Version: 20260408.1-1+trixie
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 40
-Depends: zellij, gum
-Section: utils
-Priority: optional
-Homepage: https://zellij.dev
-Description: Zellij configuration (omadeb-zellij)
- Installs omakub-based zellij config and a setup script.
- Run the bundled *-setup-zellij script to activate it for the current user.
-Filename: pool/omakasui-zellij-20260408.1/omadeb-zellij_20260408.1-1+trixie_all.deb
-Size: 4584
-MD5sum: 17524f6c99f416d3a6dbac8c703d1f88
-SHA1: b7612152bd93b1036ca61d29d255283ca7a1e13b
-SHA256: 6abe0e7c4ebc91b9d2b704b8f5bbb991480e6cd1034dafaa55099b9be597f4a3
 
 Package: omakasui-archive-keyring
 Version: 1.0.0
@@ -195,4 +87,158 @@ Size: 298644
 MD5sum: d844429ea035f4130b4835da440eb5bd
 SHA1: 3cc1b527eaebc20ff6673c7d024e0d7b4fd6c40c
 SHA256: 5a9f028552863d7ccd5942edcc3756e8fc0c4d9bff0f4e0bfcfc56d6f53f020e
+
+Package: omakub-devtools
+Version: 0.0.3
+Architecture: all
+Source: omakasui-devtools
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-devtools (= 0.0.3)
+Section: devel
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omabuntu environments
+ Provides the omakub-devtools command. Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omakub-devtools_0.0.3-1+trixie_all.deb
+Size: 2376
+MD5sum: 7e8438ff53becf5fa1c4283c0a72e586
+SHA1: 9cf331fecc5a0a1f23aa19a13e42ef799fa03864
+SHA256: 2cb2962df87612b9015d9bcb38376bfb71ab20fee0f861d1c12c8efc3fc3d724
+
+Package: omadeb-devtools
+Version: 0.0.3
+Architecture: all
+Source: omakasui-devtools
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-devtools (= 0.0.3)
+Section: devel
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omadeb environments
+ Provides the omadeb-devtools command.Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omadeb-devtools_0.0.3-1+trixie_all.deb
+Size: 2368
+MD5sum: 1ab2d56be0f6197395a8de6ca5135c8b
+SHA1: 27c3ed4eb42030c363dfeef290c6b6713e915436
+SHA256: a6d8a96e4b77ed4ab1b44b18871fbc6dabdf41c6a56422a092478e9ebc09908e
+
+Package: omakasui-nvim
+Version: 1:0.0.3
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 132326
+Depends: nvim, git, gum, xdg-utils
+Breaks: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
+Replaces: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
+Section: editors
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-nvim
+Description: Pre-built LazyVim configuration (shared payload)
+ Installs pre-cached LazyVim config and plugins to /usr/share/omakasui-nvim,
+ plus the shared setup script. Install omakub-nvim or omadeb-nvim to get the
+ project-specific setup command.
+Filename: pool/omakasui-nvim-0.0.3/omakasui-nvim_0.0.3-1+trixie_all.deb
+Size: 77209512
+MD5sum: c5a2da627dfc5b54d826581161e4a712
+SHA1: 4c47f8f9b4527e329272725ab039c2abd2de10fc
+SHA256: d71e67313f3e6eaadaf98a258f75ba0f17b119038bc447c502199d5618fd598d
+
+Package: omakub-nvim
+Version: 1:0.0.3
+Architecture: all
+Source: omakasui-nvim
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 12
+Depends: omakasui-nvim (= 1:0.0.3)
+Section: editors
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-nvim
+Description: Pre-built LazyVim configuration for Omabuntu/Omakub
+ Provides the omakub-setup-nvim command, which activates the shared
+ omakasui-nvim payload for the current user.
+Filename: pool/omakasui-nvim-0.0.3/omakub-nvim_0.0.3-1+trixie_all.deb
+Size: 2892
+MD5sum: d3497aedcd8029ee84ce962e1300cebd
+SHA1: 55161f189789364bbe56e8263ea4a5fed7e6f3f2
+SHA256: ea457c3efca40e9f256ca3687632763c906ad36f52e7834201b7a82e9859a17a
+
+Package: omadeb-nvim
+Version: 1:0.0.3
+Architecture: all
+Source: omakasui-nvim
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 12
+Depends: omakasui-nvim (= 1:0.0.3)
+Section: editors
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-nvim
+Description: Pre-built LazyVim configuration for Omadeb
+ Provides the omadeb-setup-nvim command, which activates the shared
+ omakasui-nvim payload for the current user.
+Filename: pool/omakasui-nvim-0.0.3/omadeb-nvim_0.0.3-1+trixie_all.deb
+Size: 2888
+MD5sum: 1e953da8782d365421f4e9ef91bbf8bf
+SHA1: c862c6c8401f5271b7bb8e80de57896251ac2e57
+SHA256: 119815ac487b3e3e5936f5006f412035d8cc761fcc4d10d961f3f9fe9672e590
+
+Package: omakasui-zellij
+Version: 1:0.0.2
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 27
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration (shared payload)
+ Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
+ plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
+ the project-specific setup command.
+Filename: pool/omakasui-zellij-0.0.2/omakasui-zellij_0.0.2-1+trixie_all.deb
+Size: 5352
+MD5sum: 58cbb78558f42b680150785a4a66c5ea
+SHA1: 95977515cccfc4b0b1bff97c54266951efb84f67
+SHA256: a14f141e90090de48e6c00262a0e87d5aaa06a899d365539e387a789f19b8c4e
+
+Package: omakub-zellij
+Version: 1:0.0.2
+Architecture: all
+Source: omakasui-zellij
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-zellij (= 1:0.0.2)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration for Omabuntu/Omakub
+ Provides the omakub-setup-zellij command, which activates the shared
+ omakasui-zellij configuration for the current user.
+Filename: pool/omakasui-zellij-0.0.2/omakub-zellij_0.0.2-1+trixie_all.deb
+Size: 2148
+MD5sum: 8b839b64ecd99e0dcf4b13052aafccb5
+SHA1: 0037060548d30a73c019e1222cd2e055fe2ff97a
+SHA256: 5ca038fe2b8e41f18924090fb2d244997e86353c2c96e4f003785829e60e227a
+
+Package: omadeb-zellij
+Version: 1:0.0.2
+Architecture: all
+Source: omakasui-zellij
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-zellij (= 1:0.0.2)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration for Omadeb
+ Provides the omadeb-setup-zellij command, which activates the shared
+ omakasui-zellij configuration for the current user.
+Filename: pool/omakasui-zellij-0.0.2/omadeb-zellij_0.0.2-1+trixie_all.deb
+Size: 2140
+MD5sum: f5b2d3e05c496ef1b8c883734b760d75
+SHA1: 0948c6ec2ef2b1b33a6c058869e7e6f4cb437b48
+SHA256: 268be7bee65a5069ea07250f4fdfb6217cf5015095238fbbf5e6c72df7f5eb9a
 
