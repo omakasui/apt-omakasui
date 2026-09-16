@@ -15,19 +15,28 @@ runs:
         git config user.email "bot@omakasui.org"
 
         DISTS_SNAPSHOT=$(mktemp -d)
+        PRODUCTS_SNAPSHOT=$(mktemp -d)
         INDEX_SNAPSHOT=$(mktemp -d)
         cp -r dists/. "$DISTS_SNAPSHOT/"
-        cp index/packages.tsv "$INDEX_SNAPSHOT/" 2>/dev/null || true
+        PRODUCTS=$(awk '{print $1}' index/targets.tsv | sort -u | xargs)
+        for product in $PRODUCTS; do
+          [[ -d "$product" ]] && cp -r "$product" "$PRODUCTS_SNAPSHOT/"
+        done
+        cp index/*.tsv index/freeze.list "$INDEX_SNAPSHOT/" 2>/dev/null || true
 
         for i in 1 2 3 4 5; do
           git fetch origin main
           git reset --hard origin/main
 
           cp -r "$DISTS_SNAPSHOT/." dists/
+          for product in $PRODUCTS; do
+            [[ -d "$PRODUCTS_SNAPSHOT/$product" ]] && cp -r "$PRODUCTS_SNAPSHOT/$product" ./
+          done
           mkdir -p index
-          cp "$INDEX_SNAPSHOT/packages.tsv" index/packages.tsv 2>/dev/null || true
+          cp "$INDEX_SNAPSHOT/"* index/ 2>/dev/null || true
 
           git add -f dists/ index/
+          for product in $PRODUCTS; do git add -f "$product/"; done
           git add -u index/ 2>/dev/null || true
 
           if git diff --cached --quiet; then

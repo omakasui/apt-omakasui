@@ -1,5 +1,4 @@
-# Deploy the Cloudflare Worker that redirects apt pool requests to GitHub Releases.
-# Runs whenever worker.js or wrangler.toml changes, or manually.
+# Deploy the APT pool redirect worker.
 name: Deploy Cloudflare Worker
 
 on:

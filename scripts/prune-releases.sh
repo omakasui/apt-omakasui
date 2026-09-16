@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# prune-releases.sh — Report (and optionally delete) stale GitHub Releases in build-apt-packages.
-# A release is kept if referenced in packages.tsv or is the latest for its build package.
+# List or delete stale build releases.
+# Keep referenced and latest releases.
 # Usage: prune-releases.sh [--delete] [--repo <owner/repo>] [--limit <n>]
 
 set -euo pipefail
@@ -24,16 +24,16 @@ done
   exit 1
 }
 
-# All tags currently referenced in packages.tsv.
+# Referenced tags.
 mapfile -t ACTIVE_TAGS < <(
-  awk '{print $5}' "$TSV" \
-    | grep -oP 'releases/download/\K[^/]+' \
+  { awk '{print $6}' "$TSV"; find dists -name Packages -type f -exec awk '/^Filename: pool\//{print $2}' {} + 2>/dev/null; } \
+    | grep -oP '(?:releases/download/|^pool/)\K[^/]+' \
     | sort -u
 )
 
 echo "Active release tags referenced in packages.tsv: ${#ACTIVE_TAGS[@]}"
 
-# Fetch all releases ordered newest-first, then derive a sorted copy for comm.
+# Available tags.
 mapfile -t ALL_TAGS_ORDERED < <(
   gh release list --repo "$REPO" --limit "$LIMIT" --json tagName \
     --jq '.[].tagName'
@@ -42,16 +42,16 @@ mapfile -t ALL_TAGS_SORTED < <(printf '%s\n' "${ALL_TAGS_ORDERED[@]}" | sort)
 
 echo "Total releases in ${REPO}: ${#ALL_TAGS_SORTED[@]}"
 
-# Derive build-package names from TSV URLs (tag format: <pkg>-<version>).
+# Build package names.
 declare -A BUILD_PKGS
-while IFS=' ' read -r _s _a _n version url _rest; do
+while IFS=' ' read -r _product _suite _arch _name version url _rest; do
   tag=$(printf '%s' "$url" | grep -oP 'releases/download/\K[^/]+' || true)
   [[ -z "$tag" ]] && continue
   build_pkg="${tag%-${version}}"
   [[ -n "$build_pkg" ]] && BUILD_PKGS["$build_pkg"]=1
 done < "$TSV"
 
-# Protect the most recent release tag for each build package.
+# Latest tags.
 declare -A LATEST_TAG
 for tag in "${ALL_TAGS_ORDERED[@]}"; do
   for build_pkg in "${!BUILD_PKGS[@]}"; do
@@ -62,12 +62,12 @@ for tag in "${ALL_TAGS_ORDERED[@]}"; do
   done
 done
 
-# Protected = referenced in TSV + latest per build package.
+# Protected tags.
 declare -A PROTECTED
 for tag in "${ACTIVE_TAGS[@]}";        do PROTECTED[$tag]=1; done
 for tag in "${LATEST_TAG[@]}";         do PROTECTED[$tag]=1; done
 
-# Stale = in repo but not protected.
+# Stale tags.
 mapfile -t STALE < <(
   comm -23 \
     <(printf '%s\n' "${ALL_TAGS_SORTED[@]}") \

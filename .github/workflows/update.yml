@@ -14,8 +14,12 @@ on:
         description: 'Version'
         required: true
         type: string
-      suites:
-        description: 'Suites — space-separated, e.g. "trixie" or "trixie noble"'
+      product:
+        description: 'Product repository (omabuntu, omadeb, or omari)'
+        required: true
+        type: string
+      suite:
+        description: 'Base suite (e.g. noble or trixie)'
         required: true
         type: string
       produces:
@@ -31,13 +35,7 @@ on:
           - stable
           - dev
 
-# Must stay in sync with build-matrix.yml in omakasui/build-omakasui-packages.
-env:
-  ALL_SUITES: "trixie noble resolute"
-  ALL_DEV_SUITES: "trixie-dev noble-dev resolute-dev"
-  ALL_ARCHES: "amd64 arm64"
-
-# Serialize runs so concurrent package-updated events don't overwrite each other.
+# Prevent concurrent index writes.
 concurrency:
   group: update-apt-repo
   cancel-in-progress: false
@@ -62,20 +60,25 @@ jobs:
             echo "action=${{ github.event.action }}"                  >> "$GITHUB_OUTPUT"
             echo "package=${{ github.event.client_payload.package }}" >> "$GITHUB_OUTPUT"
             echo "version=${{ github.event.client_payload.version }}" >> "$GITHUB_OUTPUT"
-            echo "suites=${{ github.event.client_payload.suites }}"   >> "$GITHUB_OUTPUT"
+            echo "product=${{ github.event.client_payload.product }}" >> "$GITHUB_OUTPUT"
+            echo "suite=${{ github.event.client_payload.suite }}"     >> "$GITHUB_OUTPUT"
             echo "pattern=${{ github.event.client_payload.pattern }}" >> "$GITHUB_OUTPUT"
             PRODUCES=$(echo '${{ toJson(github.event.client_payload.produces) }}' | jq -c '.')
             echo "produces=${PRODUCES}"                               >> "$GITHUB_OUTPUT"
             PKGS_JSON=$(echo '${{ toJson(github.event.client_payload.packages) }}' | jq -c '. // []')
             echo "packages_json=${PKGS_JSON}"                         >> "$GITHUB_OUTPUT"
+            CATALOG_JSON=$(echo '${{ toJson(github.event.client_payload.catalog) }}' | jq -c '. // []')
+            echo "catalog_json=${CATALOG_JSON}"                       >> "$GITHUB_OUTPUT"
             CD_CHANNEL='${{ github.event.client_payload.channel }}'
             echo "channel=${CD_CHANNEL:-stable}"                      >> "$GITHUB_OUTPUT"
           else
             echo "action=package-updated"          >> "$GITHUB_OUTPUT"
             echo "package=${{ inputs.package }}"   >> "$GITHUB_OUTPUT"
             echo "version=${{ inputs.version }}"   >> "$GITHUB_OUTPUT"
-            echo "suites=${{ inputs.suites }}"     >> "$GITHUB_OUTPUT"
+            echo "product=${{ inputs.product }}"   >> "$GITHUB_OUTPUT"
+            echo "suite=${{ inputs.suite }}"       >> "$GITHUB_OUTPUT"
             echo "packages_json=[]"                >> "$GITHUB_OUTPUT"
+            echo "catalog_json=[]"                 >> "$GITHUB_OUTPUT"
             if [[ -n "${{ inputs.produces }}" ]]; then
               PRODUCES_JSON=$(echo "${{ inputs.produces }}" | tr ' ' '\n' | jq -Rc '[.,inputs]' 2>/dev/null || echo "[]")
               echo "produces=${PRODUCES_JSON}"     >> "$GITHUB_OUTPUT"
@@ -84,6 +87,21 @@ jobs:
             fi
             echo "channel=${{ inputs.channel }}"   >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Sync target catalog
+        if: steps.params.outputs.catalog_json != '[]'
+        run: |
+          CATALOG='${{ steps.params.outputs.catalog_json }}'
+          : > index/targets.tsv
+          while IFS= read -r target; do
+            PRODUCT=$(jq -r '.product' <<< "$target")
+            SUITE=$(jq -r '.suite' <<< "$target")
+            LABEL=$(jq -r '.label' <<< "$target")
+            STATUS=$(jq -r '.status' <<< "$target")
+            [[ "$PRODUCT" =~ ^[a-z0-9-]+$ && "$SUITE" =~ ^[a-z0-9-]+$ ]] || { echo "Invalid target"; exit 1; }
+            [[ "$STATUS" == "active" || "$STATUS" == "deprecated" ]] || { echo "Invalid status"; exit 1; }
+            printf '%s %s %s %s\n' "$PRODUCT" "$SUITE" "$LABEL" "$STATUS" >> index/targets.tsv
+          done < <(jq -c '.[]' <<< "$CATALOG")
 
       - name: Setup APT tools and GPG key
         id: setup-apt
@@ -100,17 +118,35 @@ jobs:
           while IFS= read -r entry; do
             PKG=$(echo      "$entry" | jq -r '.package')
             VERSION=$(echo  "$entry" | jq -r '.version')
-            SUITES=$(echo   "$entry" | jq -r '.suites')
-            PRODUCES=$(echo "$entry" | jq -r '.produces | if length == 0 then "" else join(" ") end')
             CHANNEL=$(echo  "$entry" | jq -r '.channel // "stable"')
+            TARGETS=$(jq -c '.targets // []' <<< "$entry")
 
-            echo "==> Registering: ${PKG} ${VERSION} (suites: ${SUITES}, channel: ${CHANNEL})"
-            bash scripts/register-package.sh \
-              --pkg      "$PKG" \
-              --version  "$VERSION" \
-              --suites   "$SUITES" \
-              --produces "$PRODUCES" \
-              --channel  "$CHANNEL"
+            # Map v1 payloads to isolated targets.
+            if [[ "$TARGETS" == "[]" ]]; then
+              TARGETS='[]'
+              while IFS= read -r SUITE; do
+                if [[ "$SUITE" == "noble" || "$SUITE" == "resolute" ]]; then
+                  PRODUCT=omabuntu
+                  FILTER='map(select((startswith("omadeb-") or startswith("omari-") or .=="calamares-settings-omari" or .=="omakasui-archive-keyring")|not))'
+                elif [[ "$PKG" == omari-* || "$PKG" == "calamares-settings-omari" || "$PKG" == "omakasui-archive-keyring" ]]; then
+                  PRODUCT=omari; FILTER='.'
+                else
+                  PRODUCT=omadeb; FILTER='map(select(startswith("omakub-")|not))'
+                fi
+                PRODUCES=$(jq -c --arg fallback "$PKG" '.produces // [$fallback]' <<< "$entry" | jq -c "$FILTER")
+                TARGETS=$(jq -c --arg product "$PRODUCT" --arg suite "$SUITE" --argjson produces "$PRODUCES" \
+                  '. += [{product:$product,suite:$suite,produces:$produces}]' <<< "$TARGETS")
+              done < <(jq -r '.suites | split(" ")[]' <<< "$entry")
+            fi
+
+            while IFS= read -r target; do
+              PRODUCT=$(jq -r '.product' <<< "$target")
+              SUITE=$(jq -r '.suite' <<< "$target")
+              PRODUCES=$(jq -r '.produces | join(" ")' <<< "$target")
+              echo "==> Registering: ${PKG} ${VERSION} (${PRODUCT}/${SUITE}, channel: ${CHANNEL})"
+              bash scripts/register-package.sh --pkg "$PKG" --version "$VERSION" \
+                --product "$PRODUCT" --suite "$SUITE" --produces "$PRODUCES" --channel "$CHANNEL"
+            done < <(jq -c '.[]' <<< "$TARGETS")
           done < <(echo "$PKGS_JSON" | jq -c '.[]')
 
       - name: '[package-updated] Register package in index manifest'
@@ -128,7 +164,8 @@ jobs:
           bash scripts/register-package.sh \
             --pkg      "${{ steps.params.outputs.package }}" \
             --version  "${{ steps.params.outputs.version }}" \
-            --suites   "${{ steps.params.outputs.suites }}" \
+            --product  "${{ steps.params.outputs.product }}" \
+            --suite    "${{ steps.params.outputs.suite }}" \
             --produces "$PRODUCES" \
             --channel  "${{ steps.params.outputs.channel }}"
 
@@ -137,14 +174,16 @@ jobs:
         run: |
           bash scripts/remove-entries.sh \
             --package "${{ steps.params.outputs.package }}" \
-            --suites  "${{ steps.params.outputs.suites }}"
+            --product "${{ steps.params.outputs.product }}" \
+            --suite   "${{ steps.params.outputs.suite }}"
 
       - name: '[clean-pool] Remove entries matching pattern from index manifest'
         if: steps.params.outputs.action == 'clean-pool'
         run: |
           bash scripts/remove-entries.sh \
             --pattern "${{ steps.params.outputs.pattern }}" \
-            --suites  "${{ steps.params.outputs.suites }}"
+            --product "${{ steps.params.outputs.product }}" \
+            --suite   "${{ steps.params.outputs.suite }}"
 
       - name: '[rebuild-index] no-op'
         if: steps.params.outputs.action == 'rebuild-index'
@@ -155,11 +194,11 @@ jobs:
           GPG_KEY_ID: ${{ steps.setup-apt.outputs.fingerprint }}
         run: |
           touch index/packages.tsv
-          bash scripts/update-index.sh --suites "$ALL_SUITES"
-          bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
+          bash scripts/update-index.sh
+          bash scripts/sign-release.sh --key-id "$GPG_KEY_ID"
 
       - name: Update README packages table
-        run: bash scripts/update-readme.sh --suites "$ALL_SUITES" --arches "$ALL_ARCHES"
+        run: bash scripts/update-readme.sh
 
       - name: Build commit message
         id: msg

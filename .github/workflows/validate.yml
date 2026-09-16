@@ -1,0 +1,22 @@
+name: Validate
+
+on:
+  pull_request:
+    paths: ['scripts/**', 'index/**', '.github/workflows/**', 'Makefile', 'worker.js']
+  push:
+    branches: [main]
+    paths: ['scripts/**', 'index/**', '.github/workflows/**', 'Makefile', 'worker.js']
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate manifest
+        run: bash scripts/validate.sh
+      - name: Test repository isolation
+        run: bash scripts/test.sh
+      - name: Check shell syntax
+        run: find scripts -name '*.sh' -print0 | xargs -0 -n1 bash -n
+      - name: Check Worker syntax
+        run: node --check worker.js

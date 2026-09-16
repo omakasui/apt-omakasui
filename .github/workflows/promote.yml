@@ -18,19 +18,18 @@ on:
         description: 'Version — for promote-package only (leave empty to promote all dev versions)'
         required: false
         type: string
-      suites:
-        description: 'Space-separated suites (e.g. "noble" or "trixie noble"). Leave empty for all.'
-        required: false
+      product:
+        description: 'Product repository (omabuntu, omadeb, or omari)'
+        required: true
+        type: string
+      suite:
+        description: 'Base suite'
+        required: true
         type: string
       exclude:
         description: 'For promote-all: space-separated package names to exclude from bulk promotion'
         required: false
         type: string
-
-# Must stay in sync with build-matrix.yml in omakasui/build-omakasui-packages.
-env:
-  ALL_SUITES: "trixie noble resolute"
-  ALL_DEV_SUITES: "trixie-dev noble-dev resolute-dev"
 
 jobs:
   promote:
@@ -54,29 +53,27 @@ jobs:
       - name: Promote package in index manifest
         if: inputs.action == 'promote-package'
         run: |
-          SUITES="${{ inputs.suites }}"
-          [[ -z "$SUITES" ]] && SUITES="$ALL_SUITES"
           bash scripts/promote-packages.sh \
             --pkg     "${{ inputs.package }}" \
             --version "${{ inputs.version }}" \
-            --suites  "$SUITES"
+            --product "${{ inputs.product }}" \
+            --suite   "${{ inputs.suite }}"
 
       - name: Promote all dev packages to stable
         if: inputs.action == 'promote-all'
         run: |
-          SUITES="${{ inputs.suites }}"
-          [[ -z "$SUITES" ]] && SUITES="$ALL_SUITES"
           bash scripts/promote-packages.sh \
             --all \
-            --suites  "$SUITES" \
+            --product "${{ inputs.product }}" \
+            --suite   "${{ inputs.suite }}" \
             --exclude "${{ inputs.exclude }}"
 
       - name: Regenerate APT metadata
         env:
           GPG_KEY_ID: ${{ steps.setup-apt.outputs.fingerprint }}
         run: |
-          bash scripts/update-index.sh --suites "$ALL_SUITES"
-          bash scripts/sign-release.sh --suites "$ALL_SUITES $ALL_DEV_SUITES" --key-id "$GPG_KEY_ID"
+          bash scripts/update-index.sh
+          bash scripts/sign-release.sh --key-id "$GPG_KEY_ID"
 
       - name: Build commit message
         id: msg

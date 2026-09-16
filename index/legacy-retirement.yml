@@ -1,0 +1,7 @@
+status: frozen
+frozen_on: 2026-09-16
+remove_not_before: 2026-12-15
+required_consumer_migrations:
+  - omabuntu
+  - omadeb
+  - omari

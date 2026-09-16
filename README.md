@@ -2,29 +2,35 @@
 
 APT repository for [omakasui](https://omakasui.org) configuration packages (`omakasui-*`), served via GitHub Pages at `core.omakasui.org`.
 
-Metadata (`dists/`) and the package index (`index/packages.tsv`) live in this repo. Binary packages are stored as GitHub Release assets in [build-apt-omakasui](https://github.com/omakasui/build-apt-omakasui) and referenced directly via their full URL in the `Filename` field of the `Packages` index. A Cloudflare Worker on `core.omakasui.org` redirects `/pool/` requests to those release assets.
+Metadata and the package index (`index/packages.tsv`) live in this repo. Binary packages are stored as GitHub Release assets in [build-apt-omakasui](https://github.com/omakasui/build-apt-omakasui). Each product has an isolated repository path, and the Cloudflare Worker redirects namespaced `/pool/` requests to the assets.
 
-## Suites and architectures
+## Products, suites and architectures
 
-| Suite | Distro | Architectures |
-|---|---|---|
-| `noble` | Ubuntu 24.04 | `amd64`, `arm64` |
-| `noble-dev` | Ubuntu 24.04 (dev channel) | `amd64`, `arm64` |
-| `resolute` | Ubuntu 26.04 | `amd64`, `arm64` |
-| `resolute-dev` | Ubuntu 26.04 (dev channel) | `amd64`, `arm64` |
-| `trixie` | Debian 13 | `amd64`, `arm64` |
-| `trixie-dev` | Debian 13 (dev channel) | `amd64`, `arm64` |
+| Product path | Suite | Base | Architectures |
+|---|---|---|---|
+| `omabuntu` | `noble`, `resolute` | Ubuntu 24.04/26.04 | `amd64`, `arm64` |
+| `omadeb` | `trixie` | Debian 13 | `amd64`, `arm64` |
+| `omari` | `trixie` | Debian 13 | `amd64`, `arm64` |
 
-Dev suites include all stable packages as a base; dev-channel entries take precedence when present.
+Each product also exposes `*-dev` suites. Dev includes stable packages from the same product only, overridden by explicit dev entries.
 
 ## Packages
 
-| Package | Upstream | Suites | Architectures |
+| Package | Upstream | Targets | Architectures |
 |---|---|---|---|
-| `omakasui-aether` | [aether](https://github.com/bjarneo/aether) | noble, trixie | all |
-| `omakasui-nvim` | [LazyVim](https://github.com/LazyVim/LazyVim) | noble, trixie | all |
-| `omakasui-walker` | [walker](https://github.com/abenz1267/walker) | noble, trixie | all |
-| `omakasui-zellij` | [zellij](https://github.com/zellij-org/zellij) | noble, trixie | all |
+| `calamares-settings-omari` | [calamares-settings-omari](https://codeberg.org/omakasui/calamares-settings-omari) | omari/trixie | all |
+| `omadeb-devtools` | [omadeb-devtools](https://github.com/omakasui/omakasui-devtools) | omadeb/trixie | all |
+| `omadeb-nvim` | [omadeb-nvim](https://github.com/omakasui/omakasui-nvim) | omadeb/trixie | all |
+| `omadeb-walker` | [omadeb-walker](https://github.com/omakasui/omakasui) | omadeb/trixie | all |
+| `omadeb-zellij` | [omadeb-zellij](https://github.com/omakasui/omakasui-zellij) | omadeb/trixie | all |
+| `omakasui-archive-keyring` | [omakasui-archive-keyring](https://codeberg.org/omakasui/omakasui-archive-keyring) | omari/trixie | all |
+| `omakasui-nvim` | [omakasui-nvim](https://github.com/omakasui/omakasui-nvim) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
+| `omakasui-walker` | [omakasui-walker](https://github.com/omakasui/omakasui) | omabuntu/noble, omadeb/trixie | all |
+| `omakasui-zellij` | [omakasui-zellij](https://github.com/omakasui/omakasui-zellij) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
+| `omakub-devtools` | [omakub-devtools](https://github.com/omakasui/omakasui-devtools) | omabuntu/noble, omabuntu/resolute | all |
+| `omakub-nvim` | [omakub-nvim](https://github.com/omakasui/omakasui-nvim) | omabuntu/noble, omabuntu/resolute | all |
+| `omakub-walker` | [omakub-walker](https://github.com/omakasui/omakasui) | omabuntu/noble, omabuntu/resolute | all |
+| `omakub-zellij` | [omakub-zellij](https://github.com/omakasui/omakasui-zellij) | omabuntu/noble, omabuntu/resolute | all |
 
 ## Copyright and licensing
 
@@ -45,7 +51,7 @@ make info PKG=omakasui-nvim                        # inspect all entries for a p
 make check                                         # count entries per suite/arch
 make index                                         # regenerate Packages files
 make rebuild GPG_KEY_ID=<fp>                       # regenerate + re-sign
-make promote-pkg PKG=omakasui-nvim                 # promote omakasui-nvim dev → stable
+make promote-pkg PKG=omakasui-nvim PRODUCT=omadeb SUITE=trixie
 make readme                                        # sync the README packages table
 make prune-dry                                     # preview stale releases in build-apt-omakasui
 ```
@@ -53,12 +59,14 @@ make prune-dry                                     # preview stale releases in b
 ## packages.tsv format
 
 ```
-<suite> <arch> <name> <version> <url> <size> <md5> <sha1> <sha256> <control_b64> [<channel>]
+<product> <suite> <arch> <name> <version> <url> <size> <md5> <sha1> <sha256> <control_b64> <channel>
 ```
 
 `url` is the full GitHub Releases asset URL, stored as source of truth. When generating the `Packages` index, `update-index.sh` converts it to a pool-relative path (`pool/<tag>/<file>`). The Cloudflare Worker on `core.omakasui.org` redirects `pool/` requests to the corresponding GitHub Releases asset — no binaries are stored in this repo.
 
-The `channel` field is `stable` (default) or `dev`. Pass `--channel dev` to `register-package.sh` to publish to the dev channel, which populates the `*-dev` suites.
+The identity of an entry is product, suite, architecture, package and channel. Product targets and lifecycle state are defined in `index/targets.tsv`.
+
+The legacy root suites (`/dists/noble`, `/dists/resolute`, `/dists/trixie`) are frozen snapshots. They receive no new packages. `index/legacy-retirement.yml` prevents removal before 2026-12-15 and records the required consumer migrations.
 
 ## User setup
 
@@ -76,10 +84,10 @@ curl -fsSL https://keyrings.omakasui.org/omakasui-core.gpg.key \
 CODENAME=$(. /etc/os-release && echo $VERSION_CODENAME)
 echo "deb [signed-by=/etc/apt/keyrings/omakasui.gpg] https://packages.omakasui.org $CODENAME main" \
   | sudo tee /etc/apt/sources.list.d/omakasui.list
-echo "deb [signed-by=/etc/apt/keyrings/omakasui-core.gpg] https://core.omakasui.org $CODENAME main" \
+PRODUCT=omadeb # omabuntu, omadeb, or omari
+echo "deb [signed-by=/etc/apt/keyrings/omakasui-core.gpg] https://core.omakasui.org/$PRODUCT $CODENAME main" \
   | sudo tee /etc/apt/sources.list.d/omakasui-core.list
 
 sudo apt-get update
 sudo apt-get install omakasui-nvim
 ```
-
