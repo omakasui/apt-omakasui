@@ -1,69 +1,36 @@
 #!/usr/bin/env bash
-# remove-entries.sh — Remove rows from index/packages.tsv by exact name or glob pattern.
-# Usage: remove-entries.sh --package <name> [--suites "<s1> <s2>"]
-#        remove-entries.sh --pattern <glob> [--suites "<s1> <s2>"]
+# Remove entries from one target.
+# Usage: remove-entries.sh (--package <name> | --pattern <glob>) --product <product> --suite <suite>
 
 set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/lib/targets.sh"
 
-PACKAGE=""
-PATTERN=""
-SUITES=""
-
+PACKAGE="" PATTERN="" PRODUCT="" SUITE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --package) PACKAGE="$2"; shift 2 ;;
     --pattern) PATTERN="$2"; shift 2 ;;
-    --suites)  SUITES="$2";  shift 2 ;;
+    --product) PRODUCT="$2"; shift 2 ;;
+    --suite) SUITE="$2"; shift 2 ;;
     *) echo "ERROR: unknown argument: $1" >&2; exit 1 ;;
   esac
 done
+[[ -n "$PRODUCT" && -n "$SUITE" ]] || { echo "ERROR: --product and --suite are required"; exit 1; }
+[[ -n "$PACKAGE" || -n "$PATTERN" ]] || { echo "ERROR: --package or --pattern is required"; exit 1; }
+[[ -z "$PACKAGE" || -z "$PATTERN" ]] || { echo "ERROR: selectors are mutually exclusive"; exit 1; }
+target_require "$PRODUCT" "$SUITE"
+[[ -f index/packages.tsv ]] || exit 0
 
-[[ -z "$PACKAGE" && -z "$PATTERN" ]] && {
-  echo "ERROR: --package or --pattern is required"; exit 1
-}
-[[ -n "$PACKAGE" && -n "$PATTERN" ]] && {
-  echo "ERROR: --package and --pattern are mutually exclusive"; exit 1
-}
-
-[[ ! -f index/packages.tsv ]] && { echo "Nothing to remove."; exit 0; }
-
-BEFORE=$(wc -l < index/packages.tsv)
-
-if [[ -n "$PACKAGE" ]]; then
-  # Match field 3 exactly by surrounding the name with spaces.
-  if [[ -n "$SUITES" ]]; then
-    cp index/packages.tsv /tmp/packages.tmp
-    for suite in $SUITES; do
-      # Preserve other suites; remove only the matching suite+name.
-      grep -vF "^${suite} " /tmp/packages.tmp > /tmp/packages.other || true
-      grep -F "^${suite} " /tmp/packages.tmp | grep -vF " ${PACKAGE} " \
-        >> /tmp/packages.other || true
-      mv /tmp/packages.other /tmp/packages.tmp
-    done
-    mv /tmp/packages.tmp index/packages.tsv
-  else
-    grep -vF " ${PACKAGE} " index/packages.tsv > /tmp/packages.tmp || true
-    mv /tmp/packages.tmp index/packages.tsv
-  fi
-else
-  # Convert glob to extended regex.
-  REGEX=" $(echo "$PATTERN" | sed 's/\*/.*/g') "
-  if [[ -n "$SUITES" ]]; then
-    cp index/packages.tsv /tmp/packages.tmp
-    for suite in $SUITES; do
-      # Preserve other suites; filter matching suite lines by pattern.
-      grep -vF "^${suite} " /tmp/packages.tmp > /tmp/packages.other || true
-      grep -F "^${suite} " /tmp/packages.tmp | grep -vE "${REGEX}" \
-        >> /tmp/packages.other || true
-      mv /tmp/packages.other /tmp/packages.tmp
-    done
-    mv /tmp/packages.tmp index/packages.tsv
-  else
-    grep -vE "${REGEX}" index/packages.tsv > /tmp/packages.tmp || true
-    mv /tmp/packages.tmp index/packages.tsv
-  fi
-fi
-
-AFTER=$(wc -l < index/packages.tsv)
-REMOVED=$(( BEFORE - AFTER ))
-echo "Removed ${REMOVED} entries (${PACKAGE:-$PATTERN}${SUITES:+ in $SUITES})."
+before=$(wc -l < index/packages.tsv); tmp=$(mktemp)
+awk -v product="$PRODUCT" -v suite="$SUITE" -v package="$PACKAGE" -v pattern="$PATTERN" '
+  BEGIN { if(pattern!="") { gsub(/[][\\.^$()+?{}|]/,"\\\\&",pattern); gsub(/\*/,".*",pattern) } }
+  {
+    selected=($1==product && $2==suite)
+    matches=(package!="") ? ($4==package) : ($4 ~ ("^" pattern "$"))
+    if (!(selected && matches)) print
+  }
+' index/packages.tsv > "$tmp"
+mv "$tmp" index/packages.tsv
+after=$(wc -l < index/packages.tsv)
+echo "Removed $((before-after)) entries from ${PRODUCT}/${SUITE}."

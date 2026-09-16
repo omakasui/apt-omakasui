@@ -1,159 +1,93 @@
-SHELL   := /bin/bash
+SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
-PKG          ?=
-VERSION      ?=
-SUITES       ?= noble trixie resolute
-GPG_KEY_URL  ?= https://github.com/omakasui/keyrings/raw/refs/heads/main/omakasui-core.gpg.key
-GPG_KEY_ID   ?=
-ALL_SUITES     := noble trixie resolute
-ALL_DEV_SUITES := noble-dev trixie-dev resolute-dev
-SCRIPTS  := scripts
+PKG ?=
+VERSION ?=
+PRODUCT ?=
+SUITE ?=
+PRODUCES ?=
+GPG_KEY_URL ?= https://github.com/omakasui/keyrings/raw/refs/heads/main/omakasui-core.gpg.key
+GPG_KEY_ID ?=
+SCRIPTS := scripts
 
-_require_pkg     = $(if $(PKG),,$(error PKG is required. Example: make $@ PKG=fzf))
-_require_version = $(if $(VERSION),,$(error VERSION is required. Example: make $@ PKG=fzf VERSION=0.60.3))
+_require_pkg = $(if $(PKG),,$(error PKG is required))
+_require_version = $(if $(VERSION),,$(error VERSION is required))
+_require_target = $(if $(and $(PRODUCT),$(SUITE)),,$(error PRODUCT and SUITE are required))
 
 .PHONY: help
 help: ## Show this help
-	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | \
-		awk 'BEGIN {FS = ":.*##"}; {printf "  \033[36m%-22s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*##"}{printf "  \033[36m%-18s\033[0m %s\n",$$1,$$2}'
 
 .PHONY: index
-index: ## Regenerate Packages files from packages.tsv
-	@bash $(SCRIPTS)/update-index.sh --suites "$(ALL_SUITES)"
+index: ## Regenerate all active product indexes
+	@bash $(SCRIPTS)/update-index.sh
 
 .PHONY: sign
-sign: ## Re-sign Release files for all suites (GPG_KEY_ID= or GPG_KEY_URL= optional)
-	@bash $(SCRIPTS)/sign-release.sh \
-		--suites "$(ALL_SUITES) $(ALL_DEV_SUITES)" \
-		$(if $(GPG_KEY_ID),--key-id "$(GPG_KEY_ID)",--key-url "$(GPG_KEY_URL)")
+sign: ## Sign all active product indexes
+	@bash $(SCRIPTS)/sign-release.sh $(if $(GPG_KEY_ID),--key-id "$(GPG_KEY_ID)",--key-url "$(GPG_KEY_URL)")
 
 .PHONY: rebuild
-rebuild: index sign ## Regenerate and sign all metadata
+rebuild: index sign ## Regenerate and sign all active metadata
 
 .PHONY: readme
-readme: ## Sync README packages table with index/packages.tsv
-	@bash $(SCRIPTS)/update-readme.sh \
-		--suites "$(ALL_SUITES)" \
-		--arches "amd64 arm64"
+readme: ## Sync the README package table
+	@bash $(SCRIPTS)/update-readme.sh
 
-.PHONY: register
-register: ## Register a package in stable (PKG= VERSION= SUITES= required)
+.PHONY: register register-dev
+register register-dev: ## Register a release (PKG= VERSION= PRODUCT= SUITE= required)
 	$(call _require_pkg)
 	$(call _require_version)
-	@bash $(SCRIPTS)/register-package.sh \
-		--pkg     "$(PKG)" \
-		--version "$(VERSION)" \
-		--suites  "$(SUITES)"
+	$(call _require_target)
+	@bash $(SCRIPTS)/register-package.sh --pkg "$(PKG)" --version "$(VERSION)" \
+		--product "$(PRODUCT)" --suite "$(SUITE)" --produces "$(PRODUCES)" \
+		$(if $(filter register-dev,$@),--channel dev)
 
-.PHONY: register-dev
-register-dev: ## Register a package in the dev channel (PKG= VERSION= SUITES= required)
-	$(call _require_pkg)
-	$(call _require_version)
-	@bash $(SCRIPTS)/register-package.sh \
-		--pkg     "$(PKG)" \
-		--version "$(VERSION)" \
-		--suites  "$(SUITES)" \
-		--channel dev
-
-.PHONY: promote
-promote: ## Promote all dev entries to stable (SUITES= optional)
-	@bash $(SCRIPTS)/promote-packages.sh --all --suites "$(SUITES)"
-
-.PHONY: promote-pkg
-promote-pkg: ## Promote a single package dev → stable (PKG= required, VERSION= optional)
-	$(call _require_pkg)
-	@bash $(SCRIPTS)/promote-packages.sh \
-		--pkg    "$(PKG)" \
-		--suites "$(SUITES)" \
-		$(if $(VERSION),--version "$(VERSION)")
+.PHONY: promote promote-pkg
+promote promote-pkg: ## Promote dev entries within PRODUCT/SUITE
+	$(call _require_target)
+	$(if $(filter promote-pkg,$@),$(call _require_pkg))
+	@bash $(SCRIPTS)/promote-packages.sh --product "$(PRODUCT)" --suite "$(SUITE)" \
+		$(if $(filter promote,$@),--all,--pkg "$(PKG)") $(if $(VERSION),--version "$(VERSION)")
 
 .PHONY: remove
-remove: ## Remove a package from the index (PKG= required, SUITES= optional)
+remove: ## Remove PKG from PRODUCT/SUITE
 	$(call _require_pkg)
-	@bash $(SCRIPTS)/remove-entries.sh \
-		--package "$(PKG)" \
-		$(if $(filter-out noble trixie,$(SUITES)),--suites "$(SUITES)")
+	$(call _require_target)
+	@bash $(SCRIPTS)/remove-entries.sh --package "$(PKG)" --product "$(PRODUCT)" --suite "$(SUITE)"
 
-.PHONY: freeze
-freeze: ## Pin a package for specific suites (PKG= SUITES= required)
+.PHONY: freeze unfreeze
+freeze unfreeze: ## Freeze/unfreeze PKG in PRODUCT/SUITE
 	$(call _require_pkg)
-	$(if $(SUITES),,$(error SUITES is required for freeze. Example: make $@ PKG=pinta SUITES="noble"))
+	$(call _require_target)
 	@touch index/freeze.list
-	@for suite in $(SUITES); do \
-		grep -qxF "$$suite $(PKG)" index/freeze.list || echo "$$suite $(PKG)" >> index/freeze.list; \
-	done
-	@sort -o index/freeze.list index/freeze.list
-	@echo "Frozen: $(PKG) in suites: $(SUITES)"
+	@if [[ "$@" == freeze ]]; then \
+		entry="$(PRODUCT) $(SUITE) $(PKG)"; grep -qxF "$$entry" index/freeze.list || echo "$$entry" >> index/freeze.list; \
+		sort -o index/freeze.list index/freeze.list; \
+	else sed -i '/^$(PRODUCT) $(SUITE) $(PKG)$$/d' index/freeze.list; fi
 
-.PHONY: unfreeze
-unfreeze: ## Release a frozen package (PKG= required, SUITES= optional — empty = all)
-	$(call _require_pkg)
-	@if [[ -n "$(SUITES)" ]]; then \
-		for suite in $(SUITES); do sed -i "/^$$suite $(PKG)$$/d" index/freeze.list; done; \
-	else \
-		sed -i "/^[^ ]* $(PKG)$$/d" index/freeze.list; \
-	fi
-	@echo "Unfrozen: $(PKG)$(if $(SUITES), in suites: $(SUITES))"
-
-.PHONY: prune-dry
-prune-dry: ## Show stale releases in build-apt-omakasui (dry-run)
+.PHONY: prune-dry prune
+prune-dry: ## Preview stale releases
 	@bash $(SCRIPTS)/prune-releases.sh
-
-.PHONY: prune
-prune: ## Delete stale releases in build-apt-omakasui
+prune: ## Delete stale releases
 	@bash $(SCRIPTS)/prune-releases.sh --delete
 
-.PHONY: list
-list: ## List all packages and versions from packages.tsv
-	@awk '{print $$3, $$4, $$1, $$2}' index/packages.tsv \
-		| sort -u \
-		| column -t || true
-
-.PHONY: list-dev
-list-dev: ## List packages not yet promoted to stable
-	@awk '(NF>=11 && $$11=="dev") {print $$3, $$4, $$1, $$2}' index/packages.tsv \
-		| sort -u \
-		| column -t
+.PHONY: list list-dev info
+list: ## List all indexed packages
+	@awk '{print $$4,$$5,$$1"/"$$2,$$3,$$12}' index/packages.tsv | sort -u | column -t || true
+list-dev: ## List dev entries
+	@awk '$$12=="dev"{print $$4,$$5,$$1"/"$$2,$$3}' index/packages.tsv | sort -u | column -t || true
+info: ## Show PKG entries
+	$(call _require_pkg)
+	@awk '$$4=="$(PKG)"{printf "target=%-22s arch=%-6s ver=%-12s channel=%s\n",$$1"/"$$2,$$3,$$5,$$12}' index/packages.tsv
 
 .PHONY: validate
-validate: ## Validate index/packages.tsv integrity (field count, duplicates)
-	@awk 'NF != 11 { printf "Line %d: wrong field count (%d)\n", NR, NF; err=1 } \
-	     END { if (!err) print "packages.tsv OK: " NR " entr" (NR==1?"y":"ies") }' \
-	  index/packages.tsv
-	@awk 'seen[$$1" "$$2" "$$3" "$$11]++ { printf "Duplicate: %s %s %s (%s)\n", $$1, $$2, $$3, $$11 }' \
-	  index/packages.tsv | sort -u || true
-
-.PHONY: preview-promote
-preview-promote: ## Preview what next promote-all will add vs update in stable
-	@added=$$(awk -v suites="$(SUITES)" \
-	  'BEGIN{n=split(suites,sa," ");for(i=1;i<=n;i++)ss[sa[i]]=1} \
-	   {ch=(NF>=11)?$$11:"stable";if(!ss[$$1])next; \
-	    if(ch=="dev")d[$$3]=$$4;if(ch=="stable")s[$$3]=$$4} \
-	   END{for(p in d)if(!(p in s))print p,d[p]}' \
-	  index/packages.tsv | sort); \
-	updated=$$(awk -v suites="$(SUITES)" \
-	  'BEGIN{n=split(suites,sa," ");for(i=1;i<=n;i++)ss[sa[i]]=1} \
-	   {ch=(NF>=11)?$$11:"stable";if(!ss[$$1])next; \
-	    if(ch=="dev")d[$$3]=$$4;if(ch=="stable")s[$$3]=$$4} \
-	   END{for(p in d)if(p in s&&s[p]!=d[p])print p,s[p],d[p]}' \
-	  index/packages.tsv | sort); \
-	printf '\033[1;33mTo be added:\033[0m\n'; \
-	if [[ -n "$$added" ]]; then printf '%s\n' "$$added" | awk '{printf "  %-26s %s\n",$$1,$$2}'; else echo '  (none)'; fi; \
-	printf '\n\033[1;36mTo be updated:\033[0m\n'; \
-	if [[ -n "$$updated" ]]; then printf '%s\n' "$$updated" | awk '{printf "  %-26s %s -> %s\n",$$1,$$2,$$3}'; else echo '  (none)'; fi
-
-.PHONY: info
-info: ## Show index entries for a package (PKG= required)
-	$(call _require_pkg)
-	@awk '$$3 == "$(PKG)"' index/packages.tsv \
-		| awk '{printf "suite=%-12s arch=%-6s ver=%-12s channel=%s\n", $$1, $$2, $$4, (NF>=11?$$11:"stable")}'
+validate: ## Validate targets and manifest integrity
+	@bash $(SCRIPTS)/validate.sh
 
 .PHONY: check
-check: ## Count entries per suite/arch in the Packages files
-	@for suite in $(ALL_SUITES) $(ALL_DEV_SUITES); do \
-		for arch in amd64 arm64; do \
-			f="dists/$${suite}/main/binary-$${arch}/Packages"; \
-			[[ -f "$$f" ]] && printf "  %-18s %-6s %s entries\n" "$$suite" "$$arch" "$$(grep -c '^Package:' "$$f")"; \
-		done; \
-	done
+check: ## Count generated entries per target and architecture
+	@while read -r product suite _label status; do [[ "$$status" == active ]] || continue; \
+		for published_suite in "$$suite" "$$suite-dev"; do for arch in amd64 arm64; do \
+			f="$$product/dists/$$published_suite/main/binary-$$arch/Packages"; \
+			[[ -f "$$f" ]] && printf '  %-24s %-6s %s entries\n' "$$product/$$published_suite" "$$arch" "$$(grep -c '^Package:' "$$f")"; \
+		done; done; done < index/targets.tsv; true
