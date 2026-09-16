@@ -1,0 +1,132 @@
+Package: omakasui-walker
+Version: 20260330.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
+ .
+Filename: pool/omakasui-walker-20260330.1/omakasui-walker_20260330.1_ubuntu2404_all.deb
+Size: 706
+MD5sum: 535435d4d86a8729bfde5050b58362fe
+SHA1: c1bb329df9a023858d7ea85d0fb998ec861f6bb9
+SHA256: 6e45932eab333bac520488b5cf07f1276b9d4f83fcb9e62e1eee074ea070af8c
+
+Package: omakub-walker
+Version: 20260330.1-1+noble
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers.
+ Installs walker, elephant, and all elephant provider packages in one shot.
+Filename: pool/omakasui-walker-20260330.1/omakub-walker_20260330.1-1+noble_all.deb
+Size: 1794
+MD5sum: d827fa8fbcf09a8e68e6eaae7780f4db
+SHA1: eb56b117f77bfcc48e02e3f8f27667d8d6d188c3
+SHA256: 43a63ab08d643086b798ca7715421958e190f7fb6f93448c3aea1cdb0d8103d7
+
+Package: omakub-devtools
+Version: 0.0.3
+Architecture: all
+Source: omakasui-devtools
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-devtools (= 0.0.3)
+Section: devel
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omabuntu environments
+ Provides the omakub-devtools command. Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omakub-devtools_0.0.3-1+noble_all.deb
+Size: 2280
+MD5sum: 09f7cbe10891947f240183596a07b662
+SHA1: 5edd660316ef0bae3448d60e8e3dfd8240698355
+SHA256: 8212bf41e27309acb62a9f9d4f33374bb4e6e6c3d0d96b97140086b880498b48
+
+Package: omakasui-nvim
+Version: 1:0.0.3
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 132321
+Depends: nvim, git, gum, xdg-utils
+Breaks: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
+Replaces: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
+Section: editors
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-nvim
+Description: Pre-built LazyVim configuration (shared payload)
+ Installs pre-cached LazyVim config and plugins to /usr/share/omakasui-nvim,
+ plus the shared setup script. Install omakub-nvim or omadeb-nvim to get the
+ project-specific setup command.
+Filename: pool/omakasui-nvim-0.0.3/omakasui-nvim_0.0.3-1+noble_all.deb
+Size: 77682358
+MD5sum: 7649aff387104878b15ea753b30483e7
+SHA1: 10355b4cad7716f1748a056f79e7013355014896
+SHA256: 0fe19371014281dcde8c1dcb95d355c9bbb6b556f368b8cfdf09557e3f3c6caa
+
+Package: omakub-nvim
+Version: 1:0.0.3
+Architecture: all
+Source: omakasui-nvim
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 12
+Depends: omakasui-nvim (= 1:0.0.3)
+Section: editors
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-nvim
+Description: Pre-built LazyVim configuration for Omabuntu/Omakub
+ Provides the omakub-setup-nvim command, which activates the shared
+ omakasui-nvim payload for the current user.
+Filename: pool/omakasui-nvim-0.0.3/omakub-nvim_0.0.3-1+noble_all.deb
+Size: 2818
+MD5sum: 0979da03b8eda5692cd7a7e3571175c1
+SHA1: 85c366a51bbca05825774fdb006c4f006ffb6dc1
+SHA256: c4d068bd6c1fcf9c121a2d034a44204a2fecf3025eaa5a6d2481a06bb1d49d15
+
+Package: omakasui-zellij
+Version: 1:0.0.2
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 27
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration (shared payload)
+ Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
+ plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
+ the project-specific setup command.
+Filename: pool/omakasui-zellij-0.0.2/omakasui-zellij_0.0.2-1+noble_all.deb
+Size: 5306
+MD5sum: 954da1feb2f614938e1a3675b49ddd9e
+SHA1: 321dd032c47b143919d63760e3e9f8eedeecdac9
+SHA256: 609d34e4a052b2d57da8da8d80a3b91d8da320edaf4eaedd1586d17b98607dc8
+
+Package: omakub-zellij
+Version: 1:0.0.2
+Architecture: all
+Source: omakasui-zellij
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-zellij (= 1:0.0.2)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration for Omabuntu/Omakub
+ Provides the omakub-setup-zellij command, which activates the shared
+ omakasui-zellij configuration for the current user.
+Filename: pool/omakasui-zellij-0.0.2/omakub-zellij_0.0.2-1+noble_all.deb
+Size: 2038
+MD5sum: 3446a3c3607ba0aa4ae752f67b807e5d
+SHA1: 567c3805de4ccd7eaa11cfb8a0c9834701bc12da
+SHA256: 9399941c6dcdf895389135505ae73ab97dd1eae28a120176e806a3307b6513e9
+

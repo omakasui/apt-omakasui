@@ -1,0 +1,50 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Architectures: amd64 arm64
+Codename: resolute
+Components: main
+Date: Wed, 16 Sep 2026 13:31:51 +0000
+Description: Omabuntu packages
+Label: Omabuntu
+Origin: Omakasui
+Suite: resolute
+MD5Sum:
+ 252664c331302bd0605e1e5a84d58b76              181 Release
+ 100361afcca0888d96c56576c62e1a4d             4591 main/binary-amd64/Packages
+ 874dcbb3a65b4e55ac7d7ba7a675ab85             1603 main/binary-amd64/Packages.gz
+ 4f2d1616949364153816f454b78c4203             1612 main/binary-amd64/Packages.xz
+ 100361afcca0888d96c56576c62e1a4d             4591 main/binary-arm64/Packages
+ 874dcbb3a65b4e55ac7d7ba7a675ab85             1603 main/binary-arm64/Packages.gz
+ 4f2d1616949364153816f454b78c4203             1612 main/binary-arm64/Packages.xz
+SHA1:
+ 986f9addaf060281a2f5abf13b378b86e5f0d69b              181 Release
+ 82468ea264a4717c8f3e5e52ea218158d426fdd4             4591 main/binary-amd64/Packages
+ bacadba5c06ebfb87a5d9b0e880e0fccb26868b9             1603 main/binary-amd64/Packages.gz
+ 38887235a618e5f9afd8ea7c002ae30dcd6a121f             1612 main/binary-amd64/Packages.xz
+ 82468ea264a4717c8f3e5e52ea218158d426fdd4             4591 main/binary-arm64/Packages
+ bacadba5c06ebfb87a5d9b0e880e0fccb26868b9             1603 main/binary-arm64/Packages.gz
+ 38887235a618e5f9afd8ea7c002ae30dcd6a121f             1612 main/binary-arm64/Packages.xz
+SHA256:
+ cc1c539c2dfe2752f9b00619a0a1abe0f419a27ad87bdaf23815f1d1339eda48              181 Release
+ 48dad5c74066e044e023c3199e5cbec38ee06452e4878fad4e02176cfc9e7e4e             4591 main/binary-amd64/Packages
+ d429afa6cacda87d52592a53894eef2205b629521f18c00998f133ab56f33f85             1603 main/binary-amd64/Packages.gz
+ 84129c0e74130dec172f618c91eda8a8f072e39dc71ee4e6a246000bd390b32b             1612 main/binary-amd64/Packages.xz
+ 48dad5c74066e044e023c3199e5cbec38ee06452e4878fad4e02176cfc9e7e4e             4591 main/binary-arm64/Packages
+ d429afa6cacda87d52592a53894eef2205b629521f18c00998f133ab56f33f85             1603 main/binary-arm64/Packages.gz
+ 84129c0e74130dec172f618c91eda8a8f072e39dc71ee4e6a246000bd390b32b             1612 main/binary-arm64/Packages.xz
+SHA512:
+ c0c47c696717faa912b8afa37112f2319e2a359dd1b6a8a6abe123f821ed4642a1deda00ffd3ad0b414d97293a47cc8a327da15dd9413e96fc157a37aaa8c7d0              181 Release
+ cf6df7b220429f3fba9c70d7dfe5d2893e73f1f23df3ccc3ad878aa582ba897ebebffbd3ac33ddf955a4cbefdd97cd253c7e0c49084e45bdd4d40cab8448e808             4591 main/binary-amd64/Packages
+ 1a3e0508fb122d2fc7d3174b36bf9b341fe7e81755272cdf31c2c5b9c61892cddceda00cc51a3ba9c7b48d7ce47eca605dee1741c2b15773587d28a7574f371d             1603 main/binary-amd64/Packages.gz
+ d41b3c03aecde6cdfa6ebf668bde177743d3248cfb06ac0225e399067a5bfb3d9301bc09dd70afc52accabed12bfee63fdd694ad294433285f86b5cc1304f30f             1612 main/binary-amd64/Packages.xz
+ cf6df7b220429f3fba9c70d7dfe5d2893e73f1f23df3ccc3ad878aa582ba897ebebffbd3ac33ddf955a4cbefdd97cd253c7e0c49084e45bdd4d40cab8448e808             4591 main/binary-arm64/Packages
+ 1a3e0508fb122d2fc7d3174b36bf9b341fe7e81755272cdf31c2c5b9c61892cddceda00cc51a3ba9c7b48d7ce47eca605dee1741c2b15773587d28a7574f371d             1603 main/binary-arm64/Packages.gz
+ d41b3c03aecde6cdfa6ebf668bde177743d3248cfb06ac0225e399067a5bfb3d9301bc09dd70afc52accabed12bfee63fdd694ad294433285f86b5cc1304f30f             1612 main/binary-arm64/Packages.xz
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQQsMt+s59QvVUAxZknlP1HLTV4G3wUCaqqaRwAKCRDlP1HLTV4G
+3470AQDlhQhxWwKgZQqzq5oMStqRZtLmhBSaWu10k/EKVhfYLQD8D6Ff0kapLq/A
+QlAfA2jsVKPuqaFgwJFs3oCQ4XpGZwE=
+=ekDt
+-----END PGP SIGNATURE-----

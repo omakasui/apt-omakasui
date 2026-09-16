@@ -1,0 +1,132 @@
+Package: omakasui-walker
+Version: 20260330.1
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch, walker (>= 2.16.1-omakasui1), elephant (>= 2.21.0)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers. Installs walker, elephant, and all elephant provider packages in one shot.
+ .
+Filename: pool/omakasui-walker-20260330.1/omakasui-walker_20260330.1_debian13_all.deb
+Size: 706
+MD5sum: 2c591af8f32f1c24a5ea2c4303288ea0
+SHA1: d86e37d56468fd5cddafde2cc7ebf56500a6dd6c
+SHA256: fffed6c6adf1b9b9477a857a350dc520e031bbfe1850d04412caa6ea3c2f1d82
+
+Package: omadeb-walker
+Version: 20260330.1-1+trixie
+Architecture: all
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers.
+ Installs walker, elephant, and all elephant provider packages in one shot.
+Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1-1+trixie_all.deb
+Size: 1794
+MD5sum: bb5093709bff6664226463d4b1577800
+SHA1: 7ed4034cc3aec3cde089cf4accc1255671131e48
+SHA256: 78e4bd3f00c2101b74ad2e96b603acf72c3676cbd99bae4fcc74f337a903e780
+
+Package: omadeb-devtools
+Version: 0.0.3
+Architecture: all
+Source: omakasui-devtools
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-devtools (= 0.0.3)
+Section: devel
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omadeb environments
+ Provides the omadeb-devtools command.Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omadeb-devtools_0.0.3-1+trixie_all.deb
+Size: 2368
+MD5sum: 1ab2d56be0f6197395a8de6ca5135c8b
+SHA1: 27c3ed4eb42030c363dfeef290c6b6713e915436
+SHA256: a6d8a96e4b77ed4ab1b44b18871fbc6dabdf41c6a56422a092478e9ebc09908e
+
+Package: omakasui-nvim
+Version: 1:0.0.3
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 132326
+Depends: nvim, git, gum, xdg-utils
+Breaks: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
+Replaces: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
+Section: editors
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-nvim
+Description: Pre-built LazyVim configuration (shared payload)
+ Installs pre-cached LazyVim config and plugins to /usr/share/omakasui-nvim,
+ plus the shared setup script. Install omakub-nvim or omadeb-nvim to get the
+ project-specific setup command.
+Filename: pool/omakasui-nvim-0.0.3/omakasui-nvim_0.0.3-1+trixie_all.deb
+Size: 77209512
+MD5sum: c5a2da627dfc5b54d826581161e4a712
+SHA1: 4c47f8f9b4527e329272725ab039c2abd2de10fc
+SHA256: d71e67313f3e6eaadaf98a258f75ba0f17b119038bc447c502199d5618fd598d
+
+Package: omadeb-nvim
+Version: 1:0.0.3
+Architecture: all
+Source: omakasui-nvim
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 12
+Depends: omakasui-nvim (= 1:0.0.3)
+Section: editors
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-nvim
+Description: Pre-built LazyVim configuration for Omadeb
+ Provides the omadeb-setup-nvim command, which activates the shared
+ omakasui-nvim payload for the current user.
+Filename: pool/omakasui-nvim-0.0.3/omadeb-nvim_0.0.3-1+trixie_all.deb
+Size: 2888
+MD5sum: 1e953da8782d365421f4e9ef91bbf8bf
+SHA1: c862c6c8401f5271b7bb8e80de57896251ac2e57
+SHA256: 119815ac487b3e3e5936f5006f412035d8cc761fcc4d10d961f3f9fe9672e590
+
+Package: omakasui-zellij
+Version: 1:0.0.2
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 27
+Depends: zellij, gum
+Section: utils
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration (shared payload)
+ Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
+ plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
+ the project-specific setup command.
+Filename: pool/omakasui-zellij-0.0.2/omakasui-zellij_0.0.2-1+trixie_all.deb
+Size: 5352
+MD5sum: 58cbb78558f42b680150785a4a66c5ea
+SHA1: 95977515cccfc4b0b1bff97c54266951efb84f67
+SHA256: a14f141e90090de48e6c00262a0e87d5aaa06a899d365539e387a789f19b8c4e
+
+Package: omadeb-zellij
+Version: 1:0.0.2
+Architecture: all
+Source: omakasui-zellij
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Depends: omakasui-zellij (= 1:0.0.2)
+Section: utils
+Priority: optional
+Homepage: https://github.com/omakasui/omakasui-zellij
+Description: Zellij configuration for Omadeb
+ Provides the omadeb-setup-zellij command, which activates the shared
+ omakasui-zellij configuration for the current user.
+Filename: pool/omakasui-zellij-0.0.2/omadeb-zellij_0.0.2-1+trixie_all.deb
+Size: 2140
+MD5sum: f5b2d3e05c496ef1b8c883734b760d75
+SHA1: 0948c6ec2ef2b1b33a6c058869e7e6f4cb437b48
+SHA256: 268be7bee65a5069ea07250f4fdfb6217cf5015095238fbbf5e6c72df7f5eb9a
+
