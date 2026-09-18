@@ -1,0 +1,27 @@
+name: Mirror health
+
+on:
+  schedule:
+    - cron: '17 5 * * *'  # Daily at 05:17 UTC
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Check published mirror
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check core.omakasui.org
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          status=0
+          bash scripts/check-mirror.sh --base-url https://core.omakasui.org --report report.md || status=$?
+          [[ -s report.md ]] || echo "Health check failed before producing a report." > report.md
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
