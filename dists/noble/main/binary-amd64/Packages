@@ -27,10 +27,10 @@ Homepage: https://github.com/omakasui/omakasui
 Description: Omakasui metapackage for walker and elephant providers.
  Installs walker, elephant, and all elephant provider packages in one shot.
 Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1-1+noble_all.deb
-Size: 1792
-MD5sum: b5af0b746ac115492537d127cb8b179c
-SHA1: d4e367c91b9765a113eaef215ae54ffd83a66066
-SHA256: 21c2e38d58eb93dce43e66c87f75a8272d72590d34d78f7395bf3a4f77f02b0f
+Size: 1898
+MD5sum: 93f19383a0e6b077b7c7ba1cb9088ed0
+SHA1: d3188017f7d468c9e858e3676eb319be11230972
+SHA256: 16b7dbf736604fe09ecc94201996bf031bab2eea695099ed9e3799d2d0788a3b
 
 Package: omakub-walker
 Version: 20260330.1-1+noble
@@ -44,10 +44,10 @@ Homepage: https://github.com/omakasui/omakasui
 Description: Omakasui metapackage for walker and elephant providers.
  Installs walker, elephant, and all elephant provider packages in one shot.
 Filename: pool/omakasui-walker-20260330.1/omakub-walker_20260330.1-1+noble_all.deb
-Size: 1794
-MD5sum: d827fa8fbcf09a8e68e6eaae7780f4db
-SHA1: eb56b117f77bfcc48e02e3f8f27667d8d6d188c3
-SHA256: 43a63ab08d643086b798ca7715421958e190f7fb6f93448c3aea1cdb0d8103d7
+Size: 1896
+MD5sum: 411b277c7980cfcc96047880c9c5f5e0
+SHA1: ec3ae82380fceccb9443237192c2491965b06a6a
+SHA256: 77c079daa8339786181fde0ec344c8301734ecafa40a6a00e3a45f06c59008f6
 
 Package: omakub-devtools
 Version: 0.0.3
@@ -89,7 +89,7 @@ Package: omakasui-nvim
 Version: 1:0.0.3
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 132321
+Installed-Size: 132967
 Depends: nvim, git, gum, xdg-utils
 Breaks: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
 Replaces: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
@@ -102,10 +102,10 @@ Description: Pre-built LazyVim configuration (shared payload)
  plus the shared setup script. Install omakub-nvim or omadeb-nvim to get the
  project-specific setup command.
 Filename: pool/omakasui-nvim-0.0.3/omakasui-nvim_0.0.3-1+noble_all.deb
-Size: 77682358
-MD5sum: 7649aff387104878b15ea753b30483e7
-SHA1: 10355b4cad7716f1748a056f79e7013355014896
-SHA256: 0fe19371014281dcde8c1dcb95d355c9bbb6b556f368b8cfdf09557e3f3c6caa
+Size: 78041230
+MD5sum: e80464d8be974b8f8c08b00bf569f6f9
+SHA1: 6da03cb201f01b1ef7e969291de1e97ca36efce0
+SHA256: 6a74a1f5e1590c84167c4aa23c63a558dc148cf6e97e672fb79d82f9cd49163c
 
 Package: omakub-nvim
 Version: 1:0.0.3

@@ -27,10 +27,10 @@ Homepage: https://github.com/omakasui/omakasui
 Description: Omakasui metapackage for walker and elephant providers.
  Installs walker, elephant, and all elephant provider packages in one shot.
 Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1-1+trixie_all.deb
-Size: 1794
-MD5sum: bb5093709bff6664226463d4b1577800
-SHA1: 7ed4034cc3aec3cde089cf4accc1255671131e48
-SHA256: 78e4bd3f00c2101b74ad2e96b603acf72c3676cbd99bae4fcc74f337a903e780
+Size: 1902
+MD5sum: 7d80d94d057e1e6dce74a34bd7bdc3c4
+SHA1: a8c46ffef2d1bc86638d6904a9be3279b8e3b012
+SHA256: 5f43f48a04786e8dffab7d734759c6096b19dc173724fa512aa2063a162f912a
 
 Package: omadeb-devtools
 Version: 0.0.3
@@ -54,7 +54,7 @@ Package: omakasui-nvim
 Version: 1:0.0.3
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 132326
+Installed-Size: 132939
 Depends: nvim, git, gum, xdg-utils
 Breaks: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
 Replaces: omadeb-nvim (<< 1:0.0.2~), omakub-nvim (<< 1:0.0.2~)
@@ -67,10 +67,10 @@ Description: Pre-built LazyVim configuration (shared payload)
  plus the shared setup script. Install omakub-nvim or omadeb-nvim to get the
  project-specific setup command.
 Filename: pool/omakasui-nvim-0.0.3/omakasui-nvim_0.0.3-1+trixie_all.deb
-Size: 77209512
-MD5sum: c5a2da627dfc5b54d826581161e4a712
-SHA1: 4c47f8f9b4527e329272725ab039c2abd2de10fc
-SHA256: d71e67313f3e6eaadaf98a258f75ba0f17b119038bc447c502199d5618fd598d
+Size: 77559424
+MD5sum: 485f0580df9ec0923b4fcf3c0b740093
+SHA1: d353a3fabd799d278231c740d796416d7e6d36f9
+SHA256: e2df695dc55ff4770612ca777a5eb4a803ec1989ea3cf768fa4638f3cd615e57
 
 Package: omadeb-nvim
 Version: 1:0.0.3
