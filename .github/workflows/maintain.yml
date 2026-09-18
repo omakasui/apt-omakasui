@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - rebuild-index
+          - resync-assets
           - remove-package
           - clean-pool
           - freeze-package
@@ -22,11 +23,11 @@ on:
         required: false
         type: string
       product:
-        description: 'Product — required except for rebuild-index'
+        description: 'Product — required except for rebuild-index and resync-assets'
         required: false
         type: string
       suite:
-        description: 'Suite — required except for rebuild-index'
+        description: 'Suite — required except for rebuild-index and resync-assets'
         required: false
         type: string
       pattern:
@@ -50,7 +51,7 @@ jobs:
       - name: Validate inputs
         run: |
           ACTION="${{ inputs.action }}"
-          if [[ "$ACTION" != "rebuild-index" && ( -z "${{ inputs.product }}" || -z "${{ inputs.suite }}" ) ]]; then
+          if [[ "$ACTION" != "rebuild-index" && "$ACTION" != "resync-assets" && ( -z "${{ inputs.product }}" || -z "${{ inputs.suite }}" ) ]]; then
             echo "ERROR: product and suite are required"; exit 1
           fi
           case "$ACTION" in
@@ -76,6 +77,9 @@ jobs:
               ;;
             rebuild-index)
               echo "Rebuilding index from existing packages.tsv."
+              ;;
+            resync-assets)
+              echo "Realigning metadata with published release assets."
               ;;
           esac
 
@@ -105,6 +109,13 @@ jobs:
         if: inputs.action == 'rebuild-index'
         run: echo "Rebuilding index from existing index/packages.tsv."
 
+      - name: '[resync-assets] Realign index and legacy suites with release assets'
+        id: resync
+        if: inputs.action == 'resync-assets'
+        env:
+          GH_TOKEN: ${{ secrets.BUILD_OMAKASUI_DISPATCH_TOKEN }}
+        run: bash scripts/resync-assets.sh
+
       - name: '[freeze-package] Add to freeze.list'
         if: inputs.action == 'freeze-package'
         run: |
@@ -127,7 +138,8 @@ jobs:
         run: |
           touch index/packages.tsv
           bash scripts/update-index.sh
-          bash scripts/sign-release.sh --key-id "$GPG_KEY_ID"
+          bash scripts/sign-release.sh --key-id "$GPG_KEY_ID" \
+            --legacy-suites "${{ steps.resync.outputs.legacy_suites }}"
 
       - name: Update README packages table
         run: bash scripts/update-readme.sh
@@ -141,6 +153,7 @@ jobs:
           case "$ACTION" in
             remove-package) MSG="maint: remove ${PKG} [$(date '+%Y-%m-%d')]" ;;
             clean-pool)     MSG="maint: clean ${PATTERN} [$(date '+%Y-%m-%d')]" ;;
+            resync-assets)  MSG="maint: resync metadata with release assets [$(date '+%Y-%m-%d')]" ;;
             freeze-package)   MSG="maint: freeze ${PKG} [$(date '+%Y-%m-%d')]" ;;
             unfreeze-package) MSG="maint: unfreeze ${PKG} [$(date '+%Y-%m-%d')]" ;;
             *)              MSG="maint: rebuild index [$(date '+%Y-%m-%d')]" ;;

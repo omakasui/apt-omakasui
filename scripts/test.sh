@@ -29,9 +29,8 @@ for target in omabuntu/noble omabuntu/resolute omadeb/trixie omari/trixie; do
   product=${target%/*}; suite=${target#*/}
   stable="$SANDBOX/$product/dists/$suite/main/binary-amd64/Packages"
   dev="$SANDBOX/$product/dists/${suite}-dev/main/binary-amd64/Packages"
-  [[ "$(grep -c '^Package:' "$stable" || true)" == "$(grep -c '^Package:' "$dev" || true)" ]] || {
-    echo "ERROR: stable fallback mismatch for $target"; exit 1;
-  }
+  missing=$(comm -23 <(awk '/^Package:/{print $2}' "$stable" | sort -u) <(awk '/^Package:/{print $2}' "$dev" | sort -u))
+  [[ -z "$missing" ]] || { echo "ERROR: stable fallback mismatch for $target: ${missing//$'\n'/ }"; exit 1; }
 done
 
 sed -i 's/^omari trixie Omari active$/omari trixie Omari deprecated/' "$SANDBOX/index/targets.tsv"
@@ -41,8 +40,10 @@ rm -rf "$SANDBOX/omari"
 
 # Test dev override.
 sed -i 's/^omari trixie Omari deprecated$/omari trixie Omari active/' "$SANDBOX/index/targets.tsv"
-awk '$1=="omadeb" && $2=="trixie" && $4=="omakasui-nvim" { $12="dev"; print; exit }' \
-  "$SANDBOX/index/packages.tsv" >> "$SANDBOX/index/packages.tsv"
+awk '!($1=="omadeb" && $2=="trixie" && $4=="omakasui-nvim" && $12=="dev") { print }
+     $1=="omadeb" && $2=="trixie" && $4=="omakasui-nvim" && $12=="stable" && !done { $12="dev"; dev=$0; done=1 }
+     END { print dev }' "$SANDBOX/index/packages.tsv" > "$SANDBOX/index/packages.tmp"
+mv "$SANDBOX/index/packages.tmp" "$SANDBOX/index/packages.tsv"
 (cd "$SANDBOX" && bash "$ROOT/scripts/update-index.sh" --targets omadeb/trixie) >/dev/null
 [[ "$(grep -c '^Package: omakasui-nvim$' "$SANDBOX/omadeb/dists/trixie-dev/main/binary-amd64/Packages")" == 1 ]] || {
   echo 'ERROR: dev override did not suppress stable fallback'; exit 1;
