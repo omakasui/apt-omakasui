@@ -117,10 +117,10 @@ SHA1: a8c46ffef2d1bc86638d6904a9be3279b8e3b012
 SHA256: 5f43f48a04786e8dffab7d734759c6096b19dc173724fa512aa2063a162f912a
 
 Package: omakasui-zellij
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 27
+Installed-Size: 29
 Depends: zellij, gum
 Section: utils
 Priority: optional
@@ -130,28 +130,28 @@ Description: Zellij configuration (shared payload)
  Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
  plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
  the project-specific setup command.
-Filename: pool/omakasui-zellij-0.0.2/omakasui-zellij_0.0.2-1+trixie_all.deb
-Size: 5352
-MD5sum: 58cbb78558f42b680150785a4a66c5ea
-SHA1: 95977515cccfc4b0b1bff97c54266951efb84f67
-SHA256: a14f141e90090de48e6c00262a0e87d5aaa06a899d365539e387a789f19b8c4e
+Filename: pool/omakasui-zellij-0.0.3/omakasui-zellij_0.0.3-1+trixie_all.deb
+Size: 6200
+MD5sum: 2a1636950567f1176d8b8819883e0632
+SHA1: 7e90640de7a1a40bf8a69b503c7ec40b26c3a916
+SHA256: d0f430b664d929e93e0a8cfcf79eb791b680feb65c687ab6d537dbcded9aff17
 
 Package: omadeb-zellij
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Source: omakasui-zellij
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 11
-Depends: omakasui-zellij (= 1:0.0.2)
+Depends: omakasui-zellij (= 1:0.0.3)
 Section: utils
 Priority: optional
 Homepage: https://github.com/omakasui/omakasui-zellij
 Description: Zellij configuration for Omadeb
  Provides the omadeb-setup-zellij command, which activates the shared
  omakasui-zellij configuration for the current user.
-Filename: pool/omakasui-zellij-0.0.2/omadeb-zellij_0.0.2-1+trixie_all.deb
-Size: 2140
-MD5sum: f5b2d3e05c496ef1b8c883734b760d75
-SHA1: 0948c6ec2ef2b1b33a6c058869e7e6f4cb437b48
-SHA256: 268be7bee65a5069ea07250f4fdfb6217cf5015095238fbbf5e6c72df7f5eb9a
+Filename: pool/omakasui-zellij-0.0.3/omadeb-zellij_0.0.3-1+trixie_all.deb
+Size: 2196
+MD5sum: ba025354b0e3ee26058064aba6e676ae
+SHA1: 014e44ed47529560beb658ceb4067db2becdd879
+SHA256: 5c59ac6e90b6d0851fa0fd59bbc7a593640b7afafa964c2d0a45b6959fe24d7e
 
