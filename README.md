@@ -24,6 +24,7 @@ Each product also exposes `*-dev` suites. Dev includes stable packages from the 
 | `omadeb-walker` | [omadeb-walker](https://github.com/omakasui/omakasui) | omadeb/trixie | all |
 | `omadeb-zellij` | [omadeb-zellij](https://github.com/omakasui/omakasui-zellij) | omadeb/trixie | all |
 | `omakasui-archive-keyring` | [omakasui-archive-keyring](https://codeberg.org/omakasui/omakasui-archive-keyring) | omari/trixie | all |
+| `omakasui-devtools` | [omakasui-devtools](https://github.com/omakasui/omakasui-devtools) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
 | `omakasui-nvim` | [omakasui-nvim](https://github.com/omakasui/omakasui-nvim) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
 | `omakasui-walker` | [omakasui-walker](https://github.com/omakasui/omakasui) | omabuntu/noble, omadeb/trixie | all |
 | `omakasui-zellij` | [omakasui-zellij](https://github.com/omakasui/omakasui-zellij) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
@@ -40,20 +41,22 @@ This repository does not claim any ownership over the upstream software. Its sol
 
 If you are an upstream maintainer and have concerns about the distribution of your software here, please open an issue or contact the omakasui project directly.
 
-## Scripts and local workflow
+## Maintenance
 
-Run `make help` from the repo root for a full list of available targets. Common ones:
+Package releases are published automatically from `build-apt-omakasui` through a
+single `packages-updated` batch event. GitHub Actions also exposes manual workflows
+for promotion and for exceptional index rebuilds or exact package removals.
+
+Run `make help` for the small set of local inspection and verification commands:
 
 ```bash
 make list                                          # show all packages in the index
 make list-dev                                      # show packages not yet promoted to stable
 make info PKG=omakasui-nvim                        # inspect all entries for a package
-make check                                         # count entries per suite/arch
+make status                                        # count entries per suite/arch
+make check                                         # validate the manifest and run tests
 make index                                         # regenerate Packages files
 make rebuild GPG_KEY_ID=<fp>                       # regenerate + re-sign
-make promote-pkg PKG=omakasui-nvim PRODUCT=omadeb SUITE=trixie
-make promote                                       # promote all dev entries on every active target
-make promote PRODUCT=omadeb                        # bulk promotion filtered by product and/or suite
 make readme                                        # sync the README packages table
 make prune-dry                                     # preview stale releases in build-apt-omakasui
 ```
@@ -68,7 +71,7 @@ make prune-dry                                     # preview stale releases in b
 
 The identity of an entry is product, suite, architecture, package and channel. Product targets and lifecycle state are defined in `index/targets.tsv`.
 
-The legacy root suites (`/dists/noble`, `/dists/resolute`, `/dists/trixie`) are frozen snapshots. They receive no new packages. `index/legacy-retirement.yml` prevents removal before 2026-12-15 and records the required consumer migrations.
+The legacy root suites (`/dists/noble`, `/dists/resolute`, `/dists/trixie`) are frozen snapshots. They receive no new packages. `index/legacy-retirement.yml` records the do-not-remove-before date of 2026-12-15 and the required consumer migrations.
 
 ## User setup
 
