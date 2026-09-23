@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Promote dev entries within one target.
+# Promote dev entries, optionally filtering bulk promotions by target.
 # Usage: promote-packages.sh (--pkg <name> [--version <ver>] | --all)
-#        --product <product> --suite <suite> [--exclude "<p1> <p2>"]
+#        [--product <product>] [--suite <suite>] [--exclude "<p1> <p2>"]
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -19,18 +19,26 @@ while [[ $# -gt 0 ]]; do
     *) echo "ERROR: unknown argument: $1" >&2; exit 1 ;;
   esac
 done
-[[ -n "$PRODUCT" && -n "$SUITE" ]] || { echo "ERROR: --product and --suite are required"; exit 1; }
 [[ "$ALL" == true || -n "$PKG" ]] || { echo "ERROR: --pkg or --all is required"; exit 1; }
 [[ "$ALL" != true || -z "$PKG" ]] || { echo "ERROR: --pkg and --all are mutually exclusive"; exit 1; }
-target_require_active "$PRODUCT" "$SUITE"
+if [[ "$ALL" == true ]]; then
+  awk -v product="$PRODUCT" -v suite="$SUITE" '
+    $4 == "active" && (product == "" || $1 == product) && (suite == "" || $2 == suite) { found=1 }
+    END { exit !found }
+  ' index/targets.tsv || { echo "ERROR: no active targets match the requested filters" >&2; exit 1; }
+else
+  [[ -n "$PRODUCT" && -n "$SUITE" ]] || { echo "ERROR: --product and --suite are required with --pkg" >&2; exit 1; }
+  target_require_active "$PRODUCT" "$SUITE"
+fi
 
 tmp=$(mktemp)
 awk -v product="$PRODUCT" -v suite="$SUITE" -v pkg="$PKG" -v ver="$VERSION" \
     -v promote_all="$ALL" -v excluded="$EXCLUDE" '
   BEGIN { n=split(excluded,a," "); for(i=1;i<=n;i++) exclude[a[i]]=1; promoted=0 }
+  FNR==NR { if($4=="active") active[$1 FS $2]=1; next }
   {
     channel=(NF>=12)?$12:"stable"
-    match_target=($1==product && $2==suite && channel=="dev")
+    match_target=(active[$1 FS $2] && (product=="" || $1==product) && (suite=="" || $2==suite) && channel=="dev")
     if (promote_all=="true") match_target=(match_target && !exclude[$4])
     else match_target=(match_target && $4==pkg && (ver=="" || $5==ver))
     if (match_target) { $12="stable"; promoted++ }
@@ -38,7 +46,7 @@ awk -v product="$PRODUCT" -v suite="$SUITE" -v pkg="$PKG" -v ver="$VERSION" \
   }
   END { if (promoted==0) print "WARNING: no dev entries found for promotion" > "/dev/stderr";
         else print "Promoted " promoted " entries" > "/dev/stderr" }
-' index/packages.tsv > "$tmp"
+' index/targets.tsv index/packages.tsv > "$tmp"
 
 # Deduplicate stable entries.
 awk '{ key=$1 FS $2 FS $3 FS $4 FS ((NF>=12)?$12:"stable"); rows[key]=$0; order[++n]=key }

@@ -11,7 +11,7 @@ on:
           - promote-package
           - promote-all
       package:
-        description: 'Package name — required for promote-package'
+        description: 'Package name (required for promote-package)'
         required: false
         type: string
       version:
@@ -19,12 +19,12 @@ on:
         required: false
         type: string
       product:
-        description: 'Product repository (omabuntu, omadeb, or omari)'
-        required: true
+        description: 'Product repository (required for promote-package, optional filter for promote-all)'
+        required: false
         type: string
       suite:
-        description: 'Base suite'
-        required: true
+        description: 'Base suite (required for promote-package, optional filter for promote-all)'
+        required: false
         type: string
       exclude:
         description: 'For promote-all: space-separated package names to exclude from bulk promotion'

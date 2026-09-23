@@ -56,6 +56,15 @@ after_omabuntu=$(awk '$1=="omabuntu"' "$SANDBOX/index/packages.tsv" | sha256sum)
 [[ "$before_omabuntu" == "$after_omabuntu" ]] || { echo 'ERROR: promotion crossed product boundary'; exit 1; }
 [[ "$(awk '$1=="omadeb" && $2=="trixie" && $4=="omakasui-nvim" && $12=="stable"{n++} END{print n+0}' "$SANDBOX/index/packages.tsv")" == 1 ]]
 
+# Test an unscoped bulk promotion across active products and suites.
+awk '($1=="omabuntu" && $2=="noble" && $4=="omakasui-nvim") ||
+     ($1=="omari" && $2=="trixie" && $4=="omakasui-nvim") { $12="dev" }
+     { print }' "$SANDBOX/index/packages.tsv" > "$SANDBOX/index/packages.tmp"
+mv "$SANDBOX/index/packages.tmp" "$SANDBOX/index/packages.tsv"
+(cd "$SANDBOX" && bash "$ROOT/scripts/promote-packages.sh" --all) >/dev/null
+[[ "$(awk '$1=="omabuntu" && $2=="noble" && $4=="omakasui-nvim" && $12=="dev"{n++} END{print n+0}' "$SANDBOX/index/packages.tsv")" == 0 ]]
+[[ "$(awk '$1=="omari" && $2=="trixie" && $4=="omakasui-nvim" && $12=="dev"{n++} END{print n+0}' "$SANDBOX/index/packages.tsv")" == 0 ]]
+
 (cd "$SANDBOX" && bash "$ROOT/scripts/remove-entries.sh" --package omakasui-nvim --product omadeb --suite trixie) >/dev/null
 ! awk '$1=="omadeb" && $2=="trixie" && $4=="omakasui-nvim"{found=1} END{exit !found}' "$SANDBOX/index/packages.tsv"
 awk '$1=="omabuntu" && $4=="omakasui-nvim"{found=1} END{exit !found}' "$SANDBOX/index/packages.tsv"

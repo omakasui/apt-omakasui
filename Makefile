@@ -43,8 +43,8 @@ register register-dev: ## Register a release (PKG= VERSION= PRODUCT= SUITE= requ
 		$(if $(filter register-dev,$@),--channel dev)
 
 .PHONY: promote promote-pkg
-promote promote-pkg: ## Promote dev entries within PRODUCT/SUITE
-	$(call _require_target)
+promote promote-pkg: ## Promote dev entries
+	$(if $(filter promote-pkg,$@),$(call _require_target))
 	$(if $(filter promote-pkg,$@),$(call _require_pkg))
 	@bash $(SCRIPTS)/promote-packages.sh --product "$(PRODUCT)" --suite "$(SUITE)" \
 		$(if $(filter promote,$@),--all,--pkg "$(PKG)") $(if $(VERSION),--version "$(VERSION)")

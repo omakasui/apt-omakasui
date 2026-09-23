@@ -52,6 +52,8 @@ make check                                         # count entries per suite/arc
 make index                                         # regenerate Packages files
 make rebuild GPG_KEY_ID=<fp>                       # regenerate + re-sign
 make promote-pkg PKG=omakasui-nvim PRODUCT=omadeb SUITE=trixie
+make promote                                       # promote all dev entries on every active target
+make promote PRODUCT=omadeb                        # bulk promotion filtered by product and/or suite
 make readme                                        # sync the README packages table
 make prune-dry                                     # preview stale releases in build-apt-omakasui
 ```
