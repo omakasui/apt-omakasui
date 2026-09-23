@@ -31,6 +31,10 @@ on:
         required: false
         type: string
 
+concurrency:
+  group: apt-metadata-write
+  cancel-in-progress: false
+
 jobs:
   promote:
     name: Promote packages to stable
@@ -41,8 +45,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate inputs
+        env:
+          ACTION: ${{ inputs.action }}
+          PACKAGE: ${{ inputs.package }}
+          VERSION: ${{ inputs.version }}
+          PRODUCT: ${{ inputs.product }}
+          SUITE: ${{ inputs.suite }}
+          EXCLUDE: ${{ inputs.exclude }}
+        run: |
+          if [[ "$ACTION" == promote-package ]]; then
+            [[ "$PACKAGE" =~ ^[a-z0-9][a-z0-9+.-]*$ ]] || { echo 'Invalid package'; exit 1; }
+            [[ -z "$VERSION" || "$VERSION" =~ ^[a-zA-Z0-9.+:~-]+$ ]] || { echo 'Invalid version'; exit 1; }
+            [[ "$PRODUCT" =~ ^[a-z0-9-]+$ ]] || { echo 'Invalid product'; exit 1; }
+            [[ "$SUITE" =~ ^[a-z0-9-]+$ ]] || { echo 'Invalid suite'; exit 1; }
+          else
+            [[ -z "$PRODUCT" || "$PRODUCT" =~ ^[a-z0-9-]+$ ]] || { echo 'Invalid product'; exit 1; }
+            [[ -z "$SUITE" || "$SUITE" =~ ^[a-z0-9-]+$ ]] || { echo 'Invalid suite'; exit 1; }
+            for package in $EXCLUDE; do
+              [[ "$package" =~ ^[a-z0-9][a-z0-9+.-]*$ ]] || { echo 'Invalid excluded package'; exit 1; }
+            done
+          fi
 
       - name: Setup APT tools and GPG key
         id: setup-apt
@@ -52,21 +76,25 @@ jobs:
 
       - name: Promote package in index manifest
         if: inputs.action == 'promote-package'
+        env:
+          PACKAGE: ${{ inputs.package }}
+          VERSION: ${{ inputs.version }}
+          PRODUCT: ${{ inputs.product }}
+          SUITE: ${{ inputs.suite }}
         run: |
           bash scripts/promote-packages.sh \
-            --pkg     "${{ inputs.package }}" \
-            --version "${{ inputs.version }}" \
-            --product "${{ inputs.product }}" \
-            --suite   "${{ inputs.suite }}"
+            --pkg "$PACKAGE" --version "$VERSION" \
+            --product "$PRODUCT" --suite "$SUITE"
 
       - name: Promote all dev packages to stable
         if: inputs.action == 'promote-all'
+        env:
+          PRODUCT: ${{ inputs.product }}
+          SUITE: ${{ inputs.suite }}
+          EXCLUDE: ${{ inputs.exclude }}
         run: |
           bash scripts/promote-packages.sh \
-            --all \
-            --product "${{ inputs.product }}" \
-            --suite   "${{ inputs.suite }}" \
-            --exclude "${{ inputs.exclude }}"
+            --all --product "$PRODUCT" --suite "$SUITE" --exclude "$EXCLUDE"
 
       - name: Regenerate APT metadata
         env:
@@ -77,20 +105,23 @@ jobs:
 
       - name: Build commit message
         id: msg
+        env:
+          ACTION: ${{ inputs.action }}
+          PACKAGE: ${{ inputs.package }}
+          VERSION: ${{ inputs.version }}
+          EXCLUDE: ${{ inputs.exclude }}
         run: |
-          if [[ "${{ inputs.action }}" == "promote-all" ]]; then
-            if [[ -n "${{ inputs.exclude }}" ]]; then
-              MSG="apt: promote all to stable (excl: ${{ inputs.exclude }}) [$(date '+%Y-%m-%d')]"
+          if [[ "$ACTION" == "promote-all" ]]; then
+            if [[ -n "$EXCLUDE" ]]; then
+              MSG="apt: promote all to stable (excl: ${EXCLUDE}) [$(date '+%Y-%m-%d')]"
             else
               MSG="apt: promote all dev packages to stable [$(date '+%Y-%m-%d')]"
             fi
           else
-            PKG="${{ inputs.package }}"
-            VERSION="${{ inputs.version }}"
             if [[ -n "$VERSION" ]]; then
-              MSG="apt: promote ${PKG} ${VERSION} to stable [$(date '+%Y-%m-%d')]"
+              MSG="apt: promote ${PACKAGE} ${VERSION} to stable [$(date '+%Y-%m-%d')]"
             else
-              MSG="apt: promote ${PKG} to stable [$(date '+%Y-%m-%d')]"
+              MSG="apt: promote ${PACKAGE} to stable [$(date '+%Y-%m-%d')]"
             fi
           fi
           echo "value=${MSG}" >> "$GITHUB_OUTPUT"

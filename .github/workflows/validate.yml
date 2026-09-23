@@ -2,10 +2,10 @@ name: Validate
 
 on:
   pull_request:
-    paths: ['scripts/**', 'index/**', '.github/workflows/**', 'Makefile', 'worker.js']
+    paths: ['scripts/**', 'index/**', '.github/**', 'Makefile', 'worker.js', 'wrangler.toml']
   push:
     branches: [main]
-    paths: ['scripts/**', 'index/**', '.github/workflows/**', 'Makefile', 'worker.js']
+    paths: ['scripts/**', 'index/**', '.github/**', 'Makefile', 'worker.js', 'wrangler.toml']
 
 jobs:
   validate:
@@ -16,10 +16,6 @@ jobs:
         run: bash scripts/validate.sh
       - name: Test repository isolation
         run: bash scripts/test.sh
-      - name: Check metadata against release assets
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/check-mirror.sh --local
       - name: Check shell syntax
         run: find scripts -name '*.sh' -print0 | xargs -0 -n1 bash -n
       - name: Check Worker syntax

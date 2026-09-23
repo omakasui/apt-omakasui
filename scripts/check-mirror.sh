@@ -1,21 +1,20 @@
 #!/usr/bin/env bash
 # Verify that published APT metadata matches signatures and release assets.
-# Usage: check-mirror.sh [--base-url <url> | --local] [--report <file>]
+# Usage: check-mirror.sh [--base-url <url>] [--report <file>]
 #        [--key-url <url>] [--repo owner/repo]
 # Checks active product suites and frozen legacy suites: InRelease signature,
-# Packages hashes, release asset size/SHA256 and, for remote mirrors, pool redirects.
+# Packages hashes, release asset size/SHA256 and pool redirects.
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/lib/targets.sh"
 
-BASE_URL="https://core.omakasui.org" LOCAL=false REPORT=""
+BASE_URL="https://core.omakasui.org" REPORT=""
 KEY_URL="https://github.com/omakasui/keyrings/raw/refs/heads/main/omakasui-core.gpg.key"
 REPO="omakasui/build-apt-omakasui"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --base-url) BASE_URL="${2%/}"; shift 2 ;;
-    --local) LOCAL=true; shift ;;
     --report) REPORT="$2"; shift 2 ;;
     --key-url) KEY_URL="$2"; shift 2 ;;
     --repo) REPO="$2"; shift 2 ;;
@@ -31,8 +30,7 @@ fail() { echo "ERROR: $*" >&2; echo "- $*" >> "$WORK/errors"; errors=$((errors +
 
 fetch() {
   local path="$1" out="$2"
-  if [[ "$LOCAL" == true ]]; then cp "$path" "$out" 2>/dev/null
-  else curl -fsSL --retry 3 -o "$out" "${BASE_URL}/${path}"; fi
+  curl -fsSL --retry 3 -o "$out" "${BASE_URL}/${path}"
 }
 
 curl -fsSL --retry 3 "$KEY_URL" | gpg --dearmor > "$WORK/keyring.gpg"
@@ -81,17 +79,14 @@ while read -r where filename size sha256; do
 done < "$WORK/entries"
 
 # Pool redirects through the Worker, once per unique file.
-if [[ "$LOCAL" != true ]]; then
-  while read -r filename; do
-    tag=${filename#pool/}; tag=${tag%%/*}
-    want="https://github.com/${REPO}/releases/download/${tag}/${filename##*/}"
-    got=$(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -I --retry 3 "${BASE_URL}/${filename}" || true)
-    [[ "$got" == "302 ${want}" ]] || fail "redirect ${filename}: got '${got}'"
-  done < <(awk '{print $2}' "$WORK/entries" | sort -u)
-fi
+while read -r filename; do
+  tag=${filename#pool/}; tag=${tag%%/*}
+  want="https://github.com/${REPO}/releases/download/${tag}/${filename##*/}"
+  got=$(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -I --retry 3 "${BASE_URL}/${filename}" || true)
+  [[ "$got" == "302 ${want}" ]] || fail "redirect ${filename}: got '${got}'"
+done < <(awk '{print $2}' "$WORK/entries" | sort -u)
 
-source_label="${BASE_URL}"; [[ "$LOCAL" == true ]] && source_label="working tree"
-summary="Checked ${#SUITE_DIRS[@]} suites and ${checked} package entries (${source_label}): ${errors} error(s)."
+summary="Checked ${#SUITE_DIRS[@]} suites and ${checked} package entries (${BASE_URL}): ${errors} error(s)."
 echo "$summary"
 if [[ -n "$REPORT" ]]; then
   { echo "$summary"; echo; sort -u "$WORK/errors"; } > "$REPORT"

@@ -9,6 +9,12 @@ cp "$ROOT/index/packages.tsv" "$ROOT/index/targets.tsv" "$SANDBOX/index/"
 
 (cd "$SANDBOX" && bash "$ROOT/scripts/update-index.sh") >/dev/null
 
+# Compressed indexes must be reproducible across regenerations.
+first_gzip=$(sha256sum "$SANDBOX/omabuntu/dists/noble/main/binary-amd64/Packages.gz")
+(cd "$SANDBOX" && bash "$ROOT/scripts/update-index.sh") >/dev/null
+second_gzip=$(sha256sum "$SANDBOX/omabuntu/dists/noble/main/binary-amd64/Packages.gz")
+[[ "$first_gzip" == "$second_gzip" ]] || { echo 'ERROR: gzip output is not reproducible'; exit 1; }
+
 assert_absent() {
   local pattern="$1" file="$2"
   ! grep -q "^Package: ${pattern}" "$file" || { echo "ERROR: ${pattern} leaked into ${file}"; exit 1; }

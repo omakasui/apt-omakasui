@@ -54,10 +54,6 @@ register_entry() {
 }
 
 for produced in $PRODUCED_PKGS; do
-  if grep -qxF "${PRODUCT} ${SUITE} ${produced}" index/freeze.list 2>/dev/null; then
-    echo "SKIP: ${PRODUCT}/${SUITE}/${produced} is frozen"; continue
-  fi
-
   found=false
   pattern="${produced}_${VERSION}-1+${SUITE}_all.deb"
   tmpdir=$(mktemp -d)

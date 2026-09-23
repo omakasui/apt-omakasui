@@ -1,5 +1,5 @@
 name: Commit and push
-description: Snapshot build artifacts then retry fetch+reset+push up to 5 times.
+description: Commit generated APT metadata and push it to the current branch.
 
 inputs:
   message:
@@ -10,42 +10,22 @@ runs:
   steps:
     - name: Commit and push
       shell: bash
+      env:
+        MESSAGE: ${{ inputs.message }}
       run: |
         git config user.name  "omakasui-bot"
         git config user.email "bot@omakasui.org"
 
-        DISTS_SNAPSHOT=$(mktemp -d)
-        PRODUCTS_SNAPSHOT=$(mktemp -d)
-        INDEX_SNAPSHOT=$(mktemp -d)
-        cp -r dists/. "$DISTS_SNAPSHOT/"
-        PRODUCTS=$(awk '{print $1}' index/targets.tsv | sort -u | xargs)
-        for product in $PRODUCTS; do
-          [[ -d "$product" ]] && cp -r "$product" "$PRODUCTS_SNAPSHOT/"
+        mapfile -t products < <(awk '{print $1}' index/targets.tsv | sort -u)
+        git add -f index/ README.md
+        for product in "${products[@]}"; do
+          git add -f "$product/"
         done
-        cp index/*.tsv index/freeze.list "$INDEX_SNAPSHOT/" 2>/dev/null || true
 
-        for i in 1 2 3 4 5; do
-          git fetch origin main
-          git reset --hard origin/main
+        if git diff --cached --quiet; then
+          echo "Nothing to commit."
+          exit 0
+        fi
 
-          cp -r "$DISTS_SNAPSHOT/." dists/
-          for product in $PRODUCTS; do
-            [[ -d "$PRODUCTS_SNAPSHOT/$product" ]] && cp -r "$PRODUCTS_SNAPSHOT/$product" ./
-          done
-          mkdir -p index
-          cp "$INDEX_SNAPSHOT/"* index/ 2>/dev/null || true
-
-          git add -f dists/ index/
-          for product in $PRODUCTS; do git add -f "$product/"; done
-          git add -u index/ 2>/dev/null || true
-
-          if git diff --cached --quiet; then
-            echo "Nothing to commit."
-            break
-          fi
-
-          git commit -m "${{ inputs.message }}"
-          git push && break
-          echo "Push failed (attempt ${i}/5), retrying..."
-          sleep $((i * 2))
-        done
+        git commit -m "$MESSAGE"
+        git push

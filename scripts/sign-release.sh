@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 # Sign target Release files.
-# Usage: sign-release.sh [--targets "product/suite ..."] [--legacy-suites "suite ..."]
+# Usage: sign-release.sh [--targets "product/suite ..."]
 #        (--key-id <fingerprint> | --key-url <url>)
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/lib/targets.sh"
 
-TARGET_FILTER="" LEGACY_SUITES="" KEY_ID="" KEY_URL=""
+TARGET_FILTER="" KEY_ID="" KEY_URL=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --targets) TARGET_FILTER="$2"; shift 2 ;;
-    --legacy-suites) LEGACY_SUITES="$2"; shift 2 ;;
     --key-id) KEY_ID="$2"; shift 2 ;;
     --key-url) KEY_URL="$2"; shift 2 ;;
     *) echo "ERROR: unknown argument: $1" >&2; exit 1 ;;
@@ -46,10 +45,4 @@ for target in $TARGET_FILTER; do
   for published_suite in "$suite" "${suite}-dev"; do
     sign_dir "${product}/dists/${published_suite}" "Omakasui" "$label" "$published_suite" "${label} packages"
   done
-done
-
-# Frozen pre-isolation suites keep their original Release identity.
-for suite in $LEGACY_SUITES; do
-  [[ "$suite" =~ ^[a-z0-9-]+$ && -d "dists/${suite}" ]] || { echo "ERROR: unknown legacy suite ${suite}"; exit 1; }
-  sign_dir "dists/${suite}" "omakasui" "omakasui-packages" "$suite" "omakasui custom packages"
 done

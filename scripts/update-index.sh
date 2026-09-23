@@ -57,7 +57,7 @@ for target in $TARGET_FILTER; do
     unset dev_packages
 
     for dir in "$stable_dir" "$dev_dir"; do
-      gzip -k -f "${dir}/Packages"; xz -k -f "${dir}/Packages"
+      gzip -n -k -f "${dir}/Packages"; xz -k -f "${dir}/Packages"
       echo "Generated: ${dir}/Packages ($(grep -c '^Package:' "${dir}/Packages" || true) entries)"
     done
   done
