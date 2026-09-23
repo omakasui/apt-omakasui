@@ -15,30 +15,22 @@ MD5sum: 2c591af8f32f1c24a5ea2c4303288ea0
 SHA1: d86e37d56468fd5cddafde2cc7ebf56500a6dd6c
 SHA256: fffed6c6adf1b9b9477a857a350dc520e031bbfe1850d04412caa6ea3c2f1d82
 
-Package: omakasui-devtools
-Version: 0.0.3
+Package: omadeb-walker
+Version: 20260330.1-1+trixie
 Architecture: all
-Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 59
-Depends: jq, imagemagick, python3-pil
-Recommends: bash-completion
-Breaks: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
-Replaces: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
-Section: devel
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
+Section: utils
 Priority: optional
-Multi-Arch: foreign
-Homepage: https://github.com/omakasui/omakasui-devtools
-Description: Development tooling for Omakasui environments (shared payload)
- Provides the devtools command-line dispatcher and helper scripts used by
- developers working across Omakasui environments: theme asset generation,
- preview formatting, and related build tooling. Install omakub-devtools or
- omadeb-devtools to get the project-specific command name.
- Not intended for end-user installation.
-Filename: pool/omakasui-devtools-0.0.3/omakasui-devtools_0.0.3-1+trixie_all.deb
-Size: 11760
-MD5sum: d1da05dfdbb7d4e09f4a596ad5e3a6e3
-SHA1: 4f2c06a25dbb2a49e2ff3f65c3eb118c61006f31
-SHA256: dbb9c858e36d7e2eb5cf4c780936ff68d21a9512bc931881036fb2fd12dc65ad
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers.
+ Installs walker, elephant, and all elephant provider packages in one shot.
+Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1-1+trixie_all.deb
+Size: 1902
+MD5sum: 7d80d94d057e1e6dce74a34bd7bdc3c4
+SHA1: a8c46ffef2d1bc86638d6904a9be3279b8e3b012
+SHA256: 5f43f48a04786e8dffab7d734759c6096b19dc173724fa512aa2063a162f912a
 
 Package: omadeb-devtools
 Version: 0.0.3
@@ -99,23 +91,6 @@ MD5sum: 1e953da8782d365421f4e9ef91bbf8bf
 SHA1: c862c6c8401f5271b7bb8e80de57896251ac2e57
 SHA256: 119815ac487b3e3e5936f5006f412035d8cc761fcc4d10d961f3f9fe9672e590
 
-Package: omadeb-walker
-Version: 20260330.1-1+trixie
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 4
-Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
-Section: utils
-Priority: optional
-Homepage: https://github.com/omakasui/omakasui
-Description: Omakasui metapackage for walker and elephant providers.
- Installs walker, elephant, and all elephant provider packages in one shot.
-Filename: pool/omakasui-walker-20260330.1/omadeb-walker_20260330.1-1+trixie_all.deb
-Size: 1902
-MD5sum: 7d80d94d057e1e6dce74a34bd7bdc3c4
-SHA1: a8c46ffef2d1bc86638d6904a9be3279b8e3b012
-SHA256: 5f43f48a04786e8dffab7d734759c6096b19dc173724fa512aa2063a162f912a
-
 Package: omakasui-zellij
 Version: 1:0.0.3
 Architecture: all
@@ -154,4 +129,29 @@ Size: 2196
 MD5sum: ba025354b0e3ee26058064aba6e676ae
 SHA1: 014e44ed47529560beb658ceb4067db2becdd879
 SHA256: 5c59ac6e90b6d0851fa0fd59bbc7a593640b7afafa964c2d0a45b6959fe24d7e
+
+Package: omakasui-devtools
+Version: 0.0.3
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 59
+Depends: jq, imagemagick, python3-pil
+Recommends: bash-completion
+Breaks: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Replaces: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Section: devel
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omakasui environments (shared payload)
+ Provides the devtools command-line dispatcher and helper scripts used by
+ developers working across Omakasui environments: theme asset generation,
+ preview formatting, and related build tooling. Install omakub-devtools or
+ omadeb-devtools to get the project-specific command name.
+ Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omakasui-devtools_0.0.3-1+trixie_all.deb
+Size: 11760
+MD5sum: d1da05dfdbb7d4e09f4a596ad5e3a6e3
+SHA1: 4f2c06a25dbb2a49e2ff3f65c3eb118c61006f31
+SHA256: dbb9c858e36d7e2eb5cf4c780936ff68d21a9512bc931881036fb2fd12dc65ad
 

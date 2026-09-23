@@ -75,10 +75,10 @@ SHA1: 85c366a51bbca05825774fdb006c4f006ffb6dc1
 SHA256: c4d068bd6c1fcf9c121a2d034a44204a2fecf3025eaa5a6d2481a06bb1d49d15
 
 Package: omakasui-zellij
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 27
+Installed-Size: 29
 Depends: zellij, gum
 Section: utils
 Priority: optional
@@ -88,28 +88,53 @@ Description: Zellij configuration (shared payload)
  Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
  plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
  the project-specific setup command.
-Filename: pool/omakasui-zellij-0.0.2/omakasui-zellij_0.0.2-1+resolute_all.deb
-Size: 5306
-MD5sum: 954da1feb2f614938e1a3675b49ddd9e
-SHA1: 321dd032c47b143919d63760e3e9f8eedeecdac9
-SHA256: 609d34e4a052b2d57da8da8d80a3b91d8da320edaf4eaedd1586d17b98607dc8
+Filename: pool/omakasui-zellij-0.0.3/omakasui-zellij_0.0.3-1+resolute_all.deb
+Size: 6192
+MD5sum: 8903bce407f1acdc6db8348ecb4ff6ce
+SHA1: 974b3ea39a2ee54b5ca9983de4f1c54167cb6abf
+SHA256: 6579397facd75932673034309a199220f284a85427da68520c4c72b359ae150a
 
 Package: omakub-zellij
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Source: omakasui-zellij
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 11
-Depends: omakasui-zellij (= 1:0.0.2)
+Depends: omakasui-zellij (= 1:0.0.3)
 Section: utils
 Priority: optional
 Homepage: https://github.com/omakasui/omakasui-zellij
 Description: Zellij configuration for Omabuntu/Omakub
  Provides the omakub-setup-zellij command, which activates the shared
  omakasui-zellij configuration for the current user.
-Filename: pool/omakasui-zellij-0.0.2/omakub-zellij_0.0.2-1+resolute_all.deb
-Size: 2038
-MD5sum: 3446a3c3607ba0aa4ae752f67b807e5d
-SHA1: 567c3805de4ccd7eaa11cfb8a0c9834701bc12da
-SHA256: 9399941c6dcdf895389135505ae73ab97dd1eae28a120176e806a3307b6513e9
+Filename: pool/omakasui-zellij-0.0.3/omakub-zellij_0.0.3-1+resolute_all.deb
+Size: 2098
+MD5sum: 084cb12487c115a2b8856456097e2214
+SHA1: b52689f9282ee180c637dee9974005eac26ecd3c
+SHA256: fed3f0ac361fcaf8d68e16c3dd1ce1edf05d3af8e5f79edf885e590bd5373a1f
+
+Package: omakasui-devtools
+Version: 0.0.3
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 59
+Depends: jq, imagemagick, python3-pil
+Recommends: bash-completion
+Breaks: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Replaces: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Section: devel
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omakasui environments (shared payload)
+ Provides the devtools command-line dispatcher and helper scripts used by
+ developers working across Omakasui environments: theme asset generation,
+ preview formatting, and related build tooling. Install omakub-devtools or
+ omadeb-devtools to get the project-specific command name.
+ Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omakasui-devtools_0.0.3-1+resolute_all.deb
+Size: 11936
+MD5sum: 5ff9f0fb1f6b2e3526dcd055b242ee56
+SHA1: 5e978989ef64e3fbe5b88981b72bea5963c0f8fe
+SHA256: 955467d5ef2834d87e65d176caae81452d49bd24803304840d4411da21576170
 

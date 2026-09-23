@@ -92,10 +92,10 @@ SHA1: c862c6c8401f5271b7bb8e80de57896251ac2e57
 SHA256: 119815ac487b3e3e5936f5006f412035d8cc761fcc4d10d961f3f9fe9672e590
 
 Package: omakasui-zellij
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 27
+Installed-Size: 29
 Depends: zellij, gum
 Section: utils
 Priority: optional
@@ -105,28 +105,53 @@ Description: Zellij configuration (shared payload)
  Installs the omakub-based zellij configuration to /usr/share/omakasui-zellij,
  plus the shared setup script. Install omakub-zellij or omadeb-zellij to get
  the project-specific setup command.
-Filename: pool/omakasui-zellij-0.0.2/omakasui-zellij_0.0.2-1+trixie_all.deb
-Size: 5352
-MD5sum: 58cbb78558f42b680150785a4a66c5ea
-SHA1: 95977515cccfc4b0b1bff97c54266951efb84f67
-SHA256: a14f141e90090de48e6c00262a0e87d5aaa06a899d365539e387a789f19b8c4e
+Filename: pool/omakasui-zellij-0.0.3/omakasui-zellij_0.0.3-1+trixie_all.deb
+Size: 6200
+MD5sum: 2a1636950567f1176d8b8819883e0632
+SHA1: 7e90640de7a1a40bf8a69b503c7ec40b26c3a916
+SHA256: d0f430b664d929e93e0a8cfcf79eb791b680feb65c687ab6d537dbcded9aff17
 
 Package: omadeb-zellij
-Version: 1:0.0.2
+Version: 1:0.0.3
 Architecture: all
 Source: omakasui-zellij
 Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
 Installed-Size: 11
-Depends: omakasui-zellij (= 1:0.0.2)
+Depends: omakasui-zellij (= 1:0.0.3)
 Section: utils
 Priority: optional
 Homepage: https://github.com/omakasui/omakasui-zellij
 Description: Zellij configuration for Omadeb
  Provides the omadeb-setup-zellij command, which activates the shared
  omakasui-zellij configuration for the current user.
-Filename: pool/omakasui-zellij-0.0.2/omadeb-zellij_0.0.2-1+trixie_all.deb
-Size: 2140
-MD5sum: f5b2d3e05c496ef1b8c883734b760d75
-SHA1: 0948c6ec2ef2b1b33a6c058869e7e6f4cb437b48
-SHA256: 268be7bee65a5069ea07250f4fdfb6217cf5015095238fbbf5e6c72df7f5eb9a
+Filename: pool/omakasui-zellij-0.0.3/omadeb-zellij_0.0.3-1+trixie_all.deb
+Size: 2196
+MD5sum: ba025354b0e3ee26058064aba6e676ae
+SHA1: 014e44ed47529560beb658ceb4067db2becdd879
+SHA256: 5c59ac6e90b6d0851fa0fd59bbc7a593640b7afafa964c2d0a45b6959fe24d7e
+
+Package: omakasui-devtools
+Version: 0.0.3
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 59
+Depends: jq, imagemagick, python3-pil
+Recommends: bash-completion
+Breaks: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Replaces: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Section: devel
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omakasui environments (shared payload)
+ Provides the devtools command-line dispatcher and helper scripts used by
+ developers working across Omakasui environments: theme asset generation,
+ preview formatting, and related build tooling. Install omakub-devtools or
+ omadeb-devtools to get the project-specific command name.
+ Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omakasui-devtools_0.0.3-1+trixie_all.deb
+Size: 11760
+MD5sum: d1da05dfdbb7d4e09f4a596ad5e3a6e3
+SHA1: 4f2c06a25dbb2a49e2ff3f65c3eb118c61006f31
+SHA256: dbb9c858e36d7e2eb5cf4c780936ff68d21a9512bc931881036fb2fd12dc65ad
 

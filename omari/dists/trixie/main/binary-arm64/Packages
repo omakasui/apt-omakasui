@@ -37,3 +37,118 @@ MD5sum: d844429ea035f4130b4835da440eb5bd
 SHA1: 3cc1b527eaebc20ff6673c7d024e0d7b4fd6c40c
 SHA256: 5a9f028552863d7ccd5942edcc3756e8fc0c4d9bff0f4e0bfcfc56d6f53f020e
 
+Package: omari-base-files
+Version: 1:1.0.0
+Architecture: all
+Source: base-files
+Essential: yes
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 351
+Pre-Depends: awk
+Breaks: debian-security-support (<< 2019.04.25), initscripts (<< 2.88dsf-13.3), sendfile (<< 2.1b.20080616-5.2~)
+Replaces: base, dpkg (<= 1.15.0), miscutils
+Provides: base, usr-is-merged
+Section: admin
+Priority: required
+Multi-Arch: foreign
+Description: Debian base system miscellaneous files
+ This package contains the basic filesystem hierarchy of a Debian system, and
+ several important miscellaneous files, such as /etc/debian_version,
+ /etc/host.conf, /etc/issue, /etc/motd, /etc/profile, and others,
+ and the text of several common licenses in use on Debian systems.
+Filename: pool/omari-base-files-1.0.0-testing1/omari-base-files_1.0.0-testing1-1+trixie_all.deb
+Size: 73404
+MD5sum: 014cbda285347309b2c5b862dbe3da43
+SHA1: 2af6ba7807301b5d33eaf2846160978136bba5e5
+SHA256: 69814f55fa7f2e694454c4a13c0a481bf3d70f5a79095f062f1458164fcd7f90
+
+Package: omari-base
+Version: 1.0.0-testing1
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: adduser, apt, apt-utils, base-files, bind9-dnsutils, console-setup, cpio, cron, dbus-broker, debconf, debconf-i18n, debian-keyring, dmidecode, dosfstools, e2fsprogs, eject, ed, file, hdparm, init, iproute2, iputils-ping, less, locales, lsb-release, libpam-systemd, logrotate, lshw, lsof, kbd, kmod, mawk, man-db, media-types, mount, netbase, netcat-openbsd, nftables, passwd, procps, python3, parted, pciutils, psmisc, ripgrep, rsync, sensible-utils, strace, sudo, time, tzdata, udev, usbutils, vim-tiny, wget, whiptail, xz-utils
+Recommends: apparmor, bash-completion, command-not-found, nano, manpages, ntfs-3g, openssh-client, plymouth, sudo-rs, tcpdump, rsyslog, uuid-runtime
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Base system for Omari
+Filename: pool/omari-meta-1.0.0-testing1/omari-base_1.0.0-testing1-1+trixie_all.deb
+Size: 1564
+MD5sum: b5cc70bfa13db47f36d5e15061ff44dd
+SHA1: 5bd8bf347d78104b7ab3be20bc4f364d997999cd
+SHA256: f2499a8310422fc9a6b9b6d80cdc2b7bd242cd3e7793d3a9a652b7c84b08f731
+
+Package: omari-desktop-niri
+Version: 1.0.0-testing1
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: calcurse, cliphist, elephant-all, grim, gtklock, gtklock-playerctl-module, mako-notifier, mise, niri, omari-desktop-common (= 1.0.0-testing1), omari-grub-theme, omari-settings-niri, omari-system-themes, plymouth-theme, plymouth-theme-omari, swappy, swaybg, swayidle, walker, waybar, wlopm, wlsunset, yaru-theme-gtk, yaru-theme-icon
+Recommends: alacritty, chromium, imv, nautilus, pavucontrol, xdg-desktop-portal, xdg-desktop-portal-gtk, xdg-desktop-portal-gnome, xwayland-satellite
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Niri desktop environment for Omari
+Filename: pool/omari-meta-1.0.0-testing1/omari-desktop-niri_1.0.0-testing1-1+trixie_all.deb
+Size: 1416
+MD5sum: 74e9326553e57aace37dd2e461d2f4da
+SHA1: 8664f55bb434e3504f9b6447e5a584b9f3c4fde3
+SHA256: 3e0d12a2279539df797fe6b749cbad29cd7d9f351f9cefb5bd77e210fe992e81
+
+Package: omari-drivers
+Version: 1.0.0-testing1
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: bluez-firmware, firmware-atheros, firmware-intel-sound, firmware-iwlwifi, firmware-linux, firmware-realtek
+Recommends: fwupd, fwupd-signed, gnome-firmware
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Non-free firmware and drivers for Omari
+Filename: pool/omari-meta-1.0.0-testing1/omari-drivers_1.0.0-testing1-1+trixie_all.deb
+Size: 1244
+MD5sum: badb1afcc16214ca750f242bf42bc576
+SHA1: c5d15cde3ef82771437307dcac6b17fe82cd7228
+SHA256: e8b4782796eb16dbe2e18cf626b8d1b88fded6daae9316938db3eed20f50e07f
+
+Package: omari-live
+Version: 1.0.0-testing1
+Architecture: all
+Source: omari-meta
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 7
+Depends: calamares-settings-omari, live-boot, live-config, live-config-systemd
+Section: metapackages
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-meta
+Description: Live environment components for Omari installer ISO
+Filename: pool/omari-meta-1.0.0-testing1/omari-live_1.0.0-testing1-1+trixie_all.deb
+Size: 1216
+MD5sum: e3b6a08e8d1ff296f24417f10d01a4b1
+SHA1: aa043a86f5ad6a0020a05e848282682cbc3a1c69
+SHA256: 62f3e539625c9c229964f1a8915c4d7e7975ac8aa5319bae8c97e781f3bd8155
+
+Package: omari-settings
+Version: 1.0.0-testing1
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 511
+Replaces: nvim
+Section: misc
+Priority: optional
+Homepage: https://codeberg.org/omakasui/omari-settings
+Description: Default configuration and scripts for Omari
+ Provides the default dotfiles (placed in /etc/skel) and the
+ omari management scripts placed in /usr/share/omari/bin.
+ Symlinks for all omari-* scripts are created in /usr/local/bin.
+Filename: pool/omari-settings-1.0.0-testing1/omari-settings_1.0.0-testing1-1+trixie_all.deb
+Size: 111632
+MD5sum: e63dbd00babbf100a301ed2bf27bd717
+SHA1: f736ce117b57ed5228c298ebe59d4253eb23bb54
+SHA256: 69b1272e953f56432759bb15dfd51a669878c76a6cadafb8c90a39edc4b3198b
+

@@ -18,6 +18,25 @@ MD5sum: 0ac6ee9b5efe1329fd0d032b3aaceed8
 SHA1: ce2fdeae98265a7c83ad64e2262d2a15822dad91
 SHA256: 81b6f28719018926a3ed6d5212929ddde21397c080a90b65653c922502d58e30
 
+Package: calamares-settings-omari
+Version: 1.0.0-testing1
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 339
+Depends: calamares-settings-tileos-common
+Provides: calamares-settings
+Section: misc
+Priority: optional
+Homepage: https://codeberg.org/omakasui/calamares-settings-omari
+Description: Calamares installer configuration for Omari
+ Provides the branding, module configuration, and install sequence
+ for the Omari Calamares installer.
+Filename: pool/calamares-settings-omari-1.0.0-testing1/calamares-settings-omari_1.0.0-testing1-1+trixie_all.deb
+Size: 298644
+MD5sum: d844429ea035f4130b4835da440eb5bd
+SHA1: 3cc1b527eaebc20ff6673c7d024e0d7b4fd6c40c
+SHA256: 5a9f028552863d7ccd5942edcc3756e8fc0c4d9bff0f4e0bfcfc56d6f53f020e
+
 Package: omari-base-files
 Version: 1:1.0.0
 Architecture: all
@@ -113,25 +132,6 @@ Size: 1216
 MD5sum: e3b6a08e8d1ff296f24417f10d01a4b1
 SHA1: aa043a86f5ad6a0020a05e848282682cbc3a1c69
 SHA256: 62f3e539625c9c229964f1a8915c4d7e7975ac8aa5319bae8c97e781f3bd8155
-
-Package: calamares-settings-omari
-Version: 1.0.0-testing1
-Architecture: all
-Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 339
-Depends: calamares-settings-tileos-common
-Provides: calamares-settings
-Section: misc
-Priority: optional
-Homepage: https://codeberg.org/omakasui/calamares-settings-omari
-Description: Calamares installer configuration for Omari
- Provides the branding, module configuration, and install sequence
- for the Omari Calamares installer.
-Filename: pool/calamares-settings-omari-1.0.0-testing1/calamares-settings-omari_1.0.0-testing1-1+trixie_all.deb
-Size: 298644
-MD5sum: d844429ea035f4130b4835da440eb5bd
-SHA1: 3cc1b527eaebc20ff6673c7d024e0d7b4fd6c40c
-SHA256: 5a9f028552863d7ccd5942edcc3756e8fc0c4d9bff0f4e0bfcfc56d6f53f020e
 
 Package: omari-settings
 Version: 1.0.0-testing1

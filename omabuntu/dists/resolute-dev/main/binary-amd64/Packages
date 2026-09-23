@@ -1,27 +1,19 @@
-Package: omakasui-devtools
-Version: 0.0.3
+Package: omakub-walker
+Version: 20260330.1-1+resolute
 Architecture: all
-Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
-Installed-Size: 59
-Depends: jq, imagemagick, python3-pil
-Recommends: bash-completion
-Breaks: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
-Replaces: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
-Section: devel
+Maintainer: omakasui <packages@omakasui.org>
+Installed-Size: 4
+Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
+Section: utils
 Priority: optional
-Multi-Arch: foreign
-Homepage: https://github.com/omakasui/omakasui-devtools
-Description: Development tooling for Omakasui environments (shared payload)
- Provides the devtools command-line dispatcher and helper scripts used by
- developers working across Omakasui environments: theme asset generation,
- preview formatting, and related build tooling. Install omakub-devtools or
- omadeb-devtools to get the project-specific command name.
- Not intended for end-user installation.
-Filename: pool/omakasui-devtools-0.0.3/omakasui-devtools_0.0.3-1+resolute_all.deb
-Size: 11936
-MD5sum: 5ff9f0fb1f6b2e3526dcd055b242ee56
-SHA1: 5e978989ef64e3fbe5b88981b72bea5963c0f8fe
-SHA256: 955467d5ef2834d87e65d176caae81452d49bd24803304840d4411da21576170
+Homepage: https://github.com/omakasui/omakasui
+Description: Omakasui metapackage for walker and elephant providers.
+ Installs walker, elephant, and all elephant provider packages in one shot.
+Filename: pool/omakasui-walker-20260330.1/omakub-walker_20260330.1-1+resolute_all.deb
+Size: 1894
+MD5sum: 2b1d99fe7d6214b0074bcbbac491a9c4
+SHA1: 73b9d222e7d8e72e43d3da7b8235e652afc6d1e6
+SHA256: d81177f599c91d9ebf52aeb6a4a3dbd7b05e69e861074901a43945ad96d2925b
 
 Package: omakub-devtools
 Version: 0.0.3
@@ -82,23 +74,6 @@ MD5sum: 0979da03b8eda5692cd7a7e3571175c1
 SHA1: 85c366a51bbca05825774fdb006c4f006ffb6dc1
 SHA256: c4d068bd6c1fcf9c121a2d034a44204a2fecf3025eaa5a6d2481a06bb1d49d15
 
-Package: omakub-walker
-Version: 20260330.1-1+resolute
-Architecture: all
-Maintainer: omakasui <packages@omakasui.org>
-Installed-Size: 4
-Depends: walker, elephant, elephant-desktopapplications, elephant-calc, elephant-clipboard, elephant-files, elephant-menus, elephant-providerlist, elephant-runner, elephant-symbols, elephant-todo, elephant-unicode, elephant-websearch
-Section: utils
-Priority: optional
-Homepage: https://github.com/omakasui/omakasui
-Description: Omakasui metapackage for walker and elephant providers.
- Installs walker, elephant, and all elephant provider packages in one shot.
-Filename: pool/omakasui-walker-20260330.1/omakub-walker_20260330.1-1+resolute_all.deb
-Size: 1894
-MD5sum: 2b1d99fe7d6214b0074bcbbac491a9c4
-SHA1: 73b9d222e7d8e72e43d3da7b8235e652afc6d1e6
-SHA256: d81177f599c91d9ebf52aeb6a4a3dbd7b05e69e861074901a43945ad96d2925b
-
 Package: omakasui-zellij
 Version: 1:0.0.3
 Architecture: all
@@ -137,4 +112,29 @@ Size: 2098
 MD5sum: 084cb12487c115a2b8856456097e2214
 SHA1: b52689f9282ee180c637dee9974005eac26ecd3c
 SHA256: fed3f0ac361fcaf8d68e16c3dd1ce1edf05d3af8e5f79edf885e590bd5373a1f
+
+Package: omakasui-devtools
+Version: 0.0.3
+Architecture: all
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 59
+Depends: jq, imagemagick, python3-pil
+Recommends: bash-completion
+Breaks: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Replaces: omadeb-devtools (<< 0.0.3~), omakub-devtools (<< 0.0.3~)
+Section: devel
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/omakasui-devtools
+Description: Development tooling for Omakasui environments (shared payload)
+ Provides the devtools command-line dispatcher and helper scripts used by
+ developers working across Omakasui environments: theme asset generation,
+ preview formatting, and related build tooling. Install omakub-devtools or
+ omadeb-devtools to get the project-specific command name.
+ Not intended for end-user installation.
+Filename: pool/omakasui-devtools-0.0.3/omakasui-devtools_0.0.3-1+resolute_all.deb
+Size: 11936
+MD5sum: 5ff9f0fb1f6b2e3526dcd055b242ee56
+SHA1: 5e978989ef64e3fbe5b88981b72bea5963c0f8fe
+SHA256: 955467d5ef2834d87e65d176caae81452d49bd24803304840d4411da21576170
 
