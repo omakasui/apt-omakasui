@@ -18,12 +18,10 @@ Each product also exposes `*-dev` suites. Dev includes stable packages from the 
 
 | Package | Upstream | Targets | Architectures |
 |---|---|---|---|
-| `calamares-settings-omari` | [calamares-settings-omari](https://codeberg.org/omakasui/calamares-settings-omari) | omari/trixie | all |
 | `omadeb-devtools` | [omadeb-devtools](https://github.com/omakasui/omakasui-devtools) | omadeb/trixie | all |
 | `omadeb-nvim` | [omadeb-nvim](https://github.com/omakasui/omakasui-nvim) | omadeb/trixie | all |
 | `omadeb-walker` | [omadeb-walker](https://github.com/omakasui/omakasui) | omadeb/trixie | all |
 | `omadeb-zellij` | [omadeb-zellij](https://github.com/omakasui/omakasui-zellij) | omadeb/trixie | all |
-| `omakasui-archive-keyring` | [omakasui-archive-keyring](https://codeberg.org/omakasui/omakasui-archive-keyring) | omari/trixie | all |
 | `omakasui-devtools` | [omakasui-devtools](https://github.com/omakasui/omakasui-devtools) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
 | `omakasui-nvim` | [omakasui-nvim](https://github.com/omakasui/omakasui-nvim) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
 | `omakasui-walker` | [omakasui-walker](https://github.com/omakasui/omakasui) | omabuntu/noble, omadeb/trixie | all |
@@ -79,20 +77,21 @@ The legacy root suites (`/dists/noble`, `/dists/resolute`, `/dists/trixie`) are 
 
 ```bash
 # Import both GPG keys
-sudo install -dm 755 /etc/apt/keyrings
 curl -fsSL https://keyrings.omakasui.org/omakasui-packages.gpg.key \
-  | gpg --dearmor | sudo tee /etc/apt/keyrings/omakasui.gpg > /dev/null
+  | gpg --dearmor | sudo tee /usr/share/keyrings/omakasui-packages.gpg > /dev/null
 curl -fsSL https://keyrings.omakasui.org/omakasui-core.gpg.key \
-  | gpg --dearmor | sudo tee /etc/apt/keyrings/omakasui-core.gpg > /dev/null
+  | gpg --dearmor | sudo tee /usr/share/keyrings/omakasui-core.gpg > /dev/null
 
 # Add both sources
 CODENAME=$(. /etc/os-release && echo $VERSION_CODENAME)
-echo "deb [signed-by=/etc/apt/keyrings/omakasui.gpg] https://packages.omakasui.org $CODENAME main" \
+echo "deb [signed-by=/usr/share/keyrings/omakasui-packages.gpg] https://packages.omakasui.org $CODENAME main" \
   | sudo tee /etc/apt/sources.list.d/omakasui.list
 PRODUCT=omadeb # omabuntu, omadeb, or omari
-echo "deb [signed-by=/etc/apt/keyrings/omakasui-core.gpg] https://core.omakasui.org/$PRODUCT $CODENAME main" \
+echo "deb [signed-by=/usr/share/keyrings/omakasui-core.gpg] https://core.omakasui.org/$PRODUCT $CODENAME main" \
   | sudo tee /etc/apt/sources.list.d/omakasui-core.list
 
 sudo apt-get update
+# Keyring packages take over the keys and keep them up to date
+sudo apt-get install omakasui-archive-keyring omakasui-core-archive-keyring
 sudo apt-get install omakasui-nvim
 ```
