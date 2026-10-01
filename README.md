@@ -21,6 +21,7 @@ Each product also exposes `*-dev` suites. Dev includes stable packages from the 
 | `omadeb-nvim` | [omadeb-nvim](https://github.com/omakasui/omakasui-nvim) | omadeb/trixie | all |
 | `omadeb-walker` | [omadeb-walker](https://github.com/omakasui/omakasui) | omadeb/trixie | all |
 | `omadeb-zellij` | [omadeb-zellij](https://github.com/omakasui/omakasui-zellij) | omadeb/trixie | all |
+| `omakasui-core-archive-keyring` | [omakasui-core-archive-keyring](https://github.com/omakasui/keyrings) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
 | `omakasui-devtools` | [omakasui-devtools](https://github.com/omakasui/omakasui-devtools) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
 | `omakasui-nvim` | [omakasui-nvim](https://github.com/omakasui/omakasui-nvim) | omabuntu/noble, omabuntu/resolute, omadeb/trixie | all |
 | `omakasui-walker` | [omakasui-walker](https://github.com/omakasui/omakasui) | omabuntu/noble, omadeb/trixie | all |

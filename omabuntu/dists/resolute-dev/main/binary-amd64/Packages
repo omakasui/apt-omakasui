@@ -138,3 +138,24 @@ MD5sum: 5ff9f0fb1f6b2e3526dcd055b242ee56
 SHA1: 5e978989ef64e3fbe5b88981b72bea5963c0f8fe
 SHA256: 955467d5ef2834d87e65d176caae81452d49bd24803304840d4411da21576170
 
+Package: omakasui-core-archive-keyring
+Version: 1.1.0
+Architecture: all
+Source: omakasui-archive-keyring
+Maintainer: Luca Pattocchio <info@lucapattocchio.dev>
+Installed-Size: 11
+Breaks: omakasui-archive-keyring (<< 1.1.0)
+Replaces: omakasui-archive-keyring (<< 1.1.0)
+Section: misc
+Priority: optional
+Multi-Arch: foreign
+Homepage: https://github.com/omakasui/keyrings
+Description: GPG keyring for the Omakasui core repository
+ Provides the public key used to authenticate packages from
+ core.omakasui.org, installed as /usr/share/keyrings/omakasui-core.gpg.
+Filename: pool/omakasui-core-archive-keyring-1.1.0/omakasui-core-archive-keyring_1.1.0-1+resolute_all.deb
+Size: 2394
+MD5sum: c4c446788dcce09de25fcc63ffcd50e2
+SHA1: 64dbc83148197f2bcc5d32ccae981c2f16d5aa7b
+SHA256: 8f0b26ace2e543b5ee302ea4bf902e58ee79ac842fc715186d3dac757ca7bced
+
