@@ -10,7 +10,6 @@ Metadata and the package index (`index/packages.tsv`) live in this repo. Binary 
 |---|---|---|---|
 | `omabuntu` | `noble`, `resolute` | Ubuntu 24.04/26.04 | `amd64`, `arm64` |
 | `omadeb` | `trixie` | Debian 13 | `amd64`, `arm64` |
-| `omari` | `trixie` | Debian 13 | `amd64`, `arm64` |
 
 Each product also exposes `*-dev` suites. Dev includes stable packages from the same product only, overridden by explicit dev entries.
 
@@ -86,7 +85,7 @@ curl -fsSL https://keyrings.omakasui.org/omakasui-core.gpg.key \
 CODENAME=$(. /etc/os-release && echo $VERSION_CODENAME)
 echo "deb [signed-by=/usr/share/keyrings/omakasui-packages.gpg] https://packages.omakasui.org $CODENAME main" \
   | sudo tee /etc/apt/sources.list.d/omakasui.list
-PRODUCT=omadeb # omabuntu, omadeb, or omari
+PRODUCT=omadeb # omabuntu or omadeb
 echo "deb [signed-by=/usr/share/keyrings/omakasui-core.gpg] https://core.omakasui.org/$PRODUCT $CODENAME main" \
   | sudo tee /etc/apt/sources.list.d/omakasui-core.list
 

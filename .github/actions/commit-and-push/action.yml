@@ -19,7 +19,10 @@ runs:
         mapfile -t products < <(awk '{print $1}' index/targets.tsv | sort -u)
         git add -f index/ README.md
         for product in "${products[@]}"; do
-          git add -f "$product/"
+          # Deprecated products have no directory once retired.
+          if [[ -e "$product" ]] || git ls-files --error-unmatch "$product" &>/dev/null; then
+            git add -A -f -- "$product/"
+          fi
         done
 
         if git diff --cached --quiet; then
