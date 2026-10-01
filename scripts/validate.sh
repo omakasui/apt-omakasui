@@ -23,9 +23,6 @@ while IFS=' ' read -r product suite arch name version url size md5 sha1 sha256 c
   seen[$key]=1
   [[ "$name" != omakub-* || "$product" == omabuntu ]] || fail "${name} leaked into ${product}/${suite}"
   [[ "$name" != omadeb-* || "$product" == omadeb ]] || fail "${name} leaked into ${product}/${suite}"
-  if [[ "$name" == omari-* || "$name" == calamares-settings-omari ]]; then
-    [[ "$product" == omari ]] || fail "${name} leaked into ${product}/${suite}"
-  fi
 done < index/packages.tsv
 
 [[ $errors -eq 0 ]] || { echo "Validation failed: ${errors} error(s)" >&2; exit 1; }

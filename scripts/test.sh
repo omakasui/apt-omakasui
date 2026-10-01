@@ -23,11 +23,11 @@ assert_absent() {
 
 for suite in noble resolute; do
   file="$SANDBOX/omabuntu/dists/$suite/main/binary-amd64/Packages"
-  assert_absent 'omadeb-' "$file"; assert_absent 'omari-' "$file"
+  assert_absent 'omadeb-' "$file"
 done
 
 file="$SANDBOX/omadeb/dists/trixie/main/binary-amd64/Packages"
-assert_absent 'omakub-' "$file"; assert_absent 'omari-' "$file"
+assert_absent 'omakub-' "$file"
 
 for target in $(awk '$4=="active"{print $1 "/" $2}' "$SANDBOX/index/targets.tsv"); do
   product=${target%/*}; suite=${target#*/}

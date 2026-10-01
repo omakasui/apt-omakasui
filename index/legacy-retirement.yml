@@ -4,4 +4,3 @@ remove_not_before: 2026-12-15
 required_consumer_migrations:
   - omabuntu
   - omadeb
-  - omari
