@@ -4,13 +4,13 @@ Hash: SHA512
 Architectures: amd64 arm64
 Codename: trixie
 Components: main
-Date: Fri, 02 Oct 2026 13:03:52 +0000
+Date: Fri, 02 Oct 2026 13:12:59 +0000
 Description: Omadeb packages
 Label: Omadeb
 Origin: Omakasui
 Suite: trixie
 MD5Sum:
- c237b856e1e046148b2ef07e4825d43b              173 Release
+ e105e8fde68278d13c1bfbbabc0b0329              173 Release
  3cb0828ade9c82d17f99f2cc9711c973             7515 main/binary-amd64/Packages
  5efba4bfc739b010a4a1aa3b215e13fa             2343 main/binary-amd64/Packages.gz
  18a98f1f562a2af68aecd313888a84d1             2324 main/binary-amd64/Packages.xz
@@ -18,7 +18,7 @@ MD5Sum:
  5efba4bfc739b010a4a1aa3b215e13fa             2343 main/binary-arm64/Packages.gz
  18a98f1f562a2af68aecd313888a84d1             2324 main/binary-arm64/Packages.xz
 SHA1:
- 7f68909602d3c52b4866bcaadf6759bc7da5a2c9              173 Release
+ 67ef5dafd1e8bf55d8fab0c6c76d5641d6db8e8e              173 Release
  63e67b6ec0ba9a45695b8a899eacb3310a95a7fa             7515 main/binary-amd64/Packages
  9d2b28d7f6607bd089358e9f27ffc7222538d675             2343 main/binary-amd64/Packages.gz
  b8f553b39ab0c8a1dec640dcb1b8aa6b276a239f             2324 main/binary-amd64/Packages.xz
@@ -26,7 +26,7 @@ SHA1:
  9d2b28d7f6607bd089358e9f27ffc7222538d675             2343 main/binary-arm64/Packages.gz
  b8f553b39ab0c8a1dec640dcb1b8aa6b276a239f             2324 main/binary-arm64/Packages.xz
 SHA256:
- 02e6b4e552d51f4fc8aa831f4662925083e36f8c5fda7a4e75abf02ddc99442a              173 Release
+ 62efd70a71d6d959d8d5e93a4bc924b682e8a2074a8c9434caf94d72b95e3c75              173 Release
  bb5224cdee68cfc8b99b5709e8a5384d893996c5e025f921d4d198b0e5b95e47             7515 main/binary-amd64/Packages
  0dd3de7994d1237ae728fbe405c880394aa5eed0c33d0ccd5e94b999b4589b39             2343 main/binary-amd64/Packages.gz
  678f7cd3835acdb6093281f74833ff9967cd31640fa164c15aaad79dddd0aceb             2324 main/binary-amd64/Packages.xz
@@ -34,7 +34,7 @@ SHA256:
  0dd3de7994d1237ae728fbe405c880394aa5eed0c33d0ccd5e94b999b4589b39             2343 main/binary-arm64/Packages.gz
  678f7cd3835acdb6093281f74833ff9967cd31640fa164c15aaad79dddd0aceb             2324 main/binary-arm64/Packages.xz
 SHA512:
- 9174dea2b9a61110f07bb4b0a60239717f343c1e59d11f00a1a1e95b6eca50641c9cc74130e1f21073dd966ca80cec5aea1e7c7283f3552f4addba1ba4fbace1              173 Release
+ 7bf9d775bc61b40f0e84d0f474c444070db74c28c4d11689b7f634a474e63143493c71616fc1a23a00da1d5bf021cc39f2e8e610504cc72c0de16659ab421d8f              173 Release
  9c9fe01dba9f930b6a55d3f0b50dd168c3f5f42a6bed3cc188bf809a1788351d47eb7aec5eda8b74225400e44299ffd5d182a7121917d8cea22f003749b001bf             7515 main/binary-amd64/Packages
  bee30963499a1321f8d78319d02bedec0f9221842e641e0210c9874a675a2018814c4961f012033a2b715aa76a1aad7b83bce0434c5fa3ab528492900749ea02             2343 main/binary-amd64/Packages.gz
  deba5b86c08df46f7e2c5967da020d1e6934a5ef4f561be87c487b56696b62f018236b4e8d01730187fa0994d5972c66d873e99fa62f8be21b334b7d2185eccb             2324 main/binary-amd64/Packages.xz
@@ -43,8 +43,8 @@ SHA512:
  deba5b86c08df46f7e2c5967da020d1e6934a5ef4f561be87c487b56696b62f018236b4e8d01730187fa0994d5972c66d873e99fa62f8be21b334b7d2185eccb             2324 main/binary-arm64/Packages.xz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQQsMt+s59QvVUAxZknlP1HLTV4G3wUCar+ruAAKCRDlP1HLTV4G
-3y33APwL2E/V4sYTYUtDjqr6dQk/vNBVTlgFbIkceWD3SdiS+QD+IO/v5lzjtN5q
-tJSOofUXAN5rnhQ8D1Z6qqJF6rpUCwA=
-=Kp3j
+iHUEARYKAB0WIQQsMt+s59QvVUAxZknlP1HLTV4G3wUCar+t2wAKCRDlP1HLTV4G
+380ZAP0TkwPd/6dnyzoVCVtiPP7qF8y4YaqWOiHyTEqrseWyigEAyhysk56vCfu/
+zJxgip/o+EoxfJ91ZCQDbfMm5JkBYgg=
+=t4+L
 -----END PGP SIGNATURE-----

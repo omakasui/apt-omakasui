@@ -1,13 +1,13 @@
 Architectures: amd64 arm64
 Codename: noble-dev
 Components: main
-Date: Fri, 02 Oct 2026 13:03:52 +0000
+Date: Fri, 02 Oct 2026 13:12:59 +0000
 Description: Omabuntu packages
 Label: Omabuntu
 Origin: Omakasui
 Suite: noble-dev
 MD5Sum:
- 8ce6350e4eb297e908c3efd918063fb0              183 Release
+ a9a685f4fdb9d6d63659e90a96539139              183 Release
  324989bceddc9765ced591fdce65cc37             7529 main/binary-amd64/Packages
  eaee3f3051df70dd3736496f8b0eac60             2345 main/binary-amd64/Packages.gz
  13f4912ef689284c095967e15f9fa53b             2328 main/binary-amd64/Packages.xz
@@ -15,7 +15,7 @@ MD5Sum:
  eaee3f3051df70dd3736496f8b0eac60             2345 main/binary-arm64/Packages.gz
  13f4912ef689284c095967e15f9fa53b             2328 main/binary-arm64/Packages.xz
 SHA1:
- f06a3572fea84a67fd661c350a62360953a4f44e              183 Release
+ 6e963ea0b9f9c2c26a01fa3a1a838d70114f1e75              183 Release
  0fa7c48a2475a58845b0a2492af685943d363411             7529 main/binary-amd64/Packages
  24bafc7b83258108ba6a27413e939a8c0660ea80             2345 main/binary-amd64/Packages.gz
  933449da53b48d8f6fd8c422724dd257e77bdc03             2328 main/binary-amd64/Packages.xz
@@ -23,7 +23,7 @@ SHA1:
  24bafc7b83258108ba6a27413e939a8c0660ea80             2345 main/binary-arm64/Packages.gz
  933449da53b48d8f6fd8c422724dd257e77bdc03             2328 main/binary-arm64/Packages.xz
 SHA256:
- a53b7e9f7188aea8ff73a6720d238096f6be8510623ef161f73f743e84705a03              183 Release
+ 1da4a897c5eb261a516d9c69cc9014df77025e26b47e009fd4c11f3c56a3a1c4              183 Release
  3e6e6210151eed0c4cd377c0df0d6d0417ece91632391b9bbaaaec6df9f02d80             7529 main/binary-amd64/Packages
  b22e1c0dd5ae05ccdafa033d2f35aa7923f3866f1b270d553a4f9c6f87ab5908             2345 main/binary-amd64/Packages.gz
  51ee83e4c8b6c719b7d7c3c261c0309d39a9e22fee65c99c3054532704d0f71d             2328 main/binary-amd64/Packages.xz
@@ -31,7 +31,7 @@ SHA256:
  b22e1c0dd5ae05ccdafa033d2f35aa7923f3866f1b270d553a4f9c6f87ab5908             2345 main/binary-arm64/Packages.gz
  51ee83e4c8b6c719b7d7c3c261c0309d39a9e22fee65c99c3054532704d0f71d             2328 main/binary-arm64/Packages.xz
 SHA512:
- d41ecde03f6f707c2e594a71ef33044357d31817be87e651e6a54bfb0adc1561e350b44ee4e837338601efbfe8fe3984a670a725b2ce6f127bf8bf9b6f0dc194              183 Release
+ bfa68ffad05f110ce2a034cda25d72787323b7e1ae306b775f56a213b6ef12db3105afa9770a5deb7d66ed66ccfcafa4d5401dcd2f01430405dee417b2d4e4c8              183 Release
  e8cded43588a7bdd81c4ef5ce2aa1fa8a52769bb9366b0c429350ef01e434921b2e251a986fe0931d8c8dcaa9d662ebc46d423e1c4cec87cad92ad2dc030cfb7             7529 main/binary-amd64/Packages
  8b44ef23ed24869bc554a75b495b23822c176eaaccf0a04aa93cabbef2e85e103a2fa4570cc9ecc22d5129729193b6e1a72113bd9b6a7bcc829f977c302c24d7             2345 main/binary-amd64/Packages.gz
  ef5eabd085874c3122a714e1cd01b3fc8dee3c677f7c6ad581eff677a80ffa917c01125af365b4cf7a4612fee8ebb3cb99f4ada8dbf8b1a1065b29b6c86f7282             2328 main/binary-amd64/Packages.xz
