@@ -73,25 +73,18 @@ The legacy root suites (`/dists/noble`, `/dists/resolute`, `/dists/trixie`) are 
 
 ## User setup
 
-`omakasui-*` packages depend on their corresponding generic packages from `packages.omakasui.org`. Both sources must be configured:
+`omakasui-*` packages depend on their corresponding generic packages from `packages.omakasui.org`. Both keyring packages are needed: each one installs its signing key and its source in `/etc/apt/sources.list.d/`.
 
 ```bash
-# Import both GPG keys
-curl -fsSL https://keyrings.omakasui.org/omakasui-packages.gpg.key \
-  | gpg --dearmor | sudo tee /usr/share/keyrings/omakasui-packages.gpg > /dev/null
-curl -fsSL https://keyrings.omakasui.org/omakasui-core.gpg.key \
-  | gpg --dearmor | sudo tee /usr/share/keyrings/omakasui-core.gpg > /dev/null
-
-# Add both sources
 CODENAME=$(. /etc/os-release && echo $VERSION_CODENAME)
-echo "deb [signed-by=/usr/share/keyrings/omakasui-packages.gpg] https://packages.omakasui.org $CODENAME main" \
-  | sudo tee /etc/apt/sources.list.d/omakasui.list
-PRODUCT=omadeb # omabuntu or omadeb
-echo "deb [signed-by=/usr/share/keyrings/omakasui-core.gpg] https://core.omakasui.org/$PRODUCT $CODENAME main" \
-  | sudo tee /etc/apt/sources.list.d/omakasui-core.list
+wget -qO /tmp/omakasui-archive-keyring.deb \
+  https://packages.omakasui.org/omakasui-archive-keyring/$CODENAME.deb
+wget -qO /tmp/omakasui-core-archive-keyring.deb \
+  https://core.omakasui.org/omakasui-core-archive-keyring/$CODENAME.deb
+sudo dpkg -i /tmp/omakasui-archive-keyring.deb /tmp/omakasui-core-archive-keyring.deb
 
 sudo apt-get update
-# Keyring packages take over the keys and keep them up to date
-sudo apt-get install omakasui-archive-keyring omakasui-core-archive-keyring
 sudo apt-get install omakasui-nvim
 ```
+
+The product (`omabuntu` or `omadeb`) is set by the package for your distro. `/omakasui-core-archive-keyring/<suite>.deb` always redirects to the current release for that suite.
